@@ -1,0 +1,133 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  {%	include	"dashboard/nav.html"	with	user=user	%}
+
+  <!-- SIDEBAR -->
+  {%	include	"dashboard/sidebar.html"	with	user=user	%}
+
+  <div class="content-header">
+    <div class="container-fluid">
+      <!-- {% if registered %}
+
+      <div class="alert alert-success" role="alert">
+        New user added successuflly.
+      </div>
+
+      {% endif %} -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <div class="content-wrapper" style="min-height: 1244.06px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Add new notice</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card-body">
+                  
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Notice title</label>
+                    <input type="text" name="title" class="form-control" placeholder="Notice title" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputFile">Add attachment</label>
+                    <div class="input-group">
+                      <input type="file" class="custom-file-input" id="customFile" name="filename" required>
+                      <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Notice body</label>
+                    <textarea style="height: 250px;" name="body" class="form-control" rows="3" placeholder="Enter ..." required></textarea>                    
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary swalDefaultSuccess">Add new notice</button>
+                </div>
+              </form>
+              {% if registered %}
+
+              <div class="alert alert-success" role="alert">
+                New subject is successuflly added.
+              </div>
+
+              {% endif %}
+
+            
+
+            </div>
+            <!-- /.card -->
+
+
+          </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+
+          <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 1991-
+      <script type="text/javascript">
+        document.write(new Date().getFullYear());
+      </script> <a href="{% url 'index' %}">Khan Bahadur Awlad Hossein Degree College</a>.</strong>
+    All rights reserved.
+
+  </footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+  // Add the following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function () {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+</script>
+<!-- bs-custom-file-input -->
+<script src="{% static 'dashboard/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dashboard/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dashboard/dist/js/demo.js' %}"></script>
+
+
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'non-working-files/body.html' %}
+{% block body %}
+{%  load static %}
+
+
+
+<!-- USER PART -->
+
+<div class="card w-100">
+    <div class="card-body">
+        <div class="container">
+            <h5 class="section-title h1" style="text-align: center;margin: 35px;">Library</h5>
+            <div class="row">
+
+                <!-- LIBRARY BOOKS -->
+                {% for i in posts %}
+                <div class="col-xs-12 col-sm-6 col-md-4 frontside">
+                    <div class="card-deck">
+
+                        <div class="card">
+                            <img class="card-img-top" src="{{i.book_img.url}}" height="245px" width="160px"
+                                alt="{{i.book_title}} {{i.book_writter}}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{i.book_title}}</h5>
+                                <h6 class="card-title">Written By- {{i.book_writter}}</h6>
+                                <p class="card-text">{{i.book_description| truncatechars:20 }}</p>
+
+
+                            </div>
+                            {% if i.book_file %}
+                            <div class="card-footer container">
+                                <div class="text-center">
+                                    <a href="{% url 'book' i.slug %}" class="btn btn-info">Read more</a>
+                                    <a href="{{i.book_file.url}}" class="btn btn-success" download>Download</a>
+
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="card-footer container">
+                                <div class="text-center">
+                                    <a href="{% url 'book' i.slug %}" class="btn btn-info">Read more</a>
+                                    <a href="#" class="btn btn-danger">No file found</a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                {% endfor %}
+                <div>
+
+                    <!-- /LIBRARY BOOKS -->
+
+                </div>
+            </div>
+        </div>
+        <!-- Paginator -->
+        {%	include	"pagination.html"	with	page=posts	%}
+
+        <!-- Paginator -->
+    </div>
+
+</div>
+
+
+<!-- ./Team member -->
+
+
+<!-- /USER PART -->
+
+{% endblock %}

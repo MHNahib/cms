@@ -1,0 +1,44 @@
+{% extends 'non-working-files/body.html' %}
+{% block body %}
+{%  load static %}
+
+
+
+<!-- /NOTICE TABLE -->
+
+<div class="card w-100">
+    <div class="card-body">
+        <div class="container">
+            <div class="row">
+                <h4>Notice Board</h4>
+                <br>
+                <table class="table table-hover table-bordered  table-fixed">
+                    <thead>
+                        <tr>
+                            <th scope="col">Notice title</th>
+                            <th scope="col">Notice Date</th>
+                        </tr>
+                    </thead>
+                    {% for i in posts %}
+                    <tbody>
+                        <tr>
+
+                            <td><a href="{% url 'show-notice' i.slug %}">{{ i.notice_title }}</a></td>
+                            <td>{{ i.notice_date }}</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+                <!-- Paginator -->
+                {%	include	"pagination.html"	with	page=posts	%}
+
+                <!-- Paginator -->                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- /NOTICE TABLE -->
+
+{% endblock %}

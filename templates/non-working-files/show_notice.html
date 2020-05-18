@@ -1,0 +1,108 @@
+{% extends 'non-working-files/body.html' %}
+{% block body %}
+{%  load static %}
+
+<style>
+  .card {
+    margin: 0 auto;
+    /* Added */
+    float: none;
+    /* Added */
+    margin-bottom: 10px;
+    /* Added */
+  }
+</style>
+
+</head>
+
+<body>
+
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <h4 class="mt-4">{{notice.notice_title}}</h4>
+
+        <!-- Author -->
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>Posted on {{notice.notice_date}}</p>
+
+        <hr>
+
+
+        <!-- Post Content -->
+        <p class="lead">{{notice.notice_body}}</p>
+        <div class="col-md-8">
+          <div class="card-body">
+            <br>
+            {% if notice.notice_document %}
+            <a href="{{notice.notice_document.url}}" style="margin: 5px;" class="btn btn-success btn-lg form-control"
+              download>Download Now</a>
+            {% endif %}
+          </div>
+        </div>
+
+
+        <hr>
+
+        <!-- Comments Form -->
+
+
+
+
+
+      </div>
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+
+        <!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">New books</h5>
+          <div class="card-body">
+            <!-- BOOK CONTENT -->
+            <!-- <ul class="list-group list-group-flush">
+              {% for i in books %}
+              <a href="{% url 'show-notice' i.slug %}">
+                <li class="list-group-item">{{i.slug}}</li>
+              </a>
+              {% endfor %}
+            </ul> -->
+
+
+
+            {% for i in books %}
+
+            <div class="card" style="width: 18rem;">
+              <img class="card-img-top" src="{{i.book_img.url}}" alt="{{i.book_title}} {{i.book_writter}}"
+                height="286px" width="180px">
+              <div class="card-body">
+                <h5 class="card-title">{{i.book_title}}</h5>
+                <a href="{% url 'book' i.slug %}" class="btn btn-success">Read more</a>
+              </div>
+            </div>
+
+            {% endfor %}
+
+
+            <!-- /BOOK CONTENT -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+  {% endblock %}

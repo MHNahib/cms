@@ -1,0 +1,60 @@
+<div class="span9">
+    <div class="content">
+
+        <div class="module">
+            <div class="module-head">
+                <h3>Add new notice</h3>
+            </div>
+            <div class="module-body">
+
+                <form class="form-horizontal row-fluid">
+                    <div class="control-group">
+                        <label class="control-label" for="basicinput">Notice title</label>
+                        <div class="controls">
+                            <input data-title="A tooltip for the input" type="text"
+                                placeholder="Notice title" data-original-title="" class="span8 tip">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="basicinput">Chose file</label>
+                        <div class="controls custom-file mb-6">                            
+                            <input type="file" class="custom-file-input" id="customFile" name="filename">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="controls">
+                            <textarea class="span8" cols="12" rows="12">Your notice here</textarea>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-success">Add new notice</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+    </div>
+    <!--/.content-->
+</div>
+<!--/.span9-->
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>

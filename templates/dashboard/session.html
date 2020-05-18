@@ -1,0 +1,260 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  {%	include	"dashboard/nav.html"	with	user=user	%}
+
+  <!-- SIDEBAR -->
+  {%	include	"dashboard/sidebar.html"	with	user=user	%}
+
+  <div class="content-header">
+    <div class="container-fluid">
+      <!-- {% if registered %}
+
+      <div class="alert alert-success" role="alert">
+        New user added successuflly.
+      </div>
+
+      {% endif %} -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <div class="content-wrapper" style="min-height: 1244.06px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Add new session</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+
+              <div class="card-body">
+                <div class="form-group">
+
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Session name</label>
+                  <input type="text" name="name" id="session" class="form-control" placeholder="2020-21" required>
+                </div>
+              </div>
+              <!-- /.card-body -->
+
+              <div class="card-footer">
+                <button type="submit" id="click" class="btn btn-primary swalDefaultSuccess" onclick="showSession()">Add
+                  new session</button>
+              </div>
+
+            </div>
+            <!-- /.card -->
+
+
+          </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+
+          <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+    <!-- TABLE -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="card">
+          <!-- <div class="card-header" onload="any();">
+            <h3 class="card-title">Bordered Table</h3>
+          </div> -->
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Session</th>
+                  <!-- <th style="width: 40px">Edit</th>
+                    <th style="width: 40px">Delete</th> -->
+                </tr>
+              </thead>
+              <tbody id="show-data">
+                <tr>
+
+                  <!-- DATA FROM JSON -->
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+
+        </div>
+      </div>
+    </section>
+    <!-- /TABLE -->
+
+  </div>
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 1991-
+      <script type="text/javascript">
+        document.write(new Date().getFullYear());
+      </script> <a href="{% url 'index' %}">Khan Bahadur Awlad Hossein Degree College</a>.</strong>
+    All rights reserved.
+
+  </footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+</div>
+
+<script src="{% static 'js/session.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+  // Add the following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function () {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+
+  // ajax
+
+
+
+  // save data
+  var button;
+  function session() {
+    button = document.getElementById('click');
+    button.onclick = function () {
+      saveSession();
+      // var table = document.getElementById('show-data');
+      // table.innerHTML = "";
+      // showSession();
+      var table= document.getElementById('show-data');
+      $('#show-data').empty();
+      
+      setTimeout(function () { showSession(); }, 10);
+    };
+  }
+
+
+
+  function saveSession() {
+
+    var getSession = document.getElementById('session').value;
+
+    if (getSession != "") {
+
+      var saveUrl = 'save?name=' + getSession;
+
+
+      var req = new XMLHttpRequest();
+      req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          result = req.responseText;
+          
+          // check if it is true or not
+          if (result == 'true') {
+
+            Swal.fire({
+              icon: 'success',
+              title: 'Congratulations',
+              text: 'Successfully added',
+
+            });
+
+            document.getElementById('session').value = "";
+            
+
+          }
+          else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+
+            });
+
+          }
+          // setTimeout(function () { showSession(); }, 3000);
+
+        }
+      };
+      req.open("GET", saveUrl, true);
+      req.send();
+    }
+  }
+
+  // show list
+  function showSession() {
+    url = "{% url 'show_session' %}"
+    var rqst = new XMLHttpRequest();
+    rqst.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var data = eval(this.responseText);
+        var table = document.getElementById('show-data');
+
+        for (var i = 0; i < data.length; i++) {
+          var row = `<tr>
+            <td>${i + 1}</td>
+            <td>${data[i].session_name}</td>
+            <td style="width: 40px">
+              <button class="btn btn-primary btn-xs"><i class="fas fa-pen" style="color: white;"></i></button>
+            </td>
+            <td style="width: 40px">
+              <button class="btn btn-danger btn-xs"><i class="fas fa-trash" style="color: white;"></i></button>
+            </td>
+          </tr>`
+          table.innerHTML += row
+        }
+        data = data.value = "";
+
+      }
+    };
+    rqst.open("GET", url, true);
+    rqst.send();
+  }
+
+  $(document).ready(
+    function () {
+      showSession();
+      session();
+
+    }
+  );
+
+
+
+</script>
+<!-- bs-custom-file-input -->
+<script src="{% static 'dashboard/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dashboard/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dashboard/dist/js/demo.js' %}"></script>
+
+
+
+{% endblock %}

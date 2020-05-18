@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- BOOTSTRAP -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        .bg-dark {
+            background: #17a7e3 !important;
+        }
+    </style>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+    <!-- FOOTER -->
+    <!-- Footer -->
+    <footer class="page-footer font-small unique-color-dark footer">
+
+        <div style="background-color: #17a7e3;">
+            <div class="container">
+
+
+                <div class="row py-4 d-flex align-items-center">
+
+                    <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+                        <h6 class="mb-0" style="color: white;">©Khan Bahadur Awlad Hossein Degree College, 2020.</h6>
+                    </div>
+
+                    <div class="col-md-6 col-lg-7 text-center text-md-right">
+
+                        <a class="fb-ic">
+                            <i class="fa fa-facebook-f white-text mr-4" style="color:white"> </i>
+                        </a>
+
+                        <a class="tw-ic">
+                            <i class="fa fa-twitter white-text mr-4" style="color:white"> </i>
+                        </a>
+
+
+
+                        <a class="ins-ic">
+                            <i class="fa fa-instagram white-text" style="color:white"> </i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </footer>
+    <!-- /FOOTER -->
+
+    <!-- BOOTSTRAP JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
+
+<h5 class="section-title h1" style="text-align: center;margin: 35px;">Library</h5>
+<div class="row">
+
+    <!-- LIBRARY BOOKS -->
+    {% for i in posts %}
+    <div class="col-xs-12 col-sm-6 col-md-4 frontside">
+        <div class="card-deck">
+
+            <div class="card">
+                <img class="card-img-top" src="{{i.book_img.url}}" height="245px" width="160px"
+                    alt="{{i.book_title}} {{i.book_writter}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{i.book_title}}</h5>
+                    <h6 class="card-title">Written By- {{i.book_writter}}</h6>
+                    <p class="card-text">{{i.book_description| truncatechars:20 }}</p>
+
+
+                </div>
+                {% if i.book_file %}
+                <div class="card-footer container">
+                    <div class="text-center">
+                        <a href="{% url 'book' i.slug %}" target="_blank" class="btn btn-info">Read more</a>
+                        <a href="{{i.book_file.url}}" class="btn btn-success" download>Download</a>
+
+                    </div>
+                </div>
+                {% else %}
+                <div class="card-footer container">
+                    <div class="text-center">
+                        <a href="#" target="_blank" class="btn btn-info">Read more</a>
+                        <a href="#" class="btn btn-danger">No file found</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+    <!-- Paginator -->
+    {%	include	"pagination.html"	with	page=posts	%}
+
+    <!-- Paginator -->
+
+    <!-- /LIBRARY BOOKS -->
+
+</div>

@@ -1,0 +1,37 @@
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+
+<nav aria-label="Page navigation example" >
+
+    <ul class="pagination">
+
+        <li class="page-item">
+
+            {% if page.has_previous %}
+            <a class="page-link" href="?page={{page.previous_page_number}}">Previous</a>
+
+            {% endif %}
+
+        </li>
+
+        <li class="page-item">
+
+            <a class="page-link">Page {{page.number}} of {{page.paginator.num_pages}}</a>
+
+        </li>
+
+
+    <li class="page-item">
+
+            {% if page.has_next %}
+            <a class="page-link" href="?page={{page.next_page_number}}">Next</a>
+
+            {% endif %}
+
+        </li>
+
+
+    </ul>
+
+
+
+</nav>

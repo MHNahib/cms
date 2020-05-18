@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- BOOTSTRAP -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <title>User 1</title>
+    <style>
+        .bg-dark {
+            background: #17a7e3 !important;
+        }
+    </style>
+    <style>
+        .footer {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'non-working-files/css/style.css' %}">
+</head>
+
+<body>
+    <!-- NAV -->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light bg-dark">
+        <div class="container">
+            <!-- UNDER CONTAINER -->
+
+            <div class="row">
+                <a class="navbar-brand" href="{% url 'index' %}">
+                    <img src="{% static 'non-working-files/img/logo.PNG' %}" width="70" height="70" alt="">
+                    <!-- Khan Bahadur Awlad Hossein Degree College -->
+                </a>
+            </div>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'history' %}">History</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Service
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Result of College</a>
+                            <a class="dropdown-item" href="#">Class routine</a>
+                            <a class="dropdown-item" href="#">Events</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'notice' %}">Notice</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'library' %}">Library</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admission
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Admission Form (offline admission)</a>
+                            <a class="dropdown-item" href="#">Class routine(after offline admission)</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'photo' %}">Photo gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Faculty members</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Any complaint</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Hello, {{user.first_name}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </li>
+
+                    {% else %}
+                    <li class="nav-item">
+                        <button class="btn btn-success my-2 my-sm-0" href="#" type="submit">Login</button>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <!-- /UNDER CONTAINER -->
+        </div>
+    </nav>
+
+    <!-- /NAV -->
+
+    {% block body %}
+
+    {% endblock %}
+
+
+    <!-- Footer -->
+    <div class="footer">
+        <footer class="page-footer font-small unique-color-dark">
+
+            <div style="background-color: #17a7e3;">
+                <div class="container">
+
+
+                    <div class="row py-4 d-flex align-items-center">
+
+                        <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+                            <h6 class="mb-0" style="color: white;">©Khan Bahadur Awlad Hossein Degree College, 2020.
+                            </h6>
+                        </div>
+                        <div class="col-md-6 col-lg-7 text-center text-md-right">
+
+                            <a class="fb-ic">
+                                <i class="fa fa-facebook-f white-text mr-4" style="color:white"> </i>
+                            </a>
+
+                            <a class="tw-ic">
+                                <i class="fa fa-twitter white-text mr-4" style="color:white"> </i>
+                            </a>
+                            <a class="ins-ic">
+                                <i class="fa fa-instagram white-text" style="color:white"> </i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- /FOOTER -->
+
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
