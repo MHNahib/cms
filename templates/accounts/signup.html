@@ -69,12 +69,12 @@
 
             <div class="col-md-12 order-md-1">
                 <!-- <form class="needs-validation" method="POST" novalidate> -->
-                <form action="" method="post">
+                <form action="" method="post" >
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label for="name">Full Name </label>
-                            <input type="text" class="form-control" name="name" placeholder="Your name">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Your name">
                             <div class="invalid-feedback">
                                 Please enter your name as per as SSC registration card
                             </div>
@@ -116,8 +116,8 @@
 
                         <div class="col-md-6 mb-3">
                             <label for="firstName">Your phone number</label>
-                            <input type="text" class="form-control" placeholder="Your phone number" name="phone1"
-                                required>
+                            <input type="text" id="p1" class="form-control" placeholder="Your phone number"
+                                name="phone1" onblur="checkPhoneNumber();" required>
                             <div class="invalid-feedback">
                                 Please enter valid information.
                             </div>
@@ -125,8 +125,8 @@
 
                         <div class="col-md-6 mb-3">
                             <label for="lastName">Paresnts phone number</label>
-                            <input type="text" class="form-control" placeholder="Your phone number" name="phone2"
-                                required>
+                            <input type="text" id="p2" class="form-control" placeholder="Your phone number"
+                                name="phone2" onblur="checkPhoneNumber();" required>
                             <div class="invalid-feedback">
                                 Please enter valid information.
                             </div>
@@ -319,12 +319,14 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="country">Want to enrole</label>
-                            <select class="custom-select d-block w-100" name="group" required>
+                            <label for="country">Group</label>
+                            <select class="custom-select d-block w-100" name="group" id="group" onchange="getGroup();"
+                                required>
                                 <option value="">Choose...</option>
-                                <option>Arts</option>
-                                <option>Comart</option>
                                 <option>Science</option>
+                                <option>Arts (A)</option>
+                                <option>Arts (B)</option>
+                                <option>Commarts</option>
                             </select>
                             <div class="invalid-feedback">
                                 Please select a valid group.
@@ -340,17 +342,399 @@
                         </div>
                     </div>
 
-                    
                     <hr class="mb-4">
-                    <!-- <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="same-address">
-                        <label class="custom-control-label" for="same-address" name="agree">I have filled up the form
+
+                    <div id="science">
+                        <h2 style="text-align: center;">Subject list for student of science</h2>
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">First paper</th>
+                                    <th scope="col">Second paper</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Bangla (বাংলা)</td>
+                                    <td>101 ()</td>
+                                    <td>102 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>English (ইংরেজি)</td>
+                                    <td>107 ()</td>
+                                    <td>108 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Information and communications technology
+                                        <br>
+                                        (তথ্য ও যোগাযোগ প্রযুক্তি)</td>
+                                    <td colspan="2">207</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Physics (পদার্থবিদ্যা)</td>
+                                    <td>174 ()</td>
+                                    <td>175 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Chemistry (রসায়ন)</td>
+                                    <td>176 ()</td>
+                                    <td>177 </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Biology (জীববিজ্ঞান)
+                                        <span id="bio" style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span>
+                                    </td>
+                                    <td>176 ()</td>
+                                    <td>177 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Higher math (উচ্চতর গণিত) <span id="high"
+                                            style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span>
+                                    </td>
+                                    <td>176 ()</td>
+                                    <td>177 </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="country">Optional subject</label>
+                                <select class="custom-select d-block w-100" class="subject" id='subScience'
+                                    onchange="getSubject();" name="subject" required>
+                                    <option value="">Choose...</option>
+                                    <option>Biology</option>
+                                    <option>Higher math</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid group.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="commerce">
+                        <h2 style="text-align: center;">Subject list for student of commerce</h2>
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">First paper</th>
+                                    <th scope="col">Second paper</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Bangla (বাংলা)</td>
+                                    <td>101 ()</td>
+                                    <td>102 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>English (ইংরেজি)</td>
+                                    <td>107 ()</td>
+                                    <td>108 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Information and communications technology
+                                        <br>
+                                        (তথ্য ও যোগাযোগ প্রযুক্তি)</td>
+                                    <td colspan="2">207</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Business Organization and Management
+                                        <br>
+                                        (ব্যবসায় সংস্থা এবং পরিচালনা)</td>
+                                    <td>277 ()</td>
+                                    <td>278 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Accounting (হিসাববিজ্ঞান)</td>
+                                    <td>253 ()</td>
+                                    <td>254 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Finance, Banking, and Insurance (ফিনান্স, ব্যাংকিং এবং বীমা)<span id="finance"
+                                            style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span></td>
+                                    <td>292 ()</td>
+                                    <td>293 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Production Management and Marketing (উত্পাদন পরিচালনা ও বিপণন) <span
+                                            id="management" style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span></td>
+                                    <td>286 ()</td>
+                                    <td>287 </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="country">Optional subject</label>
+                                <select class="custom-select d-block w-100" id='subCom' onchange="getSubject();"
+                                    name="subject" required>
+                                    <option value="">Choose...</option>
+                                    <option>Finance, Banking, and Insurance (ফিনান্স, ব্যাংকিং এবং বীমা)</option>
+                                    <option>Production Management and Marketing (উত্পাদন পরিচালনা ও বিপণন)</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid group.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="humanities-a">
+                        <h2 style="text-align: center;">Subject list for student of Humanities - A</h2>
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">First paper</th>
+                                    <th scope="col">Second paper</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Bangla (বাংলা)</td>
+                                    <td>101 ()</td>
+                                    <td>102 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>English (ইংরেজি)</td>
+                                    <td>107 ()</td>
+                                    <td>108 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Information and communications technology
+                                        <br>
+                                        (তথ্য ও যোগাযোগ প্রযুক্তি)</td>
+                                    <td colspan="2">207</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Economy (অর্থনীতি)</td>
+                                    <td>109 ()</td>
+                                    <td>110 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Islamic History and Culture (ইসলামিক ইতিহাস ও সংস্কৃতি)</td>
+                                    <td>267 ()</td>
+                                    <td>268 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Logic (যুক্তিবিদ্যা)</td>
+                                    <td>121 ()</td>
+                                    <td>122 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Psychology (মনোবিজ্ঞান) <span id="phyco" style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span></td>
+                                    <td>125 ()</td>
+                                    <td>126 </td>
+                                </tr>
+
+
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Islamic Study (ইসলাম শিক্ষা) <span id="islam"
+                                            style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span></td>
+                                    <td>249 ()</td>
+                                    <td>250 </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="country">Optional subject</label>
+                                <select class="custom-select d-block w-100" class="subject" id='subArts'
+                                    onchange="getSubject();" name="subject" required>
+                                    <option value="">Choose...</option>
+                                    <option>Psychology (মনোবিজ্ঞান)</option>
+                                    <option>Islamic Study (ইসলাম শিক্ষা)</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid group.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="humanities-b">
+                        <h2 style="text-align: center;">Subject list for student of Humanities - B</h2>
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">First paper</th>
+                                    <th scope="col">Second paper</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Bangla (বাংলা)</td>
+                                    <td>101 ()</td>
+                                    <td>102 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>English (ইংরেজি)</td>
+                                    <td>107 ()</td>
+                                    <td>108 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Information and communications technology
+                                        <br>
+                                        (তথ্য ও যোগাযোগ প্রযুক্তি)</td>
+                                    <td colspan="2">207</td>
+                                </tr>
+                                <!-- <tr>
+                                    <th scope="row">3</th>
+                                    <td>Economy ()</td>
+                                    <td>109 ()</td>
+                                    <td>110 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Islamic History and Culture ()</td>
+                                    <td>267 ()</td>
+                                    <td>268 </td>
+                                </tr>                                
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Logic ()</td>
+                                    <td>121 ()</td>
+                                    <td>122 </td>
+                                </tr>                                
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Geography ()</td>
+                                    <td>125 ()</td>
+                                    <td>126 </td>
+                                </tr>                                 -->
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Civics and good governance (পৌরনীতি এবং সুশাসন)</td>
+                                    <td>269 ()</td>
+                                    <td>270 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Social Work (সমাজ কর্ম)</td>
+                                    <td>271 ()</td>
+                                    <td>272 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Geography (ভূগোল)</td>
+                                    <td>125 ()</td>
+                                    <td>126 </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Psychology (মনোবিজ্ঞান) <span id="phyco-2"
+                                            style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span></td>
+                                    <td>125 ()</td>
+                                    <td>126 </td>
+                                </tr>
+
+
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Islamic Study (ইসলাম শিক্ষা) <span id="islam-2"
+                                            style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span></td>
+                                    <td>249 ()</td>
+                                    <td>250 </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="country">Optional subject</label>
+                                <select class="custom-select d-block w-100" class="subject" id='subArts-2'
+                                    onchange="getSubject();" name="subject" required>
+                                    <option value="">Choose...</option>
+                                    <option>Psychology (মনোবিজ্ঞান)</option>
+                                    <option>Islamic Study (ইসলাম শিক্ষা)</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid group.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                    <hr class="mb-4">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" onclick="openBtn();" id="accept">
+                        <label class="custom-control-label" for="accept" name="agree">I have filled
+                            up the form
                             with true information and I want to get admission into this collleges</label>
-                    </div> -->
+                    </div>
 
                     <br>
 
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Send request for admission</button>
+                    <button class="btn btn-primary btn-lg btn-block" id="submit" type="submit">Send request for
+                        admission</button>
                 </form>
             </div>
         </div>
@@ -366,13 +750,165 @@
     <script src="/docs/4.4/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
         crossorigin="anonymous"></script>
-    <script src="{% static 'accounts/js/form.js' %}"></script>
+    <!-- <script src="{% static 'js/form.js' %}"></script> -->
+    <script src="https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js"></script>
     <script>
+
+        document.getElementById('science').style.display = "none";
+        document.getElementById('commerce').style.display = "none";
+        document.getElementById('humanities-a').style.display = "none";
+        document.getElementById('humanities-b').style.display = "none";
+
+        document.getElementById('high').style.display = "none";
+        document.getElementById('bio').style.display = "none";
+        document.getElementById('finance').style.display = "none";
+        document.getElementById('management').style.display = "none";
+        document.getElementById('phyco').style.display = "none";
+        document.getElementById('islam').style.display = "none";
+        document.getElementById('phyco-2').style.display = "none";
+        document.getElementById('islam-2').style.display = "none";
+
+        document.getElementById('submit').disabled = true;
+
+        function getSubject() {
+            var subject = document.getElementById('subScience').value;
+            // console.log(subject);
+
+            if (subject == 'Biology') {
+                document.getElementById('bio').style.display = "block";
+                document.getElementById('high').style.display = "none";
+            }
+            else {
+                document.getElementById('high').style.display = "block";
+                document.getElementById('bio').style.display = "none";
+            }
+
+            var subject = document.getElementById('subCom').value;
+            // console.log(subject);
+            if (subject == 'Finance, Banking, and Insurance (ফিনান্স, ব্যাংকিং এবং বীমা)') {
+                document.getElementById('finance').style.display = "block";
+                document.getElementById('management').style.display = "none";
+            }
+            else {
+                document.getElementById('finance').style.display = "none";
+                document.getElementById('management').style.display = "block";
+
+            }
+
+            var subject = document.getElementById('subArts').value;
+            // console.log(subject);
+            if (subject == 'Psychology (মনোবিজ্ঞান)') {
+                document.getElementById('phyco').style.display = "block";
+                document.getElementById('islam').style.display = "none";
+            }
+            else {
+                document.getElementById('phyco').style.display = "none";
+                document.getElementById('islam').style.display = "block";
+
+            }
+            var subject = document.getElementById('subArts-2').value;
+            // console.log(subject);
+            if (subject == 'Psychology (মনোবিজ্ঞান)') {
+                document.getElementById('phyco-2').style.display = "block";
+                document.getElementById('islam-2').style.display = "none";
+            }
+            else {
+                document.getElementById('phyco-2').style.display = "none";
+                document.getElementById('islam-2').style.display = "block";
+
+            }
+        }
+
+        function openBtn() {
+            var check = document.getElementById("accept");
+            console.log(check.checked);
+            if (check.checked == true) {
+                document.getElementById('submit').disabled = false;
+            }
+            else {
+                document.getElementById('submit').disabled = true;
+            }
+
+        }
+        // alert(checkBox.value);
+
+        function checkPhoneNumber() {
+            var phone1 = document.getElementById('p1');
+            var phone2 = document.getElementById('p2');
+            // console.log('phone2');
+            // alert(phone2.value.trim());
+            // alert(phone1.value.trim());
+            if (phone1.value.trim() != phone2.value.trim()) {
+                if (phone2.value.trim() != '' || phone2.value.trim() != '') {
+                    console.log("!");
+                    bootstrapValidate(
+                        '#p2',
+                        'email:Enter a valid E-Mail Address!'
+                    )
+                }
+
+            }
+            else {
+                console.log("k");
+            }
+
+        }
+
+
         // Add the following code if you want the name of the file appear on select
         $(".custom-file-input").on("change", function () {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
+
+        function getGroup() {
+
+            var group = document.getElementById('group').value;
+            if (group == 'Science') {
+                document.getElementById('science').style.display = "none";
+                document.getElementById('commerce').style.display = "none";
+                document.getElementById('humanities-a').style.display = "none";
+                document.getElementById('humanities-b').style.display = "none";
+                var groupName = document.getElementById('science');
+                groupName.style.display = "block";
+            }
+            else if (group == 'Commarts') {
+                document.getElementById('science').style.display = "none";
+                document.getElementById('commerce').style.display = "none";
+                document.getElementById('humanities-a').style.display = "none";
+                document.getElementById('humanities-b').style.display = "none";
+                var groupName = document.getElementById('commerce');
+                groupName.style.display = "block";
+            }
+            else if (group == 'Arts (A)') {
+                document.getElementById('science').style.display = "none";
+                document.getElementById('commerce').style.display = "none";
+                document.getElementById('humanities-a').style.display = "none";
+                document.getElementById('humanities-b').style.display = "none";
+                var groupName = document.getElementById('humanities-a');
+                groupName.style.display = "block";
+            }
+            else if (group == 'Arts (B)') {
+                document.getElementById('science').style.display = "none";
+                document.getElementById('commerce').style.display = "none";
+                document.getElementById('humanities-a').style.display = "none";
+                document.getElementById('humanities-b').style.display = "none";
+
+                var groupName = document.getElementById('humanities-b');
+                groupName.style.display = "block";
+
+            }
+            else {
+                document.getElementById('science').style.display = "none";
+                document.getElementById('commerce').style.display = "none";
+                document.getElementById('humanities-a').style.display = "none";
+                document.getElementById('humanities-b').style.display = "none";
+            }
+
+        }
+
+        // form
+        bootstrapValidate('#name', 'max:30:Your name must not be longer than 30 characters');
     </script>
 </body>
 
