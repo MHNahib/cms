@@ -69,7 +69,7 @@
 
             <div class="col-md-12 order-md-1">
                 <!-- <form class="needs-validation" method="POST" novalidate> -->
-                <form action="" method="post" >
+                <form action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-12 mb-3">
@@ -112,6 +112,9 @@
                                 <input type="file" class="custom-file-input" id="customFile" name="filename" required>
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                             </div>
+                            <div class="invalid-feedback danger" id="photo">
+                                Image size must be under 2 Mb and must contain passpoart size image.
+                            </div>
                         </div>
 
                         <div class="col-md-6 mb-3">
@@ -127,8 +130,8 @@
                             <label for="lastName">Paresnts phone number</label>
                             <input type="text" id="p2" class="form-control" placeholder="Your phone number"
                                 name="phone2" onblur="checkPhoneNumber();" required>
-                            <div class="invalid-feedback">
-                                Please enter valid information.
+                            <div id="phone" class="invalid-feedback danger">
+                                Please enter another phone number. Two phone number can't be same!
                             </div>
                         </div>
                     </div>
@@ -758,19 +761,14 @@
         document.getElementById('commerce').style.display = "none";
         document.getElementById('humanities-a').style.display = "none";
         document.getElementById('humanities-b').style.display = "none";
-
-        document.getElementById('high').style.display = "none";
-        document.getElementById('bio').style.display = "none";
-        document.getElementById('finance').style.display = "none";
-        document.getElementById('management').style.display = "none";
-        document.getElementById('phyco').style.display = "none";
-        document.getElementById('islam').style.display = "none";
-        document.getElementById('phyco-2').style.display = "none";
-        document.getElementById('islam-2').style.display = "none";
+        document.getElementById('phone').style.display = "none";
+        
+        document.getElementById('photo').style.display = "none";
 
         document.getElementById('submit').disabled = true;
 
         function getSubject() {
+
             var subject = document.getElementById('subScience').value;
             // console.log(subject);
 
@@ -838,18 +836,16 @@
             // console.log('phone2');
             // alert(phone2.value.trim());
             // alert(phone1.value.trim());
-            if (phone1.value.trim() != phone2.value.trim()) {
+            if (phone1.value.trim() == phone2.value.trim()) {
                 if (phone2.value.trim() != '' || phone2.value.trim() != '') {
                     console.log("!");
-                    bootstrapValidate(
-                        '#p2',
-                        'email:Enter a valid E-Mail Address!'
-                    )
+                    document.getElementById('phone').style.display = "block";
                 }
 
             }
             else {
                 console.log("k");
+                document.getElementById('phone').style.display = "none";
             }
 
         }
@@ -858,12 +854,31 @@
         // Add the following code if you want the name of the file appear on select
         $(".custom-file-input").on("change", function () {
             var fileName = $(this).val().split("\\").pop();
+            size = this.files[0].size / 1024 / 1024;
+            if (size > 2) {
+                document.getElementById('photo').style.display = "block";
+            }
+            else {
+                document.getElementById('photo').style.display = "none";
+            }
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            // alert('This file size is: ' + this.files[0].size/1024/1024 + "MB");
+
         });
 
         function getGroup() {
 
             var group = document.getElementById('group').value;
+
+            document.getElementById('high').style.display = "none";
+            document.getElementById('bio').style.display = "none";
+            document.getElementById('finance').style.display = "none";
+            document.getElementById('management').style.display = "none";
+            document.getElementById('phyco').style.display = "none";
+            document.getElementById('islam').style.display = "none";
+            document.getElementById('phyco-2').style.display = "none";
+            document.getElementById('islam-2').style.display = "none";
+
             if (group == 'Science') {
                 document.getElementById('science').style.display = "none";
                 document.getElementById('commerce').style.display = "none";
@@ -907,8 +922,6 @@
 
         }
 
-        // form
-        bootstrapValidate('#name', 'max:30:Your name must not be longer than 30 characters');
     </script>
 </body>
 
