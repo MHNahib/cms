@@ -74,7 +74,7 @@
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label for="name">Full Name </label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Your name">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Your name" required>
                             <div class="invalid-feedback">
                                 Please enter your name as per as SSC registration card
                             </div>
@@ -100,7 +100,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="name">Date of birth</label>
-                            <input type="date" class="form-control" name="date" placeholder="Your birth date">
+                            <input type="date" class="form-control" name="date" placeholder="Your birth date" required> 
                             <div class="invalid-feedback">
                                 Please enter your birth date as per as SSC registration card
                             </div>
@@ -120,7 +120,7 @@
                         <div class="col-md-6 mb-3">
                             <label for="firstName">Your phone number</label>
                             <input type="text" id="p1" class="form-control" placeholder="Your phone number"
-                                name="phone1" onblur="checkPhoneNumber();" required>
+                                name="phone1" onkeyup="checkPhoneNumber();" required>
                             <div class="invalid-feedback">
                                 Please enter valid information.
                             </div>
@@ -129,7 +129,7 @@
                         <div class="col-md-6 mb-3">
                             <label for="lastName">Paresnts phone number</label>
                             <input type="text" id="p2" class="form-control" placeholder="Your phone number"
-                                name="phone2" onblur="checkPhoneNumber();" required>
+                                name="phone2" onkeyup="checkPhoneNumber();" required>
                             <div id="phone" class="invalid-feedback danger">
                                 Please enter another phone number. Two phone number can't be same!
                             </div>
@@ -140,13 +140,14 @@
 
                         <div class="col-md-12 mb-3">
                             <label for="email">Email </label>
-                            <input type="email" class="form-control" name="email" placeholder="you@example.com">
-                            <div class="invalid-feedback">
-                                Please enter a valid email address.
+                            <input type="email" class="form-control" id="email-info" name="email" onkeyup="getEmail();"
+                                placeholder="you@example.com" required>
+                            <div class="invalid-feedback danger" id="email-exists">
+                                Email exitsts.
                             </div>
                         </div>
 
-                        
+
                     </div>
 
                     <div class="row">
@@ -286,7 +287,15 @@
                             <label for="country">Board name</label>
                             <select class="custom-select d-block w-100" name="ssc_board" required>
                                 <option value="">Choose...</option>
-                                <option>United States</option>
+                                <option value="barisal">Barisal</option>
+                                <option value="chittagong">Chittagong</option>
+                                <option value="comilla">Comilla</option>
+                                <option value="dhaka">Dhaka</option>
+                                <option value="dinajpur">Dinajpur</option>
+                                <option value="jessore">Jessore</option>
+                                <option value="mymensingh">Mymensingh</option>
+                                <option value="rajshahi">Rajshahi</option>
+                                <option value="sylhet">Sylhet</option>
                             </select>
                             <div class="invalid-feedback">
                                 Please select a valid board.
@@ -749,13 +758,47 @@
         crossorigin="anonymous"></script>
     <!-- <script src="{% static 'js/form.js' %}"></script> -->
     <script src="https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
 
+        // ajax 
+        function getEmail() {
+            email = document.getElementById('email-info').value;
+            console.log(email);
+            if (email != "") {
+                $.ajax({
+                    url: "{% url 'user-list' %}",
+                    data: {
+                        'email': email
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        // console.log("ok");
+                        if (data == 'True') {
+                            // console.log('found');
+                            document.getElementById('email-exists').style.display = "block";
+                        }
+                        else {
+                            document.getElementById('email-exists').style.display = "none";
+                        }
+                    }
+                });
+
+            }
+            else {
+                document.getElementById('email-exists').style.display = "none";
+            }
+
+        }
+
+
+        // handles all the conditions of the page.
         document.getElementById('science').style.display = "none";
         document.getElementById('commerce').style.display = "none";
         document.getElementById('humanities-a').style.display = "none";
         document.getElementById('humanities-b').style.display = "none";
         document.getElementById('phone').style.display = "none";
+        document.getElementById('email-exists').style.display = "none";
 
         document.getElementById('photo').style.display = "none";
 
@@ -931,7 +974,7 @@
                 }
 
             }
-            
+
         }
 
         function openBtn() {
@@ -1021,7 +1064,7 @@
                 var table = document.getElementById('a');
                 var length = document.getElementById('a').rows.length;
 
-                if(length>7){
+                if (length > 7) {
                     table.deleteRow(-1);
                 }
 
@@ -1037,7 +1080,7 @@
                 var table = document.getElementById('b');
                 var length = document.getElementById('b').rows.length;
 
-                if(length>7){
+                if (length > 7) {
                     table.deleteRow(-1);
                 }
 

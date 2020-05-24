@@ -550,7 +550,19 @@ def session_show(request):
     elements = list(all_session.values())
     
     return HttpResponse(json.dumps(elements))
+
+
+# USER LIST FOR CHECK EMAIL 
+def user_list(request): 
+
+    # User object is made json this way because date and time can't be serialize using json.dumps
+    # elements =serializers.serialize('json', User.objects.all(), fields=('email'))
+    email= request.GET.get('email', None)
+    print(email)
+    data = User.objects.filter(email__iexact=email).exists()
+    print(data)
     
+    return HttpResponse(data)
 
         
 
