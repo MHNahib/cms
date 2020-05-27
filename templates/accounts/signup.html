@@ -68,8 +68,8 @@
         <div class="row">
 
             <div class="col-md-12 order-md-1">
-                <!-- <form class="needs-validation" method="POST" novalidate> -->
-                <form action="" method="post" enctype="multipart/form-data">
+                <form class="needs-validation" method="POST" enctype="multipart/form-data">
+                <!-- <form action="" method="post" enctype="multipart/form-data"> -->
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-12 mb-3">
@@ -422,7 +422,7 @@
                             <div class="col-md-12 mb-3">
                                 <label for="country">Optional subject</label>
                                 <select class="custom-select d-block w-100" class="subject" id='subScience'
-                                    onchange="getSubject();" name="subject" required>
+                                    onchange="getSubject();" name="subjectSci">
                                     <option value="">Choose...</option>
                                     <option>Biology</option>
                                     <option>Higher math</option>
@@ -507,10 +507,10 @@
                             <div class="col-md-12 mb-3">
                                 <label for="country">Optional subject</label>
                                 <select class="custom-select d-block w-100" id='subCom' onchange="getSubject();"
-                                    name="subject" required>
+                                    name="subjectCom">
                                     <option value="">Choose...</option>
-                                    <option>Finance, Banking, and Insurance (ফিনান্স, ব্যাংকিং এবং বীমা)</option>
-                                    <option>Production Management and Marketing (উত্পাদন পরিচালনা ও বিপণন)</option>
+                                    <option>Finance, Banking, and Insurance</option>
+                                    <option>Production Management and Marketing</option>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please select a valid group.
@@ -597,10 +597,10 @@
                             <div class="col-md-12 mb-3">
                                 <label for="country">Optional subject</label>
                                 <select class="custom-select d-block w-100" class="subject" id='subArts'
-                                    onchange="getSubject();" name="subject" required>
+                                    onchange="getSubject();" name="subjectA">
                                     <option value="">Choose...</option>
-                                    <option>Psychology (মনোবিজ্ঞান)</option>
-                                    <option>Islamic Study (ইসলাম শিক্ষা)</option>
+                                    <option>Psychology</option>
+                                    <option>Islamic Study</option>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please select a valid group.
@@ -713,10 +713,10 @@
                             <div class="col-md-12 mb-3">
                                 <label for="country">Optional subject</label>
                                 <select class="custom-select d-block w-100" class="subject" id='subArts-2'
-                                    onchange="getSubject();" name="subject" required>
+                                    onchange="getSubject();" name="subjectB">
                                     <option value="">Choose...</option>
-                                    <option>Psychology (মনোবিজ্ঞান)</option>
-                                    <option>Islamic Study (ইসলাম শিক্ষা)</option>
+                                    <option>Psychology</option>
+                                    <option>Islamic Study</option>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please select a valid group.
@@ -729,17 +729,17 @@
 
 
 
-                    <hr class="mb-4">
+                    <!-- <hr class="mb-4">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" onclick="openBtn();" id="accept">
                         <label class="custom-control-label" for="accept" name="agree">I have filled
                             up the form
                             with true information and I want to get admission into this collleges</label>
-                    </div>
+                    </div> -->
 
                     <br>
 
-                    <button class="btn btn-primary btn-lg btn-block" id="submit" type="submit">Send request for
+                    <button class="btn btn-primary btn-lg btn-block" id="submitBtn" type="submit">Send request for
                         admission</button>
                 </form>
             </div>
@@ -802,7 +802,7 @@
 
         document.getElementById('photo').style.display = "none";
 
-        document.getElementById('submit').disabled = true;
+        // document.getElementById('submitBtn').disabled = true;
 
         function getSubject() {
 
@@ -977,17 +977,19 @@
 
         }
 
+        /*
         function openBtn() {
             var check = document.getElementById("accept");
             console.log(check.checked);
             if (check.checked == true) {
-                document.getElementById('submit').disabled = false;
+                document.getElementById('submitBtn').disabled = false;
             }
             else {
-                document.getElementById('submit').disabled = true;
+                document.getElementById('submitBtn').disabled = true;
             }
 
         }
+        */
         // alert(checkBox.value);
 
         function checkPhoneNumber() {

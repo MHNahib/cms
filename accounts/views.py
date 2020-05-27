@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, Http404, get_object_or_404
+import random, string
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.urls import reverse
@@ -44,6 +45,12 @@ from django.core.mail import EmailMessage
 #     return render(request, 'accounts/test.html', context)
 
 
+# GENERATE PASSWORD
+
+def passwordGenerator(size=8, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for x in range(size))
+
+
 # LOGIN
 def user_login(request):
 
@@ -86,12 +93,12 @@ def user_logout(request):
 
 def signup_hsc(request):
 
-    registered = False
+    registered = False   
 
     if request.method == 'POST':
         name = request.POST['name']
         email = request.POST['email']
-        password = request.POST['pws']
+        # password = request.POST['pws']
         fathers_name = request.POST['fname']
         mothers_name = request.POST['mname']
         date_of_birth = request.POST['date']
@@ -103,9 +110,7 @@ def signup_hsc(request):
         blood_group= request.POST['blood_group']
         gender= request.POST['gender']
         nid= request.POST['nid']
-
-        print(name)
-        print(email)
+        nationality= request.POST['nationality']       
         
 
         ssc_roll= request.POST['ssc_roll']  
@@ -115,42 +120,58 @@ def signup_hsc(request):
         ssc_group= request.POST['ssc_group'] 
         ssc_board= request.POST['ssc_board']         
         group_user= request.POST['group'] 
+        optional_sub_science= request.POST['subjectSci'] 
+        optional_sub_arts_a= request.POST['subjectA'] 
+        optional_sub_arts_b= request.POST['subjectB'] 
+        optional_sub_com= request.POST['subjectCom'] 
         # agree= request.POST['agree'] 
 
+        # print(group_user)
+        print(optional_sub_science)
+        print(optional_sub_arts_a)
+        print(optional_sub_arts_b)
+        print(optional_sub_com)
+        
+        print(nationality)
+
+        # print(name+','+fathers_name+','+mothers_name+','+email+','+marital_status+','+date_of_birth+','+present_address+','+permanent_address+',')
+        # print(phone_number+','+parents_number+','+blood_group+','+gender+','+nid+','+ssc_board+','+ssc_grade+','+ssc_group+','+ssc_reg+','+ssc_roll+','+ssc_year)
+        # print(group_user+','+optional_sub+','+passwordGenerator())
+
           
-        if User.objects.filter(email=email).exists():
+        # if User.objects.filter(email=email).exists():
 
-            if parents_number== phone_number:
-                messages.info(request, 'Same phone number cant be used in two fields.')    
-            else:
-                messages.info(request, 'Email exists') 
-                print('error')       
-                return redirect('signup')
+        #     if parents_number== phone_number:
+        #         messages.info(request, 'Same phone number cant be used in two fields.')    
+        #     else:
+        #         messages.info(request, 'Email exists') 
+        #         print('error')       
+        #         return redirect('signup')
 
 
 
-        else:
-            user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=password)
-            user.is_active= False
+        # else:
+        #     user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=password)
+        #     user.is_active= False
                 
-            user.save()            
+        #     user.save()            
 
-            student= Student(user= user, name= name, group= group_user, email= email, roll='')
-            student.save()
+        #     student= Student(user= user, name= name, group= group_user, email= email, roll='')
+        #     student.save()
 
-            about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid)
-            about.save()
+        #     about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid)
+        #     about.save()
 
-            education= StudentEducation(user= user, ssc_board=ssc_board, ssc_grade= ssc_grade, ssc_group= ssc_group, ssc_reg= ssc_reg, ssc_roll=ssc_roll, ssc_year=ssc_year)
-            education.save()
+        #     education= StudentEducation(user= user, ssc_board=ssc_board, ssc_grade= ssc_grade, ssc_group= ssc_group, ssc_reg= ssc_reg, ssc_roll=ssc_roll, ssc_year=ssc_year)
+        #     education.save()
 
-            group = Group.objects.get(name='student')
+        #     group = Group.objects.get(name='student')
 
-            user.groups.add(group)
+        #     user.groups.add(group)
 
                 
 
-            registered= True
+        #     registered= True
 
     context= {'registered': registered}
 
