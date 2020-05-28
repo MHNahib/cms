@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect, Http404, get_object_or_404
 import random, string
+from io import BytesIO
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.urls import reverse
@@ -110,15 +113,17 @@ def signup_hsc(request):
         blood_group= request.POST['blood_group']
         gender= request.POST['gender']
         nid= request.POST['nid']
+        religion= request.POST['religion']
         nationality= request.POST['nationality']       
-        
+        uploaded_file= request.FILES['filename'] 
 
         ssc_roll= request.POST['ssc_roll']  
         ssc_reg= request.POST['ssc_reg'] 
         ssc_year= request.POST['ssc_year'] 
         ssc_grade= request.POST['ssc_grade']  
         ssc_group= request.POST['ssc_group'] 
-        ssc_board= request.POST['ssc_board']         
+        ssc_board= request.POST['ssc_board']    
+
         group_user= request.POST['group'] 
         optional_sub_science= request.POST['subjectSci'] 
         optional_sub_arts_a= request.POST['subjectA'] 
@@ -126,13 +131,184 @@ def signup_hsc(request):
         optional_sub_com= request.POST['subjectCom'] 
         # agree= request.POST['agree'] 
 
-        # print(group_user)
+        print(group_user)
         print(optional_sub_science)
         print(optional_sub_arts_a)
         print(optional_sub_arts_b)
         print(optional_sub_com)
+        try:
+            user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
+            user.is_active= False
+
+            user.save()
+            print("crossed user")
+        except:
+            return render(request, 'accounts/failed.html', status= 401)
+
+        if group_user == 'Science':
+            print("On science")
+            student= Student(user= user, name= name, group= group_user, email= email, roll=None, img=uploaded_file )
+            student.save()
+
+            about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
+            about.save()
+
+            education= StudentEducation(user= user, ssc_board=ssc_board, ssc_grade= ssc_grade, ssc_group= ssc_group, ssc_reg= ssc_reg, ssc_roll=ssc_roll, ssc_year=ssc_year)
+            education.save()
+
+            # compulsory subjects
+            subject1= Subject(user= user, subject_name= 'Bangla',firstpaper_code= '101', secondpaper_code= '102',optional= False)
+            subject1.save()
+            subject2= Subject(user= user, subject_name= 'English',firstpaper_code= '107', secondpaper_code= '108',optional= False)
+            subject2.save()
+            subject3= Subject(user= user, subject_name= 'Information and communications technology',firstpaper_code= '207', secondpaper_code= None,optional= False)
+            subject3.save()
+
+            # group subject
+            subject4= Subject(user= user, subject_name= 'Physics',firstpaper_code= '174', secondpaper_code= '175',optional= False)
+            subject4.save()
+            subject5= Subject(user= user, subject_name= 'Chemistry',firstpaper_code= '176', secondpaper_code= '177',optional= False)
+            subject5.save()
+
+            if optional_sub_science == 'Biology':
+                subject6= Subject(user= user, subject_name= 'Higher math',firstpaper_code= '265', secondpaper_code= '266',optional= False)
+                subject6.save()
+                subject7= Subject(user= user, subject_name= 'Biology',firstpaper_code= '178', secondpaper_code= '179',optional= True)
+                subject7.save()
+
+            else:
+                subject7= Subject(user= user, subject_name= 'Higher math',firstpaper_code= '265', secondpaper_code= '266',optional= False)
+                subject7.save()
+                subject6= Subject(user= user, subject_name= 'Biology',firstpaper_code= '178', secondpaper_code= '179',optional= True)
+                subject6.save()
+
+            print("crossed ok")            
+
+        elif group_user == 'Business Studies':
+            
+            student= Student(user= user, name= name, group= group_user, email= email, roll=None, img=uploaded_file )
+            student.save()
+
+            about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
+            about.save()
+
+            education= StudentEducation(user= user, ssc_board=ssc_board, ssc_grade= ssc_grade, ssc_group= ssc_group, ssc_reg= ssc_reg, ssc_roll=ssc_roll, ssc_year=ssc_year)
+            education.save()
+
+            # compulsory subjects
+            subject1= Subject(user= user, subject_name= 'Bangla',firstpaper_code= '101', secondpaper_code= '102',optional= False)
+            subject1.save()
+            subject2= Subject(user= user, subject_name= 'English',firstpaper_code= '107', secondpaper_code= '108',optional= False)
+            subject2.save()
+            subject3= Subject(user= user, subject_name= 'Information and communications technology',firstpaper_code= '207', secondpaper_code= None,optional= False)
+            subject3.save()
+
+            # group subject
+            subject4= Subject(user= user, subject_name= 'Business Organization and Management',firstpaper_code= '277', secondpaper_code= '278',optional= False)
+            subject4.save()
+            subject5= Subject(user= user, subject_name= 'Accounting',firstpaper_code= '253', secondpaper_code= '254',optional= False)
+            subject5.save()
+
+            if optional_sub_science == 'Finance, Banking, and Insurance':
+                subject6= Subject(user= user, subject_name= 'Production Management and Marketing',firstpaper_code= '286', secondpaper_code= '287',optional= False)
+                subject6.save()
+                subject7= Subject(user= user, subject_name= 'Finance, Banking, and Insurance',firstpaper_code= '292', secondpaper_code= '293',optional= True)
+                subject7.save()
+
+            else:
+                subject7= Subject(user= user, subject_name= 'Finance, Banking, and Insurance',firstpaper_code= '292', secondpaper_code= '293',optional= False)
+                subject7.save()
+                subject6= Subject(user= user, subject_name= 'Production Management and Marketing',firstpaper_code= '286', secondpaper_code= '287',optional= True)
+                subject6.save()
+
+            
+
+        elif group_user == 'Humanities (A)':
+            
+            student= Student(user= user, name= name, group= group_user, email= email, roll=None, img=uploaded_file )
+            student.save()
+
+            about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
+            about.save()
+
+            education= StudentEducation(user= user, ssc_board=ssc_board, ssc_grade= ssc_grade, ssc_group= ssc_group, ssc_reg= ssc_reg, ssc_roll=ssc_roll, ssc_year=ssc_year)
+            education.save()
+
+            # compulsory subjects
+            subject1= Subject(user= user, subject_name= 'Bangla',firstpaper_code= '101', secondpaper_code= '102',optional= False)
+            subject1.save()
+            subject2= Subject(user= user, subject_name= 'English',firstpaper_code= '107', secondpaper_code= '108',optional= False)
+            subject2.save()
+            subject3= Subject(user= user, subject_name= 'Information and communications technology',firstpaper_code= '207', secondpaper_code= None,optional= False)
+            subject3.save()
+
+            # group subject
+            subject4= Subject(user= user, subject_name= 'Economy',firstpaper_code= '109', secondpaper_code= '110',optional= False)
+            subject4.save()
+            subject5= Subject(user= user, subject_name= 'Islamic History and Culture',firstpaper_code= '267', secondpaper_code= '268',optional= False)
+            subject5.save()
+            subject6= Subject(user= user, subject_name= 'Logic',firstpaper_code= '121', secondpaper_code= '122',optional= False)
+            subject6.save()
+
+            if optional_sub_science == 'Psychology':                
+                subject7= Subject(user= user, subject_name= 'Psychology',firstpaper_code= '123', secondpaper_code= '124',optional= True)
+                subject7.save()
+
+            else:
+                subject7= Subject(user= user, subject_name= 'Islamic Study',firstpaper_code= '249', secondpaper_code= '250',optional= True)
+                subject7.save()
+
+            
+
+
+        elif group_user == 'Humanities (B)':
+            
+            student= Student(user= user, name= name, group= group_user, email= email, roll=None, img=uploaded_file )
+            student.save()
+
+            about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
+            about.save()
+
+            education= StudentEducation(user= user, ssc_board=ssc_board, ssc_grade= ssc_grade, ssc_group= ssc_group, ssc_reg= ssc_reg, ssc_roll=ssc_roll, ssc_year=ssc_year)
+            education.save()
+
+            # compulsory subjects
+            subject1= Subject(user= user, subject_name= 'Bangla',firstpaper_code= '101', secondpaper_code= '102',optional= False)
+            subject1.save()
+            subject2= Subject(user= user, subject_name= 'English',firstpaper_code= '107', secondpaper_code= '108',optional= False)
+            subject2.save()
+            subject3= Subject(user= user, subject_name= 'Information and communications technology',firstpaper_code= '207', secondpaper_code= None,optional= False)
+            subject3.save()
+
+            # group subject
+            subject4= Subject(user= user, subject_name= 'Civics and good governance',firstpaper_code= '269', secondpaper_code= '270',optional= False)
+            subject4.save()
+            subject5= Subject(user= user, subject_name= 'Social Work',firstpaper_code= '271', secondpaper_code= '272',optional= False)
+            subject5.save()
+            subject6= Subject(user= user, subject_name= 'Geography',firstpaper_code= '125', secondpaper_code= '126',optional= False)
+            subject6.save()
+
+            if optional_sub_science == 'Psychology':                
+                subject7= Subject(user= user, subject_name= 'Psychology',firstpaper_code= '123', secondpaper_code= '124',optional= True)
+                subject7.save()
+
+            else:
+                subject7= Subject(user= user, subject_name= 'Islamic Study',firstpaper_code= '249', secondpaper_code= '250',optional= True)
+                subject7.save()
+
+            
+
         
-        print(nationality)
+        user= User.objects.get(username=user)
+        # education= StudentEducation.objects.get(user=user)
+        # profile= Student.objects.get(user=user)
+        # about= StudentAbout.objects.get(user=user)
+        # subject= Subject.objects.filter(user=user)
+        context={'user': user}
+        # context={'user': user, 'education':education, 'profile':profile, 'subject':subject, 'about':about}
+
+        # return render(request, 'accounts/form-hsc.html', context)
+        return render(request, 'accounts/download.html', context)
 
         # print(name+','+fathers_name+','+mothers_name+','+email+','+marital_status+','+date_of_birth+','+present_address+','+permanent_address+',')
         # print(phone_number+','+parents_number+','+blood_group+','+gender+','+nid+','+ssc_board+','+ssc_grade+','+ssc_group+','+ssc_reg+','+ssc_roll+','+ssc_year)
@@ -176,6 +352,33 @@ def signup_hsc(request):
     context= {'registered': registered}
 
     return render(request, 'accounts/signup.html', context)
+
+
+# DOWNLOAD FORM
+def download_form(request, username):
+    user= User.objects.get(username=username)
+    education= StudentEducation.objects.get(user=user)
+    profile= Student.objects.get(user=user)
+    about= StudentAbout.objects.get(user=user)
+    subject= Subject.objects.filter(user=user)
+    # context={'user': user, 'education':education, 'profile':profile, 'subject':subject, 'about':about}
+
+    # all_student=Students.objects.all()
+    # data={'students':all_student}
+    # template=get_template("accounts/form-hsc.html")
+    # data_p=template.render(context)
+    # response=BytesIO()
+
+    # pdfPage=pisa.pisaDocument(BytesIO(data_p.encode("UTF-8")),response)
+    # if not pdfPage.err:
+    #     return HttpResponse(response.getvalue(),content_type="application/pdf")
+    # else:
+    #     return render(request, 'accounts/failed.html', status= 401)
+
+        
+    context={'user': user, 'education':education, 'profile':profile, 'subject':subject, 'about':about}
+
+    return render(request, 'accounts/form-hsc.html', context)
 
 
 # SIGNUP HONOURS

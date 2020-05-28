@@ -19,7 +19,8 @@ class Student(models.Model):
     roll= models.CharField(max_length=100, null=True)
     name= models.CharField(max_length=100, null=True, blank=False)
     group= models.CharField(max_length=100, null=True, blank=False)
-    email= models.EmailField(max_length=100, null=True, blank=False)    
+    email= models.EmailField(max_length=100, null=True, blank=False)   
+    img= models.ImageField(upload_to='profile/student/', blank=False) 
     # dept_name= models.OneToOneField(Depertment, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -64,6 +65,7 @@ class StudentAbout(models.Model):
     permanent_address= models.TextField(null=True, blank=False)
     phone_number= models.CharField(max_length=50, null=True, blank=False)
     parents_number= models.CharField(max_length=50, null=True, blank=True)
+    religion= models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -153,15 +155,15 @@ class Year(models.Model):
 
 # SUBJECT
 class Subject(models.Model):
-    dept= models.ForeignKey(Depertment, on_delete=models.CASCADE)
-    year= models.ForeignKey(Year, on_delete=models.CASCADE)
-    subject_code= models.CharField(max_length=50, null=True, blank=True)
+    user= models.ForeignKey(User, on_delete= models.CASCADE)
+    firstpaper_code= models.CharField(max_length=50, null=True, blank=True)
+    secondpaper_code= models.CharField(max_length=50, null=True, blank=True)
     subject_name= models.CharField(max_length=50, null=True, blank=True)
-    subject_type= models.CharField(max_length=50, null=True, blank=True)
+    optional= models.BooleanField(default=False)
 
 
     def __str__(self):
-        return self.subject_code
+        return self.user.first_name
 
 
 

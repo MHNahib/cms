@@ -324,28 +324,28 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label for="country">Group</label>
                             <select class="custom-select d-block w-100" name="group" id="group" onchange="getGroup();"
                                 required>
                                 <option value="">Choose...</option>
                                 <option>Science</option>
-                                <option>Arts (A)</option>
-                                <option>Arts (B)</option>
-                                <option>Commarts</option>
+                                <option>Humanities (A)</option>
+                                <option>Humanities (B)</option>
+                                <option>Business Studies</option>
                             </select>
                             <div class="invalid-feedback">
                                 Please select a valid group.
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <!-- <div class="col-md-6 mb-3">
                             <label for="name">Board confermation code </label>
                             <input type="text" class="form-control" id="email" placeholder="Board confermation code">
                             <div class="invalid-feedback">
                                 Please enter your name as per as SSC registration card
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <hr class="mb-4">
@@ -402,8 +402,8 @@
                                             *Optional
                                         </span>
                                     </td>
-                                    <td>176 ()</td>
-                                    <td>177 </td>
+                                    <td>178 ()</td>
+                                    <td>179 </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">7</th>
@@ -412,8 +412,8 @@
                                             *Optional
                                         </span>
                                     </td>
-                                    <td>176 ()</td>
-                                    <td>177 </td>
+                                    <td>265 ()</td>
+                                    <td>266 ()</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -436,7 +436,7 @@
                     </div>
 
                     <div id="commerce">
-                        <h2 style="text-align: center;">Subject list for student of commerce</h2>
+                        <h2 style="text-align: center;">Subject list for student of Business Studies</h2>
 
                         <table class="table table-striped table-bordered">
                             <thead>
@@ -820,7 +820,7 @@
 
             var subject = document.getElementById('subCom').value;
             // console.log(subject);
-            if (subject == 'Finance, Banking, and Insurance (ফিনান্স, ব্যাংকিং এবং বীমা)') {
+            if (subject == 'Finance, Banking, and Insurance') {
                 document.getElementById('finance').style.display = "block";
                 document.getElementById('management').style.display = "none";
             }
@@ -832,7 +832,7 @@
 
             var subject = document.getElementById('subArts').value;
             // console.log(subject);
-            if (subject == 'Psychology (মনোবিজ্ঞান)') {
+            if (subject == 'Psychology') {
 
                 var table = document.getElementById('a');
                 var length = document.getElementById('a').rows.length;
@@ -846,8 +846,8 @@
                     var cell4 = row.insertCell(3);
                     cell1.innerHTML = '<th scope="row"><b>7</b></th>';
                     cell2.innerHTML = '<td>Psychology (মনোবিজ্ঞান) <span style="color:red; font-style: italic;"> *Optional   </span></td>';
-                    cell3.innerHTML = '<td>125 ()</td>';
-                    cell4.innerHTML = '<td>125 ()</td>';
+                    cell3.innerHTML = '<td>123 ()</td>';
+                    cell4.innerHTML = '<td>124 ()</td>';
                     length += 1;
                 }
                 else {
@@ -860,8 +860,8 @@
                     var cell4 = row.insertCell(3);
                     cell1.innerHTML = '<th scope="row"><b>7</b></th>'
                     cell2.innerHTML = '<td>Psychology (মনোবিজ্ঞান) <span style="color:red; font-style: italic;"> *Optional   </span></td>'
-                    cell3.innerHTML = '<td>125 ()</td>'
-                    cell4.innerHTML = '<td>125 ()</td>'
+                    cell3.innerHTML = '<td>123 ()</td>'
+                    cell4.innerHTML = '<td>124 ()</td>'
                     length += 1;
                 }
 
@@ -880,8 +880,8 @@
                     var cell4 = row.insertCell(3);
                     cell1.innerHTML = '<th scope="row"><b>7</b></th>'
                     cell2.innerHTML = '<td>Islamic Study (ইসলাম শিক্ষা) <span style="color:red; font-style: italic;"> *Optional   </span></td>'
-                    cell3.innerHTML = '<td>125 ()</td>'
-                    cell4.innerHTML = '<td>125 ()</td>'
+                    cell3.innerHTML = '<td>249 ()</td>'
+                    cell4.innerHTML = '<td>250 ()</td>'
 
                     length += 1;
                 }
@@ -895,8 +895,8 @@
                     var cell4 = row.insertCell(3);
                     cell1.innerHTML = '<th scope="row"><b>7</b></th>'
                     cell2.innerHTML = '<td>Islamic Study (ইসলাম শিক্ষা) <span style="color:red; font-style: italic;"> *Optional   </span></td>'
-                    cell3.innerHTML = '<td>125 ()</td>'
-                    cell4.innerHTML = '<td>125 ()</td>'
+                    cell3.innerHTML = '<td>249 ()</td>'
+                    cell4.innerHTML = '<td>250 ()</td>'
 
                     length += 1;
                 }
@@ -904,7 +904,7 @@
             }
             var subject = document.getElementById('subArts-2').value;
             // console.log(subject);
-            if (subject == 'Psychology (মনোবিজ্ঞান)') {
+            if (subject == 'Psychology') {
 
                 var table = document.getElementById('b');
                 var length = document.getElementById('b').rows.length;
@@ -918,8 +918,8 @@
                     var cell4 = row.insertCell(3);
                     cell1.innerHTML = '<th scope="row"><b>7</b></th>';
                     cell2.innerHTML = '<td>Psychology (মনোবিজ্ঞান) <span style="color:red; font-style: italic;"> *Optional   </span></td>';
-                    cell3.innerHTML = '<td>125 ()</td>';
-                    cell4.innerHTML = '<td>125 ()</td>';
+                    cell3.innerHTML = '<td>123 ()</td>';
+                    cell4.innerHTML = '<td>124 ()</td>';
                     length += 1;
                 }
                 else {
@@ -932,8 +932,8 @@
                     var cell4 = row.insertCell(3);
                     cell1.innerHTML = '<th scope="row"><b>7</b></th>'
                     cell2.innerHTML = '<td>Psychology (মনোবিজ্ঞান) <span style="color:red; font-style: italic;"> *Optional   </span></td>'
-                    cell3.innerHTML = '<td>125 ()</td>'
-                    cell4.innerHTML = '<td>125 ()</td>'
+                    cell3.innerHTML = '<td>123 ()</td>'
+                    cell4.innerHTML = '<td>124 ()</td>'
                     length += 1;
                 }
 
@@ -952,8 +952,8 @@
                     var cell4 = row.insertCell(3);
                     cell1.innerHTML = '<th scope="row"><b>7</b></th>'
                     cell2.innerHTML = '<td>Islamic Study (ইসলাম শিক্ষা) <span style="color:red; font-style: italic;"> *Optional   </span></td>'
-                    cell3.innerHTML = '<td>125 ()</td>'
-                    cell4.innerHTML = '<td>125 ()</td>'
+                    cell3.innerHTML = '<td>249 ()</td>'
+                    cell4.innerHTML = '<td>250 ()</td>'
 
                     length += 1;
                 }
@@ -967,8 +967,8 @@
                     var cell4 = row.insertCell(3);
                     cell1.innerHTML = '<th scope="row"><b>7</b></th>'
                     cell2.innerHTML = '<td>Islamic Study (ইসলাম শিক্ষা) <span style="color:red; font-style: italic;"> *Optional   </span></td>'
-                    cell3.innerHTML = '<td>125 ()</td>'
-                    cell4.innerHTML = '<td>125 ()</td>'
+                    cell3.innerHTML = '<td>249 ()</td>'
+                    cell4.innerHTML = '<td>250 ()</td>'
 
                     length += 1;
                 }
@@ -1049,7 +1049,7 @@
                 var groupName = document.getElementById('science');
                 groupName.style.display = "block";
             }
-            else if (group == 'Commarts') {
+            else if (group == 'Business Studies') {
                 document.getElementById('science').style.display = "none";
                 document.getElementById('commerce').style.display = "none";
                 document.getElementById('humanities-a').style.display = "none";
@@ -1057,7 +1057,7 @@
                 var groupName = document.getElementById('commerce');
                 groupName.style.display = "block";
             }
-            else if (group == 'Arts (A)') {
+            else if (group == 'Humanities (A)') {
                 document.getElementById('science').style.display = "none";
                 document.getElementById('commerce').style.display = "none";
                 document.getElementById('humanities-a').style.display = "none";
@@ -1073,7 +1073,7 @@
                 var groupName = document.getElementById('humanities-a');
                 groupName.style.display = "block";
             }
-            else if (group == 'Arts (B)') {
+            else if (group == 'Humanities (B)') {
                 document.getElementById('science').style.display = "none";
                 document.getElementById('commerce').style.display = "none";
                 document.getElementById('humanities-a').style.display = "none";
