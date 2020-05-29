@@ -147,7 +147,7 @@ def signup_hsc(request):
 
         if group_user == 'Science':
             print("On science")
-            student= Student(user= user, name= name, group= group_user, email= email, roll=None, img=uploaded_file )
+            student= Student(user= user, name= name, group= group_user, course='HSC', email= email, roll=None, img=uploaded_file )
             student.save()
 
             about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
@@ -186,7 +186,7 @@ def signup_hsc(request):
 
         elif group_user == 'Business Studies':
             
-            student= Student(user= user, name= name, group= group_user, email= email, roll=None, img=uploaded_file )
+            student= Student(user= user, name= name, group= group_user, course='HSC', email= email, roll=None, img=uploaded_file )
             student.save()
 
             about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
@@ -225,7 +225,7 @@ def signup_hsc(request):
 
         elif group_user == 'Humanities (A)':
             
-            student= Student(user= user, name= name, group= group_user, email= email, roll=None, img=uploaded_file )
+            student= Student(user= user, name= name, group= group_user, course='HSC', email= email, roll=None, img=uploaded_file )
             student.save()
 
             about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
@@ -263,7 +263,7 @@ def signup_hsc(request):
 
         elif group_user == 'Humanities (B)':
             
-            student= Student(user= user, name= name, group= group_user, email= email, roll=None, img=uploaded_file )
+            student= Student(user= user, name= name, group= group_user, course='HSC', email= email, roll=None, img=uploaded_file )
             student.save()
 
             about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
@@ -384,12 +384,12 @@ def download_form(request, username):
 # SIGNUP HONOURS
 def signup_honours(request):
 
-    registered = False
+    registered = False   
 
     if request.method == 'POST':
         name = request.POST['name']
         email = request.POST['email']
-        password = request.POST['pws']
+        # password = request.POST['pws']
         fathers_name = request.POST['fname']
         mothers_name = request.POST['mname']
         date_of_birth = request.POST['date']
@@ -401,14 +401,16 @@ def signup_honours(request):
         blood_group= request.POST['blood_group']
         gender= request.POST['gender']
         nid= request.POST['nid']
-
+        religion= request.POST['religion']
+        nationality= request.POST['nationality']       
+        uploaded_file= request.FILES['filename'] 
 
         ssc_roll= request.POST['ssc_roll']  
         ssc_reg= request.POST['ssc_reg'] 
         ssc_year= request.POST['ssc_year'] 
         ssc_grade= request.POST['ssc_grade']  
         ssc_group= request.POST['ssc_group'] 
-        ssc_board= request.POST['ssc_board'] 
+        ssc_board= request.POST['ssc_board']    
 
         hsc_roll= request.POST['hsc_roll']  
         hsc_reg= request.POST['hsc_reg'] 
@@ -417,46 +419,188 @@ def signup_honours(request):
         hsc_group= request.POST['hsc_group'] 
         hsc_board= request.POST['hsc_board']         
         group_user= request.POST['group'] 
-        # agree= request.POST['agree'] 
+        # agree= request.POST['agree']
+
+        group_user= request.POST['group'] 
+        
+        try:
+            user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
+            user.is_active= False
+
+            user.save()
+            print("crossed user")
+        except:
+            return render(request, 'accounts/failed.html', status= 401)
+
+        
+            
+        student= Student(user= user, name= name, group= group_user, course='Honours', email= email, roll=None, img=uploaded_file )
+        student.save()
+
+        about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
+        about.save()
+
+        education= StudentEducation(user= user, ssc_board=ssc_board, ssc_grade= ssc_grade, ssc_group= ssc_group, ssc_reg= ssc_reg, ssc_roll=ssc_roll, ssc_year=ssc_year, hsc_board=hsc_board, hsc_grade= hsc_grade, hsc_group= hsc_group, hsc_reg= hsc_reg, hsc_roll=hsc_roll, hsc_year=hsc_year)
+        education.save()
+
+        user= User.objects.get(username=user)
+        # education= StudentEducation.objects.get(user=user)
+        # profile= Student.objects.get(user=user)
+        # about= StudentAbout.objects.get(user=user)
+        # subject= Subject.objects.filter(user=user)
+        context={'user': user}
+        # context={'user': user, 'education':education, 'profile':profile, 'subject':subject, 'about':about}
+
+        # return render(request, 'accounts/form-hsc.html', context)
+        return render(request, 'accounts/download.html', context)
+
+        
+    # registered = False
+
+    # if request.method == 'POST':
+    #     name = request.POST['name']
+    #     email = request.POST['email']
+    #     password = request.POST['pws']
+    #     fathers_name = request.POST['fname']
+    #     mothers_name = request.POST['mname']
+    #     date_of_birth = request.POST['date']
+    #     marital_status = request.POST['marital']
+    #     present_address = request.POST['paddress'] 
+    #     permanent_address = request.POST['peraddress']
+    #     phone_number = request.POST['phone1']
+    #     parents_number = request.POST['phone2']
+    #     blood_group= request.POST['blood_group']
+    #     gender= request.POST['gender']
+    #     nid= request.POST['nid']
+
+
+    #     ssc_roll= request.POST['ssc_roll']  
+    #     ssc_reg= request.POST['ssc_reg'] 
+    #     ssc_year= request.POST['ssc_year'] 
+    #     ssc_grade= request.POST['ssc_grade']  
+    #     ssc_group= request.POST['ssc_group'] 
+    #     ssc_board= request.POST['ssc_board'] 
+
+    #     hsc_roll= request.POST['hsc_roll']  
+    #     hsc_reg= request.POST['hsc_reg'] 
+    #     hsc_year= request.POST['hsc_year'] 
+    #     hsc_grade= request.POST['hsc_grade']  
+    #     hsc_group= request.POST['hsc_group'] 
+    #     hsc_board= request.POST['hsc_board']         
+    #     group_user= request.POST['group'] 
+    #     # agree= request.POST['agree'] 
 
           
-        if User.objects.filter(email=email).exists():
+    #     if User.objects.filter(email=email).exists():
 
-            if parents_number== phone_number:
-                messages.info(request, 'Same phone number cant be used in two fields.')    
-            else:
-                messages.info(request, 'Email exists') 
-                print('error')       
-                return redirect('signup')
+    #         if parents_number== phone_number:
+    #             messages.info(request, 'Same phone number cant be used in two fields.')    
+    #         else:
+    #             messages.info(request, 'Email exists') 
+    #             print('error')       
+    #             return redirect('signup')
 
 
 
-        else:
-            user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=password)
-            user.is_active= False
+    #     else:
+    #         user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=password)
+    #         user.is_active= False
                 
-            user.save()            
+    #         user.save()            
 
-            student= Student(user= user, name= name, group= group_user, email= email, roll='')
-            student.save()
+    #         student= Student(user= user, name= name, group= group_user, email= email, roll='')
+    #         student.save()
 
-            about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid)
-            about.save()
+    #         about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid)
+    #         about.save()
 
-            education= StudentEducation(user= user, ssc_board=ssc_board, ssc_grade= ssc_grade, ssc_group= ssc_group, ssc_reg= ssc_reg, ssc_roll=ssc_roll, ssc_year=ssc_year, hsc_board=hsc_board, hsc_grade= hsc_grade, hsc_group= hsc_group, hsc_reg= hsc_reg, hsc_roll=hsc_roll, hsc_year=hsc_year)
-            education.save()
+    #         education= StudentEducation(user= user, ssc_board=ssc_board, ssc_grade= ssc_grade, ssc_group= ssc_group, ssc_reg= ssc_reg, ssc_roll=ssc_roll, ssc_year=ssc_year, hsc_board=hsc_board, hsc_grade= hsc_grade, hsc_group= hsc_group, hsc_reg= hsc_reg, hsc_roll=hsc_roll, hsc_year=hsc_year)
+    #         education.save()
 
-            group = Group.objects.get(name='student')
+    #         group = Group.objects.get(name='student')
 
-            user.groups.add(group)
+    #         user.groups.add(group)
 
                 
 
-            registered= True
+    #         registered= True
 
     context= {'registered': registered}
 
     return render(request, 'accounts/signup-h.html', context)
+
+# SIGNUP IBM
+def signup_ibm(request):
+
+    registered = False   
+
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        # password = request.POST['pws']
+        fathers_name = request.POST['fname']
+        mothers_name = request.POST['mname']
+        date_of_birth = request.POST['date']
+        marital_status = request.POST['marital']
+        present_address = request.POST['paddress'] 
+        permanent_address = request.POST['peraddress']
+        phone_number = request.POST['phone1']
+        parents_number = request.POST['phone2']
+        blood_group= request.POST['blood_group']
+        gender= request.POST['gender']
+        nid= request.POST['nid']
+        religion= request.POST['religion']
+        nationality= request.POST['nationality']       
+        uploaded_file= request.FILES['filename'] 
+
+        ssc_roll= request.POST['ssc_roll']  
+        ssc_reg= request.POST['ssc_reg'] 
+        ssc_year= request.POST['ssc_year'] 
+        ssc_grade= request.POST['ssc_grade']  
+        ssc_group= request.POST['ssc_group'] 
+        ssc_board= request.POST['ssc_board']    
+
+        
+        # agree= request.POST['agree']
+
+        # group_user= request.POST['group'] 
+        
+        try:
+            user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
+            user.is_active= False
+
+            user.save()
+            print("crossed user")
+        except:
+            return render(request, 'accounts/failed.html', status= 401)
+
+        
+            
+        student= Student(user= user, name= name, group= 'IBM', course='IBM', email= email, roll=None, img=uploaded_file )
+        student.save()
+
+        about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
+        about.save()
+
+        education= StudentEducation(user= user, ssc_board=ssc_board, ssc_grade= ssc_grade, ssc_group= ssc_group, ssc_reg= ssc_reg, ssc_roll=ssc_roll, ssc_year=ssc_year)
+        education.save()
+
+        user= User.objects.get(username=user)
+        # education= StudentEducation.objects.get(user=user)
+        # profile= Student.objects.get(user=user)
+        # about= StudentAbout.objects.get(user=user)
+        # subject= Subject.objects.filter(user=user)
+        context={'user': user}
+        # context={'user': user, 'education':education, 'profile':profile, 'subject':subject, 'about':about}
+
+        # return render(request, 'accounts/form-hsc.html', context)
+        return render(request, 'accounts/download.html', context)
+
+        
+
+    context= {'registered': registered}
+
+    return render(request, 'accounts/signup-ibm.html', context)
 
 # ADMIN DASHBOARD
 def admin_dashboard(request):

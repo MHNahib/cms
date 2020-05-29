@@ -19,6 +19,7 @@ class Student(models.Model):
     roll= models.CharField(max_length=100, null=True)
     name= models.CharField(max_length=100, null=True, blank=False)
     group= models.CharField(max_length=100, null=True, blank=False)
+    course= models.CharField(max_length=100, null=True, blank=False)
     email= models.EmailField(max_length=100, null=True, blank=False)   
     img= models.ImageField(upload_to='profile/student/', blank=False) 
     # dept_name= models.OneToOneField(Depertment, on_delete=models.CASCADE)

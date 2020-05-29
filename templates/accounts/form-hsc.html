@@ -1576,10 +1576,18 @@
                     <p class="c4"><span class="c1"></span></p>
                 </td>
                 <td class="c80" colspan="4" rowspan="1">
+                    {%if profile.course == 'HSC' or profile.course == 'IBM' %}
                     <p class="c5"><span class="c1">Group </span></p>
+                    {% else %}
+                    <p class="c5"><span class="c1">Course </span></p>
+                    {% endif %}
                 </td>
                 <td class="c89" colspan="4" rowspan="1">
                     <p class="c4"><span class="c1">{{profile.group}}</span></p>
+                    {%if profile.course != 'HSC' or profile.course != 'IBM' %}
+                    <p class="c4"><span class="c1"></span></p>
+                    <p class="c4"><span class="c1"></span></p>
+                    {% endif %}
                 </td>
             </tr>
             <tr class="c3">
@@ -1681,6 +1689,37 @@
                     <p class="c4"><span class="c1">{{education.ssc_grade}}</span></p>
                 </td>
             </tr>
+            {%if profile.course != 'HSC' or profile.course != 'IBM' %}
+            <tr class="c3">
+                <td class="c34" colspan="1" rowspan="1">
+                    <p class="c5"><span class="c1">HSC</span></p>
+                </td>
+                <td class="c64" colspan="2" rowspan="1">
+                    <p class="c5"><span class="c1">Roll</span></p>
+                </td>
+                <td class="c68" colspan="2" rowspan="1">
+                    <p class="c5"><span class="c1">{{education.hsc_roll}}</span></p>
+                </td>
+                <td class="c62" colspan="3" rowspan="1">
+                    <p class="c5"><span class="c1">Board </span></p>
+                </td>
+                <td class="c41" colspan="3" rowspan="1">
+                    <p class="c5"><span class="c1">{{education.hsc_board}} &nbsp;</span></p>
+                </td>
+                <td class="c46" colspan="3" rowspan="1">
+                    <p class="c5"><span class="c1">Year</span></p>
+                </td>
+                <td class="c70" colspan="5" rowspan="1">
+                    <p class="c5"><span class="c1">{{education.hsc_year}}</span></p>
+                </td>
+                <td class="c51" colspan="1" rowspan="1">
+                    <p class="c5"><span class="c1">GPA</span></p>
+                </td>
+                <td class="c56" colspan="1" rowspan="1">
+                    <p class="c4"><span class="c1">{{education.hsc_grade}}</span></p>
+                </td>
+            </tr>
+            {% endif %}
             <tr class="c3">
                 <td class="c32" colspan="3" rowspan="1">
                     <p class="c5"><span class="c1">Present address</span></p>
@@ -1701,10 +1740,11 @@
             </tr>
         </tbody>
     </table>
+    {% if subject %}
     <p class="c38"><span class="c6">Subject list of student</span></p><a
         id="t.870e4cf9b1f358e0b8f9cc631462c55bbc882beb"></a><a id="t.1"></a>
     <table class="c42">
-        <tb1dy>
+        <tbody>
             <tr class="c3">
                 <td class="c9" colspan="1" rowspan="1">
                     <p class="c16"><span class="c1">Subject name</span></p>
@@ -1732,6 +1772,7 @@
             {% endfor %}
             </tbody>
     </table>
+    {% endif %}
     <p class="c39"><span class="c6"></span></p><a id="t.4448daa76b6a6adb4dd91bcf8074396ae256552b"></a><a id="t.2"></a>
     <table class="c88">
         <tbody>

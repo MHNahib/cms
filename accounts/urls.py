@@ -26,6 +26,7 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('admission/hsc/', views.signup_hsc, name='signup'),
     path('admission/honours/', views.signup_honours, name='signup-h'),   
+    path('admission/ibm/', views.signup_ibm, name='signup-ibm'),   
     path('dashboard/', views.admin_dashboard, name='admin'),
     path('dashboard/add/teacher/', views.add_teacher, name='add-teacher'),
     path('dashboard/add/staff/', views.add_staff, name='add-staff'),
