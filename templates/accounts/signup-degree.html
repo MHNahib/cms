@@ -1,0 +1,1309 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.6">
+    <title>Admission form</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="form-validation.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container">
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="{% static 'non-working-files/img/logo.png' %}" alt="" width="72"
+                height="72">
+            <h2>Admission form for Degree (pass) students</h2>
+            <p class="lead">
+                Please fillup the form carefully. Any mistack in the form can delay your admission.
+
+                {% if registered %}
+
+            <div class="alert alert-success" role="alert">
+                Singup successful. Please check your email.
+            </div>
+
+            {% endif %}
+
+            {% if messages %}
+            <div class="alert alert-info" role="alert">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            </p>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12 order-md-1">
+                <form class="needs-validation" method="POST" enctype="multipart/form-data">
+                    <!-- <form action="" method="post" enctype="multipart/form-data"> -->
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="name">Full Name </label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Your name"
+                                required>
+                            <div class="invalid-feedback">
+                                Please enter your name as per as SSC registration card
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="firstName">Father's name</label>
+                            <input type="text" class="form-control" placeholder="Enter your father's name" name="fname"
+                                required>
+                            <div class="invalid-feedback">
+                                Please enter your father's name as per as SSC registration card
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="lastName">Mother's name</label>
+                            <input type="text" class="form-control" placeholder="Enter your mothers's name" name="mname"
+                                required>
+                            <div class="invalid-feedback">
+                                Please enter your mother's name as per as SSC registration card
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name">Date of birth</label>
+                            <input type="date" class="form-control" name="date" placeholder="Your birth date" required>
+                            <div class="invalid-feedback">
+                                Please enter your birth date as per as SSC registration card
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="exampleInputFile">Select photo</label>
+                            <div class="input-group">
+                                <input type="file" class="custom-file-input" id="customFile" name="filename" required>
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                            <div class="invalid-feedback danger" id="photo">
+                                Image size must be under 2 Mb and must contain passpoart size image.
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="firstName">Your phone number</label>
+                            <input type="text" id="p1" class="form-control" placeholder="Your phone number"
+                                name="phone1" onkeyup="checkPhoneNumber();" required>
+                            <div class="invalid-feedback">
+                                Please enter valid information.
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="lastName">Paresnts phone number</label>
+                            <input type="text" id="p2" class="form-control" placeholder="Your phone number"
+                                name="phone2" onkeyup="checkPhoneNumber();" required>
+                            <div id="phone" class="invalid-feedback danger">
+                                Please enter another phone number. Two phone number can't be same!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-12 mb-3">
+                            <label for="email">Email </label>
+                            <input type="email" class="form-control" id="email-info" name="email" onkeyup="getEmail();"
+                                placeholder="you@example.com" required>
+                            <div class="invalid-feedback danger" id="email-exists">
+                                Email exitsts.
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="country">Blood group</label>
+                            <select class="custom-select d-block w-100" name="blood_group">
+                                <option value="">Choose...</option>
+                                <option>A (+)</option>
+                                <option>A (-)</option>
+                                <option>B (+)</option>
+                                <option>B (-)</option>
+                                <option>O (+)</option>
+                                <option>O (-)</option>
+                                <option>AB (+)</option>
+                                <option>AB (-)</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid board.
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="country">Gender</label>
+                            <select class="custom-select d-block w-100" name="gender" required>
+                                <option value="">Choose...</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid group.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address"> Present address</label>
+                        <input type="textarea" class="form-control" name="paddress"
+                            placeholder="Village:   ,Post Office:   ,District:   ;" required>
+                        <div class="invalid-feedback">
+                            Please enter your present address.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address2">Permanent address</label>
+                        <input type="text" class="form-control" name="peraddress"
+                            placeholder="Village:   ,Post Office:   ,District:   ;" required>
+                        <div class="invalid-feedback">
+                            Please enter your premanent address.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address2">NID number</label>
+                        <input type="text" class="form-control" name="nid" placeholder="NID number (if any)">
+                        <div class="invalid-feedback">
+                            NID number (if any)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <label for="state">Marital status</label>
+                            <select class="custom-select d-block w-100" name="marital" required>
+                                <option value="">Choose...</option>
+                                <option>Unmarried</option>
+                                <option>Married</option>
+                                <option>Engaged</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Marital status required
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <label for="state">Nationality</label>
+                            <select class="custom-select d-block w-100" name="nationality" id="state" required>
+                                <option value="">Choose...</option>
+                                <option>Bangladeshi by barth</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Nationality required
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <label for="state">Religion</label>
+                            <select class="custom-select d-block w-100" name="religion" id="state" required>
+                                <option value="">Choose...</option>
+                                <option>Islam</option>
+                                <option>Hinduism</option>
+                                <option>Christianity</option>
+                                <option>Buddhism</option>
+                                <option>Others</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Nationality required
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <br>
+                    <hr class="mb-4">
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <label for="firstName">SSC roll#</label>
+                            <input type="text" class="form-control" placeholder="Enter your father's name"
+                                name="ssc_roll" required>
+                            <div class="invalid-feedback">
+                                Please enter valid information.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <label for="lastName">SSC registration#</label>
+                            <input type="text" class="form-control" placeholder="Enter your mothers's name"
+                                name="ssc_reg" required>
+                            <div class="invalid-feedback">
+                                Please enter valid information.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <label for="lastName">SSC passing year</label>
+                            <input type="text" class="form-control" placeholder="Enter your mothers's name"
+                                name="ssc_year" required>
+                            <div class="invalid-feedback">
+                                Please enter valid information.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <label for="country">SSC Board name</label>
+                            <select class="custom-select d-block w-100" name="ssc_board" required>
+                                <option value="">Choose...</option>
+                                <option value="Barisal">Barisal</option>
+                                <option value="Chittagong">Chittagong</option>
+                                <option value="Comilla">Comilla</option>
+                                <option value="Dhaka">Dhaka</option>
+                                <option value="Dinajpur">Dinajpur</option>
+                                <option value="Jessore">Jessore</option>
+                                <option value="Mymensingh">Mymensingh</option>
+                                <option value="Rajshahi">Rajshahi</option>
+                                <option value="Sylhet">Sylhet</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid board.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <label for="country">SSC Group</label>
+                            <select class="custom-select d-block w-100" name="ssc_group" required>
+                                <option value="">Choose...</option>
+                                <option>Arts</option>
+                                <option>Comart</option>
+                                <option>Science</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid group.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <label for="lastName">SSC GPA</label>
+                            <input type="text" class="form-control" placeholder="Enter your mothers's name"
+                                name="ssc_grade" required>
+                            <div class="invalid-feedback">
+                                Please enter valid information.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <label for="firstName">HSC roll#</label>
+                            <input type="text" class="form-control" placeholder="Enter your father's name"
+                                name="hsc_roll" required>
+                            <div class="invalid-feedback">
+                                Please enter valid information.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <label for="lastName">HSC registration#</label>
+                            <input type="text" class="form-control" placeholder="Enter your mothers's name"
+                                name="hsc_reg" required>
+                            <div class="invalid-feedback">
+                                Please enter valid information.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <label for="lastName">HSC passing year</label>
+                            <input type="text" class="form-control" placeholder="Enter your mothers's name"
+                                name="hsc_year" required>
+                            <div class="invalid-feedback">
+                                Please enter valid information.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <label for="country">HSC Board name</label>
+                            <select class="custom-select d-block w-100" name="hsc_board" required>
+                                <option value="">Choose...</option>
+                                <option value="Barisal">Barisal</option>
+                                <option value="Chittagong">Chittagong</option>
+                                <option value="Comilla">Comilla</option>
+                                <option value="Dhaka">Dhaka</option>
+                                <option value="Dinajpur">Dinajpur</option>
+                                <option value="Jessore">Jessore</option>
+                                <option value="Mymensingh">Mymensingh</option>
+                                <option value="Rajshahi">Rajshahi</option>
+                                <option value="Sylhet">Sylhet</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid board.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <label for="country">HSC Group</label>
+                            <select class="custom-select d-block w-100" name="hsc_group" required>
+                                <option value="">Choose...</option>
+                                <option>Arts</option>
+                                <option>Comart</option>
+                                <option>Science</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid group.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <label for="lastName">HSC GPA</label>
+                            <input type="text" class="form-control" placeholder="Enter your mothers's name"
+                                name="hsc_grade" required>
+                            <div class="invalid-feedback">
+                                Please enter valid information.
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 mb-3">
+                            <label for="country">Course</label>
+                            <select class="custom-select d-block w-100" name="group" id="dept"
+                                onchange="selectSubject();">
+                                <option value="">Choose...</option>
+                                <option>BA (PASS)</option>
+                                <option>BSS (PASS)</option>
+                                <option>BBA (PASS)</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid course.
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-md-6 mb-3">
+                            <label for="name">Board confermation code </label>
+                            <input type="text" class="form-control" id="email" placeholder="Board confermation code">
+                            <div class="invalid-feedback">
+                                Please enter your name as per as SSC registration card
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <br>
+                    <hr class="mb-4">
+                    <br>
+
+                    <div class="row" id="ba">
+
+                        <div class="col-md-12 mb-3">
+                            <h4>Compulsory subject: History of the rise of independent Bangladesh</h4>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="country">Select first bunch</label>
+                            <select class="custom-select d-block w-100" id="branch-ba-1"
+                                onchange="ba('branch-ba-1', 'subject1' , 'branch-ba-2');">
+                                <option value="">Choose...</option>
+                                <option>B</option>
+                                <option>C</option>
+                                <option>D</option>
+                                <option>E</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid board.
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="country">First subject</label>
+                            <select class="custom-select d-block w-100" id="subject1" name="subject1">">
+
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid group.
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="country">Select second bunch</label>
+                            <select class="custom-select d-block w-100" id="branch-ba-2"
+                                onchange="ba2('branch-ba-1', 'subject2' , 'branch-ba-2', 'branch-ba-3');">
+
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid board.
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="country">Second subject</label>
+                            <select class="custom-select d-block w-100" id="subject2" name="subject2">
+
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid group.
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="country">Select third bunch</label>
+                            <select class="custom-select d-block w-100" id="branch-ba-3" onchange="ba3('branch-ba-3', 'subject3');">
+
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid board.
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="country">Third subject</label>
+                            <select class="custom-select d-block w-100" id="subject3" name="subject3">
+
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid group.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row" id="bss">
+                        <div class="col-md-12 mb-3 justify">
+                            <h4>Compulsory subject (1): History of the rise of independent Bangladesh</h4>
+                            <h4>Compulsory subject (2): Social work</h4>
+                        </div>                        
+                        <div class="col-md-12 mb-3">
+                            <label for="country">Select subject</label>
+                             <select class="custom-select d-block w-100" name="subjectBSS">
+                                <option value="">Choose...</option>
+                                <option>Economics</option>
+                                <option>Political science</option>
+                            </select>
+                            
+                            <div class="invalid-feedback">
+                                Please select a valid group.
+                            </div>
+                        </div>                       
+                        
+                    </div>
+
+                    <!-- <div class="row" id="bss">
+                        <div class="col-md-12 mb-3 justify">
+                            <h4>Compulsory subject (1): History of the rise of independent Bangladesh</h4>
+                            <h4>Compulsory subject (2): Accounting and Management</h4>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="country">Select subject</label>
+                            <select class="custom-select d-block w-100" name="subjectBSS">
+                                <option value="">Choose...</option>
+                                <option>Marketing</option>
+                                <option>Economics</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid group.
+                            </div>
+                        </div>
+
+                    </div> -->
+
+
+                    <div class="row" id="bba">
+                        <div class="col-md-12 mb-3 justify">
+                            <h4>Compulsory subject (1): History of the rise of independent Bangladesh</h4>
+                            <h4>Compulsory subject (2): Accounting and Management</h4>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="country">Select subject</label>
+                            <select class="custom-select d-block w-100" name="subjectBBA">
+                                <option value="">Choose...</option>
+                                <option>Marketing</option>
+                                <option>Economics</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid group.
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- <hr class="mb-4">
+
+                    <div id="science">
+                        <h2 style="text-align: center;">Subject list for student of science</h2>
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">First paper</th>
+                                    <th scope="col">Second paper</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Bangla (বাংলা)</td>
+                                    <td>101 ()</td>
+                                    <td>102 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>English (ইংরেজি)</td>
+                                    <td>107 ()</td>
+                                    <td>108 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Information and communications technology
+                                        <br>
+                                        (তথ্য ও যোগাযোগ প্রযুক্তি)</td>
+                                    <td colspan="2">207</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Physics (পদার্থবিদ্যা)</td>
+                                    <td>174 ()</td>
+                                    <td>175 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Chemistry (রসায়ন)</td>
+                                    <td>176 ()</td>
+                                    <td>177 </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Biology (জীববিজ্ঞান)
+                                        <span id="bio" style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span>
+                                    </td>
+                                    <td>178 ()</td>
+                                    <td>179 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Higher math (উচ্চতর গণিত) <span id="high"
+                                            style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span>
+                                    </td>
+                                    <td>265 ()</td>
+                                    <td>266 ()</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="country">Optional subject</label>
+                                <select class="custom-select d-block w-100" class="subject" id='subScience'
+                                    onchange="getSubject();" name="subjectSci">
+                                    <option value="">Choose...</option>
+                                    <option>Biology</option>
+                                    <option>Higher math</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid group.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="commerce">
+                        <h2 style="text-align: center;">Subject list for student of Business Studies</h2>
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">First paper</th>
+                                    <th scope="col">Second paper</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Bangla (বাংলা)</td>
+                                    <td>101 ()</td>
+                                    <td>102 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>English (ইংরেজি)</td>
+                                    <td>107 ()</td>
+                                    <td>108 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Information and communications technology
+                                        <br>
+                                        (তথ্য ও যোগাযোগ প্রযুক্তি)</td>
+                                    <td colspan="2">207</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Business Organization and Management
+                                        <br>
+                                        (ব্যবসায় সংস্থা এবং পরিচালনা)</td>
+                                    <td>277 ()</td>
+                                    <td>278 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Accounting (হিসাববিজ্ঞান)</td>
+                                    <td>253 ()</td>
+                                    <td>254 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Finance, Banking, and Insurance (ফিনান্স, ব্যাংকিং এবং বীমা)<span id="finance"
+                                            style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span></td>
+                                    <td>292 ()</td>
+                                    <td>293 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Production Management and Marketing (উত্পাদন পরিচালনা ও বিপণন) <span
+                                            id="management" style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span></td>
+                                    <td>286 ()</td>
+                                    <td>287 </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="country">Optional subject</label>
+                                <select class="custom-select d-block w-100" id='subCom' onchange="getSubject();"
+                                    name="subjectCom">
+                                    <option value="">Choose...</option>
+                                    <option>Finance, Banking, and Insurance</option>
+                                    <option>Production Management and Marketing</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid group.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="humanities-a">
+                        <h2 style="text-align: center;">Subject list for student of Humanities - A</h2>
+
+                        <table class="table table-striped table-bordered" id="a">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">First paper</th>
+                                    <th scope="col">Second paper</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Bangla (বাংলা)</td>
+                                    <td>101 ()</td>
+                                    <td>102 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>English (ইংরেজি)</td>
+                                    <td>107 ()</td>
+                                    <td>108 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Information and communications technology
+                                        <br>
+                                        (তথ্য ও যোগাযোগ প্রযুক্তি)</td>
+                                    <td colspan="2">207</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Economy (অর্থনীতি)</td>
+                                    <td>109 ()</td>
+                                    <td>110 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Islamic History and Culture (ইসলামিক ইতিহাস ও সংস্কৃতি)</td>
+                                    <td>267 ()</td>
+                                    <td>268 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Logic (যুক্তিবিদ্যা)</td>
+                                    <td>121 ()</td>
+                                    <td>122 </td>
+                                </tr>
+                                <!-- <tr>
+                                    <th scope="row">7</th>
+                                    <td>Psychology (মনোবিজ্ঞান) <span id="phyco" style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span></td>
+                                    <td>125 ()</td>
+                                    <td>126 </td>
+                                </tr>
+
+
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Islamic Study (ইসলাম শিক্ষা) <span id="islam"
+                                            style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span></td>
+                                    <td>249 ()</td>
+                                    <td>250 </td>
+                                </tr> -->
+
+                    <!-- </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="country">Optional subject</label>
+                                <select class="custom-select d-block w-100" class="subject" id='subArts'
+                                    onchange="getSubject();" name="subjectA">
+                                    <option value="">Choose...</option>
+                                    <option>Psychology</option>
+                                    <option>Islamic Study</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid group.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="humanities-b">
+                        <h2 style="text-align: center;">Subject list for student of Humanities - B</h2>
+
+                        <table class="table table-striped table-bordered" id="b">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">First paper</th>
+                                    <th scope="col">Second paper</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Bangla (বাংলা)</td>
+                                    <td>101 ()</td>
+                                    <td>102 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>English (ইংরেজি)</td>
+                                    <td>107 ()</td>
+                                    <td>108 ()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Information and communications technology
+                                        <br>
+                                        (তথ্য ও যোগাযোগ প্রযুক্তি)</td>
+                                    <td colspan="2">207</td>
+                                </tr>
+                                <!-- <tr>
+                                    <th scope="row">3</th>
+                                    <td>Economy ()</td>
+                                    <td>109 ()</td>
+                                    <td>110 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Islamic History and Culture ()</td>
+                                    <td>267 ()</td>
+                                    <td>268 </td>
+                                </tr>                                
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Logic ()</td>
+                                    <td>121 ()</td>
+                                    <td>122 </td>
+                                </tr>                                
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Geography ()</td>
+                                    <td>125 ()</td>
+                                    <td>126 </td>
+                                </tr>                                 -->
+                    <!-- <tr>
+                                    <th scope="row">4</th>
+                                    <td>Civics and good governance (পৌরনীতি এবং সুশাসন)</td>
+                                    <td>269 ()</td>
+                                    <td>270 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Social Work (সমাজ কর্ম)</td>
+                                    <td>271 ()</td>
+                                    <td>272 </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Geography (ভূগোল)</td>
+                                    <td>125 ()</td>
+                                    <td>126 </td>
+                                </tr> -->
+
+                    <!-- <tr>
+                                    <th scope="row">7</th>
+                                    <td>Psychology (মনোবিজ্ঞান) <span id="phyco-2"
+                                            style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span></td>
+                                    <td>125 ()</td>
+                                    <td>126 </td>
+                                </tr>
+
+
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Islamic Study (ইসলাম শিক্ষা) <span id="islam-2"
+                                            style="color:red; font-style: italic;">
+                                            *Optional
+                                        </span></td>
+                                    <td>249 ()</td>
+                                    <td>250 </td>
+                                </tr> -->
+
+                    <!-- </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="country">Optional subject</label>
+                                <select class="custom-select d-block w-100" class="subject" id='subArts-2'
+                                    onchange="getSubject();" name="subjectB">
+                                    <option value="">Choose...</option>
+                                    <option>Psychology</option>
+                                    <option>Islamic Study</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid group.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> -->
+
+
+
+
+                    <!-- <hr class="mb-4">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" onclick="openBtn();" id="accept">
+                        <label class="custom-control-label" for="accept" name="agree">I have filled
+                            up the form
+                            with true information and I want to get admission into this collleges</label>
+                    </div> -->
+
+                    <br>
+
+                    <button class="btn btn-primary btn-lg btn-block" id="submitBtn" type="submit">Send request for
+                        admission</button>
+                </form>
+            </div>
+        </div>
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">&copy; Khan Bahadur Awlad Hossein Degree College, Manikganj</p>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+    <script src="/docs/4.4/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+        crossorigin="anonymous"></script>
+    <!-- <script src="{% static 'js/form.js' %}"></script> -->
+    <script src="https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        // ajax 
+        // EMAIL VALIDATE
+        function getEmail() {
+            email = document.getElementById('email-info').value;
+            console.log(email);
+            if (email != "") {
+                $.ajax({
+                    url: "{% url 'user-list' %}",
+                    data: {
+                        'email': email
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        // console.log("ok");
+                        if (data == 'True') {
+                            // console.log('found');
+                            document.getElementById('email-exists').style.display = "block";
+                        }
+                        else {
+                            document.getElementById('email-exists').style.display = "none";
+                        }
+                    }
+                });
+
+            }
+            else {
+                document.getElementById('email-exists').style.display = "none";
+            }
+
+        }
+
+
+        // handles all the conditions of the page.
+
+        document.getElementById('phone').style.display = "none";
+        document.getElementById('email-exists').style.display = "none";
+
+        document.getElementById('photo').style.display = "none";
+
+        // document.getElementById('submitBtn').disabled = true;
+
+
+        /*
+        function openBtn() {
+            var check = document.getElementById("accept");
+            console.log(check.checked);
+            if (check.checked == true) {
+                document.getElementById('submitBtn').disabled = false;
+            }
+            else {
+                document.getElementById('submitBtn').disabled = true;
+            }
+
+        }
+        */
+        // alert(checkBox.value);
+
+        // CHECK PHONE NUMBER
+        function checkPhoneNumber() {
+            var phone1 = document.getElementById('p1');
+            var phone2 = document.getElementById('p2');
+            // console.log('phone2');
+            // alert(phone2.value.trim());
+            // alert(phone1.value.trim());
+            if (phone1.value.trim() == phone2.value.trim()) {
+                if (phone2.value.trim() != '' || phone2.value.trim() != '') {
+                    console.log("!");
+                    document.getElementById('phone').style.display = "block";
+                }
+
+            }
+            else {
+                console.log("k");
+                document.getElementById('phone').style.display = "none";
+            }
+
+        }
+
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            size = this.files[0].size / 1024 / 1024;
+            if (size > 2) {
+                document.getElementById('photo').style.display = "block";
+            }
+            else {
+                document.getElementById('photo').style.display = "none";
+            }
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            // alert('This file size is: ' + this.files[0].size/1024/1024 + "MB");
+
+        });
+
+
+        // BRANCH CHOICE
+        document.getElementById('ba').style.display = "none";
+        document.getElementById('bss').style.display = "none";
+        document.getElementById('bba').style.display = "none";
+
+        function selectSubject() {
+            var dept = document.getElementById('dept').value;
+            // console.log(dept);
+            if (dept == 'BA (PASS)') {
+                document.getElementById('ba').style.display = "block";
+                document.getElementById('bss').style.display = "none";
+                document.getElementById('bba').style.display = "none";
+            }
+            else if (dept == 'BSS (PASS)') {
+                document.getElementById('ba').style.display = "none";
+                document.getElementById('bss').style.display = "block";
+                document.getElementById('bba').style.display = "none";
+            }
+            else if (dept == 'BBA (PASS)') {
+                document.getElementById('ba').style.display = "none";
+                document.getElementById('bss').style.display = "none";
+                document.getElementById('bba').style.display = "block";
+            }
+            else {
+                document.getElementById('ba').style.display = "none";
+                document.getElementById('bss').style.display = "none";
+                document.getElementById('bba').style.display = "none";
+            }
+        }
+
+
+        //END BRANCH 
+
+        // SUJECT CHOISE
+        //  BRANCH 1
+        function ba(branch, subject, branch2) {
+
+            var branchName = document.getElementById(branch);
+            var branchName2 = document.getElementById(branch2);
+            var subjectName = document.getElementById(subject);
+
+            branchName2.innerHTML = "";
+            subjectName.innerHTML = "";
+            /*
+            if(s1.value == "Chevy"){
+                var optionArray = ["|","camaro|Camaro","corvette|Corvette","impala|Impala"];
+            } 
+            */
+            if (branchName.value == 'B') {
+
+                var subjectArray = ["|Choise...", "History|History", "History and culture of Islam|History and culture of Islam"];
+                var branchArray = ["|Choise...", "C|C", "D|D", "E|E"];
+
+            }
+            else if (branchName.value == 'C') {
+
+                var subjectArray = ["|Choise...", "Geography and environment|Geography and environment", "Philosophy|Philosophy"];
+                var branchArray = ["|Choise...", "B|B", "D|D", "E|E"];
+            }
+            else if (branchName.value == 'D') {
+
+                var subjectArray = ["|Choise...", "Economics|Economics", "Political science|Political science", "Sociology|Sociology"];
+                var branchArray = ["|Choise...", "B|B", "C|C", "E|E"];
+            }
+            else if (branchName.value == 'E') {
+
+                var subjectArray = ["|Choise...", "Islamic studies|Islamic studies", "Psychology|Psychology"];
+                var branchArray = ["|Choise...", "B|B", "C|C", "D|D"];
+            }
+
+
+            for (var option in subjectArray) {
+                var pair = subjectArray[option].split("|");
+                var newOption = document.createElement("option");
+                newOption.value = pair[0];
+                newOption.innerHTML = pair[1];
+                subjectName.options.add(newOption);
+
+            }
+
+            for (var option in branchArray) {
+                var pair = branchArray[option].split("|");
+                var newOption = document.createElement("option");
+                newOption.value = pair[0];
+                newOption.innerHTML = pair[1];
+                branchName2.options.add(newOption);
+
+            }
+
+        }
+
+        // BRANCH 2
+        function ba2(branch, subject, branch2, branch3) {
+
+            var branchName = document.getElementById(branch);
+            var branchName2 = document.getElementById(branch2);
+            var branchName3 = document.getElementById(branch3);
+            var subjectName = document.getElementById(subject);
+
+            branchName3.innerHTML = "";
+            subjectName.innerHTML = "";
+            
+            if (branchName.value == 'B') {
+
+                if (branchName2.value == 'C') {
+                    var subjectArray = ["|Choise...", "Geography and environment|Geography and environment", "Philosophy|Philosophy"];
+                    var branchArray = ["|Choise...", "D|D", "E|E"];
+                }
+                else if (branchName2.value == 'D') {
+                    var subjectArray = ["|Choise...", "Economics|Economics", "Political science|Political science", "Sociology|Sociology"];
+                    var branchArray = ["|Choise...", "C|C", "E|E"];
+                }
+                else if (branchName2.value == 'E') {
+                    var subjectArray = ["|Choise...", "Islamic studies|Islamic studies", "Psychology|Psychology"];
+                    var branchArray = ["|Choise...", "C|C", "D|D"];
+                }
+                // var subjectArray = ["|Choise...", "History|History", "History and culture of Islam|History and culture of Islam"];
+                // var branchArray = ["|Choise...", "C|C", "D|D", "E|E"];
+
+            }
+            else if (branchName.value == 'C') {
+
+                if (branchName2.value == 'B') {
+                    var subjectArray = ["|Choise...", "History|History", "History and culture of Islam|History and culture of Islam"];
+                    var branchArray = ["|Choise...", "D|D", "E|E"];
+                }
+
+                else if (branchName2.value == 'D') {
+                    var subjectArray = ["|Choise...", "Economics|Economics", "Political science|Political science", "Sociology|Sociology"];
+                    var branchArray = ["|Choise...", "B|B", "E|E"];
+                }
+                else if (branchName2.value == 'E') {
+                    var subjectArray = ["|Choise...", "Islamic studies|Islamic studies", "Psychology|Psychology"];
+                    var branchArray = ["|Choise...", "B|B", "D|D"];
+                }
+
+                // var subjectArray = ["|Choise...", "Geography and environment|Geography and environment", "Philosophy|Philosophy"];
+                // var branchArray = ["|Choise...", "B|B", "D|D", "E|E"];
+            }
+            else if (branchName.value == 'D') {
+
+                if (branchName2.value == 'B') {
+                    var subjectArray = ["|Choise...", "History|History", "History and culture of Islam|History and culture of Islam"];
+                    var branchArray = ["|Choise...", "C|C", "E|E"];
+                }
+
+                else  if (branchName2.value == 'C') {
+                    var subjectArray = ["|Choise...", "Geography and environment|Geography and environment", "Philosophy|Philosophy"];
+                    var branchArray = ["|Choise...", "B|B", "E|E"];
+                }
+
+                else if (branchName2.value == 'E') {
+                    var subjectArray = ["|Choise...", "Islamic studies|Islamic studies", "Psychology|Psychology"];
+                    var branchArray = ["|Choise...", "B|B", "C|C"];
+                }
+
+               // var subjectArray = ["|Choise...", "Economics|Economics", "Political science|Political science", "Sociology|Sociology"];
+               // var branchArray = ["|Choise...", "B|B", "C|C", "E|E"];
+            }
+            else if (branchName.value == 'E') {
+
+                if (branchName2.value == 'B') {
+                    var subjectArray = ["|Choise...", "History|History", "History and culture of Islam|History and culture of Islam"];
+                    var branchArray = ["|Choise...", "C|C", "D|D"];
+                }
+
+                else  if (branchName2.value == 'C') {
+                    var subjectArray = ["|Choise...", "Geography and environment|Geography and environment", "Philosophy|Philosophy"];
+                    var branchArray = ["|Choise...", "B|B", "D|D"];
+                }
+
+                else if (branchName2.value == 'D') {
+                    var subjectArray = ["|Choise...", "Economics|Economics", "Political science|Political science", "Sociology|Sociology"];
+                    var branchArray = ["|Choise...", "B|B", "C|C"];
+                }
+
+                // var subjectArray = ["|Choise...", "Islamic studies|Islamic studies", "Psychology|Psychology"];
+                // var branchArray = ["|Choise...", "B|B", "C|C", "D|D"];
+            }
+
+
+            for (var option in subjectArray) {
+                var pair = subjectArray[option].split("|");
+                var newOption = document.createElement("option");
+                newOption.value = pair[0];
+                newOption.innerHTML = pair[1];
+                subjectName.options.add(newOption);
+
+            }
+
+            for (var option in branchArray) {
+                var pair = branchArray[option].split("|");
+                var newOption = document.createElement("option");
+                newOption.value = pair[0];
+                newOption.innerHTML = pair[1];
+                branchName3.options.add(newOption);
+
+            }
+
+        }
+
+        // BRANCH 3
+        function ba3(branch, subject) {
+
+            var branchName = document.getElementById(branch);            
+            var subjectName = document.getElementById(subject);
+
+            subjectName.innerHTML = "";
+            
+            if (branchName.value == 'B') {
+                
+                var subjectArray = ["|Choise...", "History|History", "History and culture of Islam|History and culture of Islam"];               
+
+            }
+            else if (branchName.value == 'C') {
+                
+                var subjectArray = ["|Choise...", "Geography and environment|Geography and environment", "Philosophy|Philosophy"];                
+            }
+            else if (branchName.value == 'D') {
+
+                var subjectArray = ["|Choise...", "Economics|Economics", "Political science|Political science", "Sociology|Sociology"];
+               
+            }
+            else if (branchName.value == 'E') {
+
+                var subjectArray = ["|Choise...", "Islamic studies|Islamic studies", "Psychology|Psychology"];                
+            }
+
+
+            for (var option in subjectArray) {
+                var pair = subjectArray[option].split("|");
+                var newOption = document.createElement("option");
+                newOption.value = pair[0];
+                newOption.innerHTML = pair[1];
+                subjectName.options.add(newOption);
+
+            }
+            
+        }
+        // END SUJECT
+
+
+    </script>
+</body>
+
+</html>

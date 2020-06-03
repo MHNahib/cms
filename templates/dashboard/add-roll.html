@@ -1,0 +1,307 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+  .hidden {
+    display: none;
+  }
+</style>
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  {%	include	"dashboard/nav.html"	with	user=user	%}
+
+  <!-- SIDEBAR -->
+  {%	include	"dashboard/sidebar.html"	with	user=user	%}
+
+  <div class="content-header">
+    <div class="container-fluid">
+      <!-- {% if registered %}
+
+      <div class="alert alert-success" role="alert">
+        New user added successuflly.
+      </div>
+
+      {% endif %} -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <div class="content-wrapper" style="min-height: 1244.06px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    <!-- Main content -->
+    <form action="" id="rest-form"></form>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Student list of {{course}} ({{group}})</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+
+              <div class="card-body">
+                <div class="form-group">
+                  <!-- TABLE -->
+                  <section class="content">
+                    <div class="container-fluid">
+                      <div class="card">
+                        <!-- <div class="card-header" onload="any();">
+            <h3 class="card-title">Bordered Table</h3>
+          </div> -->
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <table class="table table-striped" id="list">
+                            <thead>
+                              <tr>
+                                <th style="width: 20px">Roll</th>
+                                <th>Name</th>
+                                <th style="width: 40px"></th>
+                                <th class="hidden" id="action" style="width: 40px"></th>
+                                <!-- <th style="width: 40px">Delete</th> -->
+                              </tr>
+                            </thead>
+                            <tbody id="show-data">
+                              {% for i in user %}
+                              <tr id="row-{{i.user.id}}">
+                                <td id="roll-{{i.user.id}}" style="width: 20px">{{i.roll}}</td>
+
+                                <td class="hidden" id="roll-input-{{i.user.id}}" style="width: 20px">
+                                  {% csrf_token %}
+                                  <input id="value-{{i.user.id}}" type="text" value="{{i.roll}}"></td>
+                                <td>{{i.name}}</td>
+
+                                <td id="edit-{{i.user.id}}" style="width: 40px">
+                                  <button onclick="editRoll('{{i.user.id}}');" id="edit-{{i.user.id}}"
+                                    class="btn btn-primary btn-xs"><i class="fas fa-pen"
+                                      style="color: white;"></i></button>
+                                </td>
+
+                                <td class="hidden" id="save-{{i.user.id}}" style="width: 40px">
+                                  <button onclick="save('{{i.user.id}}', this);" id="{{i.user.id}}" value="{{i.user.id}}"
+                                    class="btn btn-success btn-xs"><i class="fas fa-save"
+                                      style="color: white;"></i></button>
+                                </td>
+                                <td class="hidden" id="cancle-{{i.user.id}}" style="width: 40px">
+                                  <button class="btn btn-danger btn-xs" onclick="cancleElement('{{i.user.id}}');"><i
+                                      class="fas fa-times-circle" style="color: white;"></i></button>
+                                </td>
+
+                              </tr>
+                              {% endfor %}
+
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- /.card-body -->
+
+                      </div>
+                    </div>
+                  </section>
+
+                </div>
+                <!-- <div class="form-group">
+                  <label for="exampleInputPassword1">Session name</label>
+                  <input type="text" name="name" id="session" class="form-control" placeholder="2020-21" required>
+                </div> -->
+              </div>
+              <!-- /.card-body -->
+
+              <!-- <div class="card-footer">
+                <button type="submit" id="click" class="btn btn-primary swalDefaultSuccess" onclick="showSession()">Add
+                  new session</button>
+              </div> -->
+
+            </div>
+            <!-- /.card -->
+
+
+          </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+
+          <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+
+    <!-- /TABLE -->
+
+  </div>
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 1991-
+      <script type="text/javascript">
+        document.write(new Date().getFullYear());
+      </script> <a href="{% url 'index' %}">Khan Bahadur Awlad Hossein Degree College</a>.</strong>
+    All rights reserved.
+
+  </footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+</div>
+
+<!-- <script src="{% static 'js/session.js' %}"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+  // Add the following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function () {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+
+  // EDIT ROLL
+
+  var valueOfInput;
+
+  document.getElementsByClassName('hidden').style.display = "none";
+
+  // EDIT 
+  function editRoll(id) {
+    // console.log('edit' + id)
+    // DECLEAR VAR 
+    var edit = 'edit-' + id;
+    var cancle = 'cancle-' + id;
+    var save = 'save-' + id;
+    var idValue = 'value-' + id;
+    var row = 'roll-input-' + id;
+    var roll = 'roll-' + id;
+
+    // SAVE VALUE TO THE VAR 
+    valueOfInput = document.getElementById(idValue).value;
+    // console.log(valueOfInput);
+
+    // HIDE EDIT AND ROLL
+    document.getElementById(edit).classList.add('hidden');
+    document.getElementById(roll).classList.add('hidden');
+    // SHOW CANCLE, SAVE AND ROW
+    document.getElementById(cancle).classList.remove('hidden');
+    document.getElementById(save).classList.remove('hidden');
+    document.getElementById(row).classList.remove('hidden');
+    document.getElementById('action').classList.remove('hidden');
+
+
+  }
+
+  // cancle 
+  function cancleElement(id) {
+    var edit = 'edit-' + id;
+    var cancle = 'cancle-' + id;
+    var save = 'save-' + id;
+    var idValue = 'value-' + id;
+    var row = 'roll-input-' + id;
+    var roll = 'roll-' + id;
+
+    // SAVE VALUE TO THE VAR 
+    document.getElementById(idValue).value = valueOfInput;
+
+    // SHOW EDIT AND ROLL
+    document.getElementById(edit).classList.remove('hidden');
+    document.getElementById(roll).classList.remove('hidden');
+    // HIDE CANCLE, SAVE AND ROW
+    document.getElementById(cancle).classList.add('hidden');
+    document.getElementById(save).classList.add('hidden');
+    document.getElementById(row).classList.add('hidden');
+    document.getElementById('action').classList.add('hidden');
+
+  }
+
+  // CSRF TOKEN
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+
+
+  // SAVE DATA 
+  function save(id, row) {
+    // console.log(getCookie('csrftoken'));
+    // console.log(document.getElementById(id).value);
+    value= 'value-'+id;
+    $.ajax({
+
+      type: 'POST',
+      url: "{% url 'add-roll' %}",
+      data: {
+        roll: document.getElementById(value).value,
+        id: document.getElementById(id).value,
+        csrfmiddlewaretoken: getCookie('csrftoken'),
+      },
+
+      success: function(data){
+        if(data== 'true'){
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Congratulations',
+            text: 'Successfully added',
+
+          });
+
+          var i= row.parentNode.parentNode.rowIndex;
+          document.getElementById("list").deleteRow(i);
+        }
+        else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Roll can\'t be None.',
+            text: 'Something went wrong!',
+
+          });
+        }
+      }
+
+
+    });
+
+  }
+
+
+
+
+
+</script>
+<!-- bs-custom-file-input -->
+<script src="{% static 'dashboard/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dashboard/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dashboard/dist/js/demo.js' %}"></script>
+
+
+
+{% endblock %}

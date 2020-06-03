@@ -602,6 +602,122 @@ def signup_ibm(request):
 
     return render(request, 'accounts/signup-ibm.html', context)
 
+# SIGNUP DEGREE
+def signup_degree(request):
+
+    registered = False   
+
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        # password = request.POST['pws']
+        fathers_name = request.POST['fname']
+        mothers_name = request.POST['mname']
+        date_of_birth = request.POST['date']
+        marital_status = request.POST['marital']
+        present_address = request.POST['paddress'] 
+        permanent_address = request.POST['peraddress']
+        phone_number = request.POST['phone1']
+        parents_number = request.POST['phone2']
+        blood_group= request.POST['blood_group']
+        gender= request.POST['gender']
+        nid= request.POST['nid']
+        religion= request.POST['religion']
+        nationality= request.POST['nationality']       
+        uploaded_file= request.FILES['filename'] 
+
+        ssc_roll= request.POST['ssc_roll']  
+        ssc_reg= request.POST['ssc_reg'] 
+        ssc_year= request.POST['ssc_year'] 
+        ssc_grade= request.POST['ssc_grade']  
+        ssc_group= request.POST['ssc_group'] 
+        ssc_board= request.POST['ssc_board']  
+
+        hsc_roll= request.POST['hsc_roll']  
+        hsc_reg= request.POST['hsc_reg'] 
+        hsc_year= request.POST['hsc_year'] 
+        hsc_grade= request.POST['hsc_grade']  
+        hsc_group= request.POST['hsc_group'] 
+        hsc_board= request.POST['hsc_board']         
+        group_user= request.POST['group'] 
+        # agree= request.POST['agree']
+
+
+        
+        
+         
+        
+        
+        
+        try:
+            user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
+            user.is_active= False
+
+            user.save()
+            print("crossed user")
+        except:
+            return render(request, 'accounts/failed.html', status= 401)
+
+        
+            
+        student= Student(user= user, name= name, group= group_user, course='Degree (Pass)', email= email, roll=None, img=uploaded_file )
+        student.save()
+
+        about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
+        about.save()
+
+        education= StudentEducation(user= user, ssc_board=ssc_board, ssc_grade= ssc_grade, ssc_group= ssc_group, ssc_reg= ssc_reg, ssc_roll=ssc_roll, ssc_year=ssc_year, hsc_board=hsc_board, hsc_grade= hsc_grade, hsc_group= hsc_group, hsc_reg= hsc_reg, hsc_roll=hsc_roll, hsc_year=hsc_year)
+        education.save()
+
+        if group_user == 'BA (PASS)':
+            first_subject= request.POST['subject1'] 
+            second_subject= request.POST['subject2'] 
+            third_subject= request.POST['subject3'] 
+            subject1= Subject(user= user, subject_name= 'History of the rise of independent Bangladesh',firstpaper_code= None, secondpaper_code= None,optional= False)
+            subject1.save()
+            subject2= Subject(user= user, subject_name= first_subject,firstpaper_code= None, secondpaper_code= None,optional= False)
+            subject2.save()
+            subject3= Subject(user= user, subject_name= second_subject,firstpaper_code= None, secondpaper_code= None,optional= False)
+            subject3.save()
+            subject4= Subject(user= user, subject_name= third_subject,firstpaper_code= None, secondpaper_code= None,optional= False)
+            subject4.save()
+
+        elif group_user == 'BSS (PASS)':
+            fifth_subject= request.POST['subjectBSS']
+            subject1= Subject(user= user, subject_name= 'History of the rise of independent Bangladesh',firstpaper_code= None, secondpaper_code= None,optional= False)
+            subject1.save()
+            subject2= Subject(user= user, subject_name= 'Social work',firstpaper_code= None, secondpaper_code= None,optional= False)
+            subject2.save()
+            subject3= Subject(user= user, subject_name= fifth_subject,firstpaper_code= None, secondpaper_code= None,optional= False)
+            subject3.save()
+
+        elif group_user == 'BBA (PASS)':
+            fourth_subject= request.POST['subjectBBA'] 
+            subject1= Subject(user= user, subject_name= 'History of the rise of independent Bangladesh',firstpaper_code= None, secondpaper_code= None,optional= False)
+            subject1.save()
+            subject2= Subject(user= user, subject_name= 'Accounting and Management',firstpaper_code= None, secondpaper_code= None,optional= False)
+            subject2.save()
+            subject3= Subject(user= user, subject_name= fourth_subject,firstpaper_code= None, secondpaper_code= None,optional= False)
+            subject3.save()
+
+                    
+
+
+        user= User.objects.get(username=user)
+        # education= StudentEducation.objects.get(user=user)
+        # profile= Student.objects.get(user=user)
+        # about= StudentAbout.objects.get(user=user)
+        # subject= Subject.objects.filter(user=user)
+        context={'user': user}
+        # context={'user': user, 'education':education, 'profile':profile, 'subject':subject, 'about':about}
+
+        # return render(request, 'accounts/form-hsc.html', context)
+        return render(request, 'accounts/download.html', context)        
+
+    context= {'registered': registered}
+
+    return render(request, 'accounts/signup-degree.html', context)
+
 # ADMIN DASHBOARD
 def admin_dashboard(request):
     user_count= User.objects.all().count()
@@ -865,6 +981,109 @@ def year(request):
     context= {'registered': registered, 'depertment': depertment, 'session':session}
     return render(request, 'dashboard/year.html', context)    
 
+# ADD ROLL OF SCIENCE (HSC) STUDENTS
+def roll_hsc_science(request):
+    user= Student.objects.filter(course= "HSC", group='Science', roll= None)
+    context={'user': user, 'course': "HSC", 'group':'Science'}
+    return render(request, 'dashboard/add-roll.html', context)
+
+
+# ADD ROLL OF COMARTS (HSC) STUDENTS
+def roll_hsc_commarts(request):
+    user= Student.objects.filter(course= "HSC", group='Business Studies', roll= None)
+    context={'user': user, 'course': "HSC", 'group':'Business Studies'}
+    return render(request, 'dashboard/add-roll.html', context)
+
+
+# ADD ROLL OF ARTS A (HSC) STUDENTS
+def roll_hsc_arts_a(request):
+    user= Student.objects.filter(course= "HSC", group='Humanities (A)', roll= None)
+    context={'user': user, 'course': "HSC", 'group':'Humanities (A)'}
+    return render(request, 'dashboard/add-roll.html', context)
+
+
+# ADD ROLL OF ARTS B (HSC) STUDENTS
+def roll_hsc_arts_b(request):
+    user= Student.objects.filter(course= "HSC", group='Humanities (B)', roll= None)
+    context={'user': user, 'course': "HSC", 'group':'Humanities (B)'}
+    return render(request, 'dashboard/add-roll.html', context)
+
+
+# ADD ROLL OF HONOURS (Department of Accounting) STUDENTS
+def roll_honours_accounting(request):
+    user= Student.objects.filter(course= 'Honours', group='Department of Accounting', roll= None)
+    context={'user': user, 'course': 'Honours', 'group':'Department of Accounting'}
+    return render(request, 'dashboard/add-roll.html', context)
+
+
+# ADD ROLL OF HONOURS (Department of Bengali) STUDENTS
+def roll_honours_bangla(request):
+    user= Student.objects.filter(course= 'Honours', group='Department of Bengali', roll= None)
+    context={'user': user, 'course': 'Honours', 'group':'Department of Bengali'}
+    return render(request, 'dashboard/add-roll.html', context)
+
+
+# ADD ROLL OF HONOURS (Department of Geography) STUDENTS
+def roll_honours_geography(request):
+    user= Student.objects.filter(course= 'Honours', group='Department of Geography', roll= None)
+    context={'user': user, 'course': 'Honours', 'group':'Department of Geography'}
+    return render(request, 'dashboard/add-roll.html', context)
+
+
+# ADD ROLL OF HONOURS (Department of Management) STUDENTS
+def roll_honours_management(request):
+    user= Student.objects.filter(course= 'Honours', group='Department of Management', roll= None)
+    context={'user': user, 'course': 'Honours', 'group':'Department of Management'}
+    return render(request, 'dashboard/add-roll.html', context)
+
+
+# ADD ROLL OF DEGREE (BBA) STUDENTS
+def roll_degree_bba(request):
+    user= Student.objects.filter(course= 'Degree (Pass)', group='BBA (PASS)', roll= None)
+    context={'user': user, 'course': 'Degree (Pass)', 'group':'BBA (PASS)'}
+    return render(request, 'dashboard/add-roll.html', context)
+
+# ADD ROLL OF DEGREE (BA) STUDENTS
+def roll_degree_ba(request):
+    user= Student.objects.filter(course= 'Degree (Pass)', group='BA (PASS)', roll= None)
+    context={'user': user, 'course': 'Degree (Pass)', 'group':'BA (PASS)'}
+    return render(request, 'dashboard/add-roll.html', context)
+
+# ADD ROLL OF DEGREE (BSS) STUDENTS
+def roll_degree_bss(request):
+    user= Student.objects.filter(course= 'Degree (Pass)', group='BSS (PASS)', roll= None)
+    context={'user': user, 'course': 'Degree (Pass)', 'group':'BSS (PASS)'}
+    return render(request, 'dashboard/add-roll.html', context)
+
+# ADD ROLL OF IBM STUDENTS
+def roll_ibm(request):
+    user= Student.objects.filter(course= 'IBM', roll= None)
+    context={'user': user, 'course': 'IBM', 'group':''}
+    return render(request, 'dashboard/add-roll.html', context)
+
+
+    
+# ADD ROLL
+def add_roll(request):
+    if request.method == 'POST':
+        roll = request.POST['roll']
+        user_id = request.POST['id']
+        # print(roll)
+        # print(user_id)
+        user= User.objects.get(id=user_id)
+        if roll == 'None':
+            return HttpResponse('false')
+        # print(user)
+        try:
+            saveRoll= Student.objects.filter(user= user).update(roll= roll)
+            print(saveRoll)
+            return HttpResponse('true')
+        except:
+            return HttpResponse('false')
+
+        
+
+
 # ADD SUBJECT
 def subject(request):
 
@@ -967,6 +1186,14 @@ def teachersList(request, dept_name):
     context= {'teacher': teacher, 'page':page,'posts':posts}
     count=0
     return render(request, 'dashboard/user-list.html', context)    
+
+
+# PAYMENT
+def payment(request, id):
+    user= User.objects.get(id=id)
+    student= Student.objects.get(user=user)
+    context= {'user': user, 'student': student}
+    return render(request, 'dashboard/payment.html', context)   
 
 
 # # TEACHER WILL TAKE
