@@ -57,7 +57,10 @@ urlpatterns = [
     path('add/session/save/', views.session_save, name='save_session'),
     path('add/session/show/', views.session_show, name='show_session'),
     path('add/year/', views.year, name='year'),
+    path('payment/', views.monthly_payment, name='monthly-payment'),
+    path('payment/donation/', views.donation, name='donation'),
     path('payment/<str:id>/', views.payment, name='payment'),
+    
 
     path('activate/<uidb64>/<token>/',views.activate, name='activate'),
     

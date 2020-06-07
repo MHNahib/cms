@@ -1195,6 +1195,20 @@ def payment(request, id):
     context= {'user': user, 'student': student}
     return render(request, 'dashboard/payment.html', context)   
 
+    
+# MONTHLY PAYMENT
+def monthly_payment(request):
+   
+    context= {}
+    return render(request, 'dashboard/monthly-payment.html', context)   
+
+
+# MONTHLY DONATION
+def donation(request):
+   
+    context= {}
+    return render(request, 'dashboard/donation-payment.html', context)   
+
 
 # # TEACHER WILL TAKE
 # def wil_take(request, id):
