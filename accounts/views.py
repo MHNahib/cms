@@ -1296,9 +1296,16 @@ def payment(request, id):
     student= Student.objects.get(id= id)
     user= User.objects.get(id= student.user.id)
     pay= StudentPayment.objects.get(user= student)
-
-    context= {'user': user, 'student': student, 'pay': pay}
+    tution= TutionFee.objects.get(class_name= student.course)
+    others= OthersCharge.objects.all().first()
     
+    context= {'user': user, 'student': student, 'pay': pay, 'tution': tution, 'others': others}
+    # print(student.name)
+    # print(student.id)
+    # print(student.email)
+    # print(user.email)
+    # print(pay.user.id)
+    # print(pay.monthly)
     return render(request, 'dashboard/payment.html', context)   
 
     
