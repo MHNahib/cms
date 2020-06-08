@@ -1,5 +1,5 @@
 from django.contrib import admin
-from accounts.models import Student, StudentEducation, StudentAbout, Teacher, TeacherEducation, TeacherAbout, Depertment, SessionYear, Subject, DepertmentInstance, Staff, Year
+from accounts.models import Student, StudentEducation, StudentAbout, Teacher, TeacherEducation, TeacherAbout, Depertment, SessionYear, Subject, DepertmentInstance, Staff, Year, StudentPayment, TutionFee, OthersCharge
 # Register your models here.
 
 admin.site.register(Student)
@@ -11,6 +11,9 @@ admin.site.register(TeacherAbout)
 admin.site.register(Depertment)
 admin.site.register(SessionYear)
 admin.site.register(Subject)
+admin.site.register(StudentPayment)
+admin.site.register(TutionFee)
+admin.site.register(OthersCharge)
 # admin.site.register(Attendence)
 admin.site.register(DepertmentInstance)
 admin.site.register(Staff)

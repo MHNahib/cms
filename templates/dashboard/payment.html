@@ -3,8 +3,19 @@
 {% load static %}
 
 <!-- Bootstrap Switch Button CDN -->
-<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+  rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
+<style>
+  .hide {
+    display: none;
+  }
+
+  .disable{
+    display: none;
+  }
+</style>
 
 <div class="wrapper">
 
@@ -28,173 +39,183 @@
       </div><!-- /.container-fluid -->
     </div>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- left column -->
-          <div class="col-md-6">
-            <!-- general form elements -->
-            <div class="card card-success">
-              <div class="card-header">
-                <h3 class="card-title container">Students information</h3>
-              </div>
+    <form method="POST">
+      {% csrf_token %}
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+              <!-- general form elements -->
+              <div class="card card-success">
+                <div class="card-header">
+                  <h3 class="card-title container">Students information</h3>
+                </div>
 
-              <div class="card-body">
-                <div class="form-group">
-                  <!-- <div class="row"> -->
-                  <div class="col-6">
-                    <h6> <b>Name:</b> {{student.name}}</h6>
-                  </div>
-                  <div class="col-6">
-                    <h6><b>Roll:</b> {{student.roll}}</h6>
-                  </div>
-                  <div class="col-6">
-                    <h6><b>Class:</b> {{student.course}} ( {{student.group}} )</h6>
-                  </div>
-                  <div class="col-6">
-                    <h6><b>Year:</b> </h6>
-                  </div>
-                  <div class="col-6">
-                    <input type="checkbox" id="fee" data-toggle="toggle" data-size="sm" data-onstyle="outline-info" data-offstyle="outline-danger">
-                    <label for="fee"> Monthly Fee </label>
-                    <br>
-                    
-                    <input type="checkbox" id="admission" data-toggle="toggle" data-size="sm" data-onstyle="outline-info" data-offstyle="outline-danger">
-                    <label for="admission"> Admission Fee </label> 
-                    <br>                
-                    
-                    <input type="checkbox" id="exam" data-toggle="toggle" data-size="sm" data-onstyle="outline-info" data-offstyle="outline-danger">
-                    <label for="exam"> Examination Fee</label>
-                    <br>
+                <div class="card-body">
+                  <div class="form-group">
+                    <!-- <div class="row"> -->
+                    <div class="col-6">
+                      <h6> <b>Name:</b> {{student.name}}</h6>
+                    </div>
+                    <div class="col-6">
+                      <h6><b>Roll:</b> {{student.roll}}</h6>
+                    </div>
+                    <div class="col-6">
+                      <h6><b>Class:</b> {{student.course}} ( {{student.group}} )</h6>
+                    </div>
+                    <div class="col-6">
+                      <h6><b>Year:</b> </h6>
+                    </div>
+                    <div class="col-6">
+                      <input type="checkbox" name="payfee" id="fee" data-toggle="toggle" data-size="sm"
+                        data-onstyle="outline-info" data-offstyle="outline-danger" value="False"
+                        onchange="monthlyfee(this.id);">
+                      <label for="fee"> Monthly Fee </label>
+                      <br>
 
-                    <input type="checkbox" id="others" data-toggle="toggle" data-size="sm" data-onstyle="outline-info" data-offstyle="outline-danger">
-                    <label for="others"> Others Fee</label>
-                    <br>
+                      <input type="checkbox" name="payadmission" id="adm" data-toggle="toggle" data-size="sm"
+                        data-onstyle="outline-info" data-offstyle="outline-danger" value="False"
+                        onchange="admissionfee(this.id);">
+                      <label for="adm"> Admission Fee </label>
+                      <br>
+
+                      <input type="checkbox" name="payexam" id="exam-ch" data-toggle="toggle" data-size="sm"
+                        data-onstyle="outline-info" data-offstyle="outline-danger" value="False"
+                        onchange="examfee(this.id);">
+                      <label for="exam-ch"> Examination Fee</label>
+                      <br>
+
+                      <input type="checkbox" name="payothers" id="others" data-toggle="toggle" data-size="sm"
+                        data-onstyle="outline-info" data-offstyle="outline-danger" value="False"
+                        onchange="othersfee(this.id);">
+                      <label for="others"> Others Fee</label>
+                      <br>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="col-md-6">
-            <!-- general form elements -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title container">Paid month list</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <!-- <form method="POST"> -->
-              <!-- {% csrf_token %} -->
-              <div class="card-body">
-                <div class="form-group">
-                  <div class="row">
-                    <div class="col-3">
-                      <div class="icheck-success">
-                        <input type="checkbox" id="jan" value="January">
-                        <label for="jan">
-                          January
-                        </label>
+            <div class="col-md-6">
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title container">Paid month list</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <!-- <form method="POST"> -->
+                <!-- {% csrf_token %} -->
+                <div class="card-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-3">
+                        <div class="icheck-success ">
+                          <input type="checkbox" id="jan" value="January">
+                          <label for="jan">
+                            January
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="feb" value="February">
+                          <label for="feb">
+                            February
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="mar" value="March">
+                          <label for="mar">
+                            March
+                          </label>
+                        </div>
                       </div>
-                      <div class="icheck-success">
-                        <input type="checkbox" id="feb" value="February">
-                        <label for="feb">
-                          February
-                        </label>
-                      </div>
-                      <div class="icheck-success">
-                        <input type="checkbox" id="mar" value="March">
-                        <label for="mar">
-                          March
-                        </label>
-                      </div>
-                    </div>
 
-                    <div class="col-3">
-                      <div class="icheck-success">
-                        <input type="checkbox" id="apr" value="April">
-                        <label for="apr">
-                          April
-                        </label>
+                      <div class="col-3">
+                        <div class="icheck-success">
+                          <input type="checkbox" id="apr" value="April">
+                          <label for="apr">
+                            April
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="may" value="May">
+                          <label for="may">
+                            May
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="june" value="June">
+                          <label for="june">
+                            June
+                          </label>
+                        </div>
                       </div>
-                      <div class="icheck-success">
-                        <input type="checkbox" id="may" value="May">
-                        <label for="may">
-                          May
-                        </label>
-                      </div>
-                      <div class="icheck-success">
-                        <input type="checkbox" id="june" value="June">
-                        <label for="june">
-                          June
-                        </label>
-                      </div>
-                    </div>
 
-                    <div class="col-3">
-                      <div class="icheck-success">
-                        <input type="checkbox" id="jul" value="July">
-                        <label for="jul">
-                          July
-                        </label>
+                      <div class="col-3">
+                        <div class="icheck-success">
+                          <input type="checkbox" id="jul" value="July">
+                          <label for="jul">
+                            July
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="aug" value="August">
+                          <label for="aug">
+                            August
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="sept" value="September">
+                          <label for="sept">
+                            September
+                          </label>
+                        </div>
                       </div>
-                      <div class="icheck-success">
-                        <input type="checkbox" id="aug" value="August">
-                        <label for="aug">
-                          August
-                        </label>
-                      </div>
-                      <div class="icheck-success">
-                        <input type="checkbox" id="sept" value="September">
-                        <label for="sept">
-                          September
-                        </label>
-                      </div>
-                    </div>
 
-                    <div class="col-3">
-                      <div class="icheck-success">
-                        <input type="checkbox" id="oct" value="Octobor">
-                        <label for="oct">
-                          Octobor
-                        </label>
+                      <div class="col-3">
+                        <div class="icheck-success">
+                          <input type="checkbox" id="oct" value="Octobor">
+                          <label for="oct">
+                            Octobor
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="nov" value="Novembor">
+                          <label for="nov">
+                            Novembor
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="dec" value="Decembor">
+                          <label for="dec">
+                            Decembor
+                          </label>
+                        </div>
                       </div>
-                      <div class="icheck-success">
-                        <input type="checkbox" id="nov" value="Novembor">
-                        <label for="nov">
-                          Novembor
-                        </label>
-                      </div>
-                      <div class="icheck-success">
-                        <input type="checkbox" id="dec" value="Decembor">
-                        <label for="dec">
-                          Decembor
-                        </label>
-                      </div>
+
                     </div>
 
                   </div>
 
+                  <div class="form-group">
+
+
+                  </div>
+                  <div class="form-group">
+
+                  </div>
                 </div>
-
-                <div class="form-group">
-
-
-                </div>
-                <div class="form-group">
-
-                </div>
-              </div>
-              <!-- /.card-body -->
+                <!-- /.card-body -->
 
 
-              <!-- <div class="card-footer">
+                <!-- <div class="card-footer">
                   <button type="submit" class="btn btn-primary swalDefaultSuccess">Add new depertment</button>
                 </div> -->
-              <!-- </form> -->
+                <!-- </form> -->
 
-              <!-- {% if messages %}
+                <!-- {% if messages %}
               <div class="alert alert-danger" role="alert">
                 {% for message in messages %}
                 {{ message }}
@@ -202,289 +223,311 @@
               </div>
               {% endif %} -->
 
-            </div>
-            <!-- /.card -->
-
-
-          </div>
-          <!--/.col (left) -->
-          <!-- right column -->
-
-          <!--/.col (right) -->
-        </div>
-        <!-- /.row -->
-        <div class="row">
-          <div class="col-md-12">
-            <!-- general form elements -->
-            <div class="card card-info">
-              <div class="card-header">
-                <h3 class="card-title container">Tuition fee and other fee collection receipts</h3>
               </div>
+              <!-- /.card -->
 
-              <div class="card-body">
-                <div class="form-group">
-                  <div class="row">
-                    <!-- TUITION FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+
+            </div>
+            <!--/.col (left) -->
+            <!-- right column -->
+
+            <!--/.col (right) -->
+          </div>
+          <!-- /.row -->
+          <div class="row">
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title container">Tuition fee and other fee collection receipts</h3>
+                </div>
+
+                <div class="card-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <!-- TUITION FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-1">
                         <label class="custom-control-label" for="sw-1">
                           <label for="monthly-fee">Monthly Tuition fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="monthly-fee-l" for="monthly-fee">Monthly Tuition fee</label>
+                        <input type="number" class="form-control hide" id="monthly-fee" name="monthly-tuition-fee"
+                          placeholder="Tuition fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="monthly-fee" name="monthly-tuition-fee"
-                        placeholder="Tuition fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- EXAM FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- EXAM FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-2">
                         <label class="custom-control-label" for="sw-2">
                           <label for="exam">College Examination fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="exam-l" for="exam">College Examination fee</label>
+                        <input type="number" class="form-control hide" id="exam" name="exam-fee"
+                          placeholder="College Examination fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="exam" name="exam-fee"
-                        placeholder="College Examination fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- BOARD OR UNIVERSITY EXAM FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- BOARD OR UNIVERSITY EXAM FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-3">
                         <label class="custom-control-label" for="sw-3">
                           <label for="board">Board/ University Examination fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="board-l" for="board">Board/ University Examination fee</label>
+                        <input type="number" class="form-control hide" id="board" name="board-fee"
+                          placeholder="Board/ University Examination fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="board" name="board-fee"
-                        placeholder="Board/ University Examination fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- COLLEGE DEVELOPMENT FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- COLLEGE DEVELOPMENT FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-4">
                         <label class="custom-control-label" for="sw-4">
                           <label for="development">College Development fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" for="development">College Development fee</label>
+                        <input type="number" class="form-control hide" id="development" name="clg-development"
+                          placeholder="College Development fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="development" name="clg-development"
-                        placeholder="College Development fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- MILAD/ PUJA-->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- MILAD/ PUJA-->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-5">
                         <label class="custom-control-label" for="sw-5">
                           <label for="mp">Milad/ Puja</label>
                         </label>
+                      </div> -->
+                        <label id="mp-l" class="hide" for="mp">Milad/ Puja</label>
+                        <input type="number" class="form-control hide" id="mp" name="mp-fee" placeholder="Milad/ Puja">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="mp" name="mp-fee" placeholder="Milad/ Puja">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- LIBRARY FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- LIBRARY FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-6">
                         <label class="custom-control-label" for="sw-6">
                           <label for="library">Library fee</label>
                         </label>
+                      </div> -->
+                        <label id="library-l" class="hide" for="library">Library fee</label>
+                        <input type="number" class="form-control hide" id="library" name="library-fee"
+                          placeholder="Library fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="library" name="library-fee" placeholder="Library fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- COLLEGE SPORTS FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- COLLEGE SPORTS FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-7">
                         <label class="custom-control-label" for="sw-7">
                           <label for="clg-sports">College sports fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="clg-sports-l" for="clg-sports">College sports fee</label>
+                        <input type="number" class="form-control hide" id="clg-sports" name="clg-sports-fee"
+                          placeholder="College sports fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="clg-sports" name="clg-sports-fee"
-                        placeholder="College sports fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- BOARD/ UNIVERSITY SPORTS FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- BOARD/ UNIVERSITY SPORTS FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-8">
                         <label class="custom-control-label" for="sw-8">
                           <label for="board-sports">Board/ University sports fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="board-sports-l" for="board-sports">Board/ University sports fee</label>
+                        <input type="number" class="form-control hide" id="board-sports" name="board-sports-fee"
+                          placeholder="Board/ University sports fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="board-sports" name="board-sports-fee"
-                        placeholder="Board/ University sports fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- POOR FUND -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- POOR FUND -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-9">
                         <label class="custom-control-label" for="sw-9">
                           <label for="poor">Poor fund</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="poor-l" for="poor">Poor fund</label>
+                        <input type="number" class="form-control hide" id="poor" name="poor-fund"
+                          placeholder="Poor fund">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="poor" name="poor-fund" placeholder="Poor fund">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- SCIENCE AND TECH FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- SCIENCE AND TECH FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-10">
                         <label class="custom-control-label" for="sw-10">
                           <label for="st">Science and Technologic fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="st-l" for="st">Science and Technologic fee</label>
+                        <input type="number" class="form-control hide" id="st" name="st-fee"
+                          placeholder="Science and Technologic fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="st" name="st-fee"
-                        placeholder="Science and Technologic fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- COMPUTER LAB FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- COMPUTER LAB FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-11">
                         <label class="custom-control-label" for="sw-11">
                           <label for="cl">Computer lab fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="cl-l" for="cl">Computer lab fee</label>
+                        <input type="number" class="form-control hide" id="cl" name="cl-fee"
+                          placeholder="Computer lab fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="cl" name="cl-fee" placeholder="Computer lab fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- ADMISSION FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- ADMISSION FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-12">
                         <label class="custom-control-label" for="sw-12">
                           <label for="admissin">Admission fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" for="admissin">Admission fee</label>
+                        <input type="number" class="form-control hide" id="admissin" name="admissin-fee"
+                          placeholder="Admission fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="admissin" name="admissin-fee"
-                        placeholder="Admission fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- REG FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- REG FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-13">
                         <label class="custom-control-label" for="sw-13">
                           <label for="reg">Registration fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" for="reg">Registration fee</label>
+                        <input type="number" class="form-control hide" id="reg" name="reg-fee"
+                          placeholder="Registration fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="reg" name="reg-fee" placeholder="Registration fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- ROVERS/ GIRLS GUIDE FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- ROVERS/ GIRLS GUIDE FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-14">
                         <label class="custom-control-label" for="sw-14">
                           <label for="rov-clg">Rovers/ Girls guide College fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" for="rov-clg">Rovers/ Girls guide College fee</label>
+                        <input type="number" class="form-control hide" id="rov-clg" name="rov-clg-fee"
+                          placeholder="Rovers/ Girls guide College fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="rov-clg" name="rov-clg-fee"
-                        placeholder="Rovers/ Girls guide College fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- ROVERS/ GIRLS GUIDE FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- ROVERS/ GIRLS GUIDE FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-15">
                         <label class="custom-control-label" for="sw-15">
                           <label for="rov-board">Rovers/ Girls guide Board/ University fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" for="rov-board">Rovers/ Girls guide Board/ University fee</label>
+                        <input type="number" class="form-control hide" id="rov-board" name="rov-board-fee"
+                          placeholder="Rovers/ Girls guide Board/ University fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="rov-board" name="rov-board-fee"
-                        placeholder="Rovers/ Girls guide Board/ University fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- TRANSFER FEE -->
-                    <!-- <div class="col-md-12 mb-3">
+                      <!-- TRANSFER FEE -->
+                      <!-- <div class="col-md-12 mb-3">
                       <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-16">
                         <label class="custom-control-label" for="sw-16">
                           <label for="transfer">Transfer fee</label>
                         </label>
                       </div>
-                      <input type="text" class="form-control" id="transfer" name="transfer-fee"
+                      <input type="number" class="form-control" id="transfer" name="transfer-fee"
                         placeholder="Transfer fee">
                       <div class="invalid-feedback">
                         Must contain number.
                       </div>
                     </div> -->
-                    <!-- TRANSFER FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- TRANSFER FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-17">
                         <label class="custom-control-label" for="sw-17">
                           <label for="transfer">College Transfer fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="transfer-l" for="transfer">College Transfer fee</label>
+                        <input type="number" class="form-control hide" id="transfer" name="transfer-fee"
+                          placeholder="College Transfer fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="transfer" name="transfer-fee"
-                        placeholder="College Transfer fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- ID CARD FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- ID CARD FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-18">
                         <label class="custom-control-label" for="sw-18">
                           <label for="id">ID Card fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="id-l" for="id">ID Card fee</label>
+                        <input type="number" class="form-control hide" id="id" name="id-fee" placeholder="ID Card fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="id" name="id-fee" placeholder="ID Card fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- CERTIFICATE FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- CERTIFICATE FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-19">
                         <label class="custom-control-label" for="sw-19">
                           <label for="certificate">Certificate/ Transcript fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="certificate-l" for="certificate">Certificate/ Transcript fee</label>
+                        <input type="number" class="form-control hide" id="certificate" name="certificate-fee"
+                          placeholder="Certificate/ Transcript fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="certificate" name="certificate-fee"
-                        placeholder="Certificate/ Transcript fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- CERTIFICATE FEE
+                      <!-- CERTIFICATE FEE
                     <div class="col-md-12 mb-3">
                       <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-20">
@@ -492,159 +535,173 @@
                           <label for="certificate">Certificate/ Transcript fee</label>
                         </label>
                       </div>
-                      <input type="text" class="form-control" id="certificate" name="certificate-fee"
+                      <input type="number" class="form-control" id="certificate" name="certificate-fee"
                         placeholder="Certificate/ Transcript fee">
                       <div class="invalid-feedback">
                         Must contain number.
                       </div>
                     </div> -->
-                    <!-- RETENTION FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- RETENTION FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-21">
                         <label class="custom-control-label" for="sw-21">
                           <label for="ret">Retention fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="ret-l" for="ret">Retention fee</label>
+                        <input type="number" class="form-control hide" id="ret" name="ret-fee"
+                          placeholder="Retention fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="ret" name="ret-fee" placeholder="Retention fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- TESTIMONIAL/ CHAR/ OHTER FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- TESTIMONIAL/ CHAR/ OHTER FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-22">
                         <label class="custom-control-label" for="sw-22">
                           <label for="test">Testimonial/ Character/ Other Certificate fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="test-l" for="test">Testimonial/ Character/ Other Certificate fee</label>
+                        <input type="number" class="form-control hide" id="test" name="test-fee"
+                          placeholder="Testimonial/ Character/ Other Certificate fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="test" name="test-fee"
-                        placeholder="Testimonial/ Character/ Other Certificate fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- PAPER MAGAZINES -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- PAPER MAGAZINES -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-23">
                         <label class="custom-control-label" for="sw-23">
                           <label for="paper">Paper/ Magazines</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="paper-l" for="paper">Paper/ Magazines</label>
+                        <input type="number" class="form-control hide" id="paper" name="paper-fee"
+                          placeholder="Paper/ Magazines">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="paper" name="paper-fee"
-                        placeholder="Paper/ Magazines">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- PRACTICAL -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- PRACTICAL -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-24">
                         <label class="custom-control-label" for="sw-24">
                           <label for="practical">Practical fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="practical-l" for="practical">Practical fee</label>
+                        <input type="number" class="form-control hide" id="practical" name="practical-fee"
+                          placeholder="Practical fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="practical" name="practical-fee"
-                        placeholder="Practical fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- WATER/ ELEC/ TEL -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- WATER/ ELEC/ TEL -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-25">
                         <label class="custom-control-label" for="sw-25">
                           <label for="water">Water/ Electricity/ Telephone</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="water-l" for="water">Water/ Electricity/ Telephone</label>
+                        <input type="number" class="form-control hide" id="water" name="bill"
+                          placeholder="Water/ Electricity/ Telephone">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="water" name="bill"
-                        placeholder="Water/ Electricity/ Telephone">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- MANAGEMENT -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- MANAGEMENT -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-26">
                         <label class="custom-control-label" for="sw-26">
                           <label for="management">Management fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="management-l" for="management">Management fee</label>
+                        <input type="number" class="form-control hide" id="management" name="management-fee"
+                          placeholder="Management fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="management" name="management-fee"
-                        placeholder="Management fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- 4th PAPER -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- 4th PAPER -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-27">
                         <label class="custom-control-label" for="sw-27">
                           <label for="fourth">Fourth paper fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="fourth-l" for="fourth">Fourth paper fee</label>
+                        <input type="number" class="form-control hide " id="fourth" name="fourth-fee"
+                          placeholder="Fourth paper fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="fourth" name="fourth-fee"
-                        placeholder="Fourth paper fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- LATE FINE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- LATE FINE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-28">
                         <label class="custom-control-label" for="sw-28">
                           <label for="late">Late fine</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="late-l" for="late">Late fine</label>
+                        <input type="number" class="form-control hide" id="late" name="late-fee"
+                          placeholder="Late fine">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="late" name="late-fee" placeholder="Late fine">
-                      <div class="invalid-feedback">
-                        Must contain number.
-                      </div>
-                    </div>
-                    <!-- CENTER FEE -->
-                    <div class="col-md-12 mb-3">
-                      <div class="custom-control custom-switch">
+                      <!-- CENTER FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="sw-29">
                         <label class="custom-control-label" for="sw-29">
                           <label for="center">Center fee</label>
                         </label>
+                      </div> -->
+                        <label class="hide" id="center-l" for="center">Center fee</label>
+                        <input type="number" class="form-control hide" id="center" name="center-fee"
+                          placeholder="Center fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
                       </div>
-                      <input type="text" class="form-control" id="center" name="center-fee" placeholder="Center fee">
-                      <div class="invalid-feedback">
-                        Must contain number.
+                      <div class="col-md-12 mb-3">
+                        <h5>Total fee: &#2547; 100000</h5>
                       </div>
+                      <div class="col-md-12 mb-3">
+                        <div class="container">
+                          <!-- <button class="btn btn-success"><i class="fa fa-save"></i> Save</button> -->
+                          <button type="submit" class="btn btn-info"><i class="fa fa-print" aria-hidden="true"></i>
+                            Print</button>
+                        </div>
+                      </div>
+
                     </div>
-                    <div class="col-md-12 mb-3">
-                      <h5>Total fee: &#2547; 100000</h5>
-                    </div>
-                    <div class="col-md-12 mb-3">
-                      <div class="container">
-                      <button class="btn btn-success"><i class="fa fa-save" ></i>  Save</button>
-                      <button class="btn btn-info"><i class="fa fa-print" aria-hidden="true"></i> Print</button>
-                      </div>                      
-                    </div>
-                   
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
 
-      </div><!-- /.container-fluid -->
+        </div><!-- /.container-fluid -->
 
 
 
-    </section>
-    <!-- /.content -->
+      </section>
+      <!-- /.content -->
+    </form>
   </div>
 
   <!-- /.content-wrapper -->
@@ -681,28 +738,273 @@
 <script src="{% static 'dashboard/dist/js/demo.js' %}"></script>
 
 <script>
-
-  // check box
-  var tmp = [];
-  
-  $("input[type='checkbox']").change(function () {
-    var checked = $(this).val();
-    
-    if ($(this).is(':checked')) {
-      tmp.push(checked);
-    } else {
-      tmp.splice($.inArray(checked, tmp), 1);
-    }
-    console.log(tmp);
+  // on page load
+  $(document).ready(function () {
+    /*
+    document.getElementById('monthly-fee').style.display = "none";
+    document.getElementById('exam').style.display = "none";
+    document.getElementById('board').style.display = "none";
+    document.getElementById('development').style.display = "none";
+    document.getElementById('mp').style.display = "none";
+    document.getElementById('library').style.display = "none";
+    document.getElementById('clg-sports').style.display = "none";
+    document.getElementById('board-sports').style.display = "none";
+    document.getElementById('poor').style.display = "none";
+    document.getElementById('st').style.display = "none";
+    document.getElementById('cl').style.display = "none";
+    document.getElementById('admissin').style.display = "none";
+    document.getElementById('reg').style.display = "none";
+    document.getElementById('rov-clg').style.display = "none";
+    document.getElementById('rov-board').style.display = "none";
+    document.getElementById('transfer').style.display = "none";
+    document.getElementById('id').style.display = "none";
+    document.getElementById('certificate').style.display = "none";
+    document.getElementById('ret').style.display = "none";
+    document.getElementById('test').style.display = "none";
+    document.getElementById('paper').style.display = "none";
+    document.getElementById('practical').style.display = "none";
+    document.getElementById('water').style.display = "none";;
+    document.getElementById('management').style.display = "none";
+    document.getElementById('fourth').style.display = "none";
+    document.getElementById('late').style.display = "none";
+    document.getElementById('center').style.display = "none";
+    */
   });
+  // end of on page load
+
+  // check box (month)
+    var tmp = [];
+    var len = 0;
+
+    $("input[type='checkbox']").change(function () {
+      var checked = $(this).val();
+
+      if ($(this).is(':checked')) {
+        tmp.push(checked);
+      } else {
+        tmp.splice($.inArray(checked, tmp), 1);
+      }
+      len = tmp.length;
+      // console.log(len);
+      var pay= document.getElementById('monthly-fee');
+      var tk= {{pay.monthly|floatformat:2}};
+      
+      pay.disabled = true;
+      pay.value= tk;
+      pay.value= len*tk;
+    });
+  // end of check box (month)
+
+
+  // switch control
+  // admission fee switch
+  function admissionfee(id) {
+
+    var fee = document.getElementById(id).checked;
+
+    if (fee == true) {
+      document.getElementById(id).value = "True";
+
+      document.getElementById('mp-l').classList.remove("hide");
+      document.getElementById('mp').classList.remove("hide");
+
+      document.getElementById('library-l').classList.remove("hide");
+      document.getElementById('library').classList.remove("hide");
+
+      document.getElementById('poor-l').classList.remove("hide");
+      document.getElementById('poor').classList.remove("hide");
+
+      document.getElementById('st-l').classList.remove("hide");
+      document.getElementById('st').classList.remove("hide");
+
+      document.getElementById('cl-l').classList.remove("hide");
+      document.getElementById('cl').classList.remove("hide");
+
+      document.getElementById('id').classList.remove("hide");
+      document.getElementById('id-l').classList.remove("hide");
+    }
+    else {
+      document.getElementById(id).value = "False";
+
+      document.getElementById('mp-l').classList.add("hide");
+      document.getElementById('mp').classList.add("hide");
+
+      document.getElementById('library-l').classList.add("hide");
+      document.getElementById('library').classList.add("hide");
+
+      document.getElementById('poor-l').classList.add("hide");
+      document.getElementById('poor').classList.add("hide");
+
+      document.getElementById('st-l').classList.add("hide");
+      document.getElementById('st').classList.add("hide");
+
+      document.getElementById('cl-l').classList.add("hide");
+      document.getElementById('cl').classList.add("hide");
+
+      document.getElementById('id').classList.add("hide");
+      document.getElementById('id-l').classList.add("hide");
+    }
+
+
+  }
+  // end of admission fee switch
+
+  // monthly fee switch
+  function monthlyfee(id) {
+
+    var fee = document.getElementById(id).checked;
+
+    if (fee == true) {
+      document.getElementById(id).value = "True";
+
+      document.getElementById('monthly-fee').classList.remove("hide");
+      document.getElementById('monthly-fee-l').classList.remove("hide");
+      var pay= document.getElementById('monthly-fee');
+      
+     
+    }
+    else {
+      document.getElementById(id).value = "False";
+
+      document.getElementById('monthly-fee').classList.add("hide");
+      document.getElementById('monthly-fee-l').classList.add("hide");
+    }
+
+
+  }
+  // end of monthly fee switch
+
+  // exam fee switch
+  function examfee(id) {
+
+    var fee = document.getElementById(id).checked;
+
+    if (fee == true) {
+      document.getElementById(id).value = "True";
+
+      document.getElementById('exam').classList.remove("hide");
+      document.getElementById('exam-l').classList.remove("hide");
+
+      document.getElementById('board').classList.remove("hide");
+      document.getElementById('board-l').classList.remove("hide");
+    }
+    else {
+      document.getElementById(id).value = "False";
+
+      document.getElementById('exam').classList.add("hide");
+      document.getElementById('exam-l').classList.add("hide");
+
+      document.getElementById('board').classList.add("hide");
+      document.getElementById('board-l').classList.add("hide");
+    }
+
+
+  }
+  // end of exam fee switch
+
+  // othes fee switch
+
+  function othersfee(id) {
+    var fee = document.getElementById(id).checked;
+    if (fee == true) {
+      document.getElementById(id).value = "True";
+
+      document.getElementById('clg-sports').classList.remove("hide");
+      document.getElementById('clg-sports-l').classList.remove("hide");
+
+      document.getElementById('board-sports-l').classList.remove("hide");
+      document.getElementById('board-sports').classList.remove("hide");
+
+      document.getElementById('transfer-l').classList.remove("hide");
+      document.getElementById('transfer').classList.remove("hide");
+
+      document.getElementById('certificate').classList.remove("hide");
+      document.getElementById('certificate-l').classList.remove("hide");
+
+      document.getElementById('ret-l').classList.remove("hide");
+      document.getElementById('ret').classList.remove("hide");
+
+      document.getElementById('test').classList.remove("hide");
+      document.getElementById('test-l').classList.remove("hide");
+
+      document.getElementById('paper-l').classList.remove("hide");
+      document.getElementById('paper').classList.remove("hide");
+
+      document.getElementById('practical').classList.remove("hide");
+      document.getElementById('practical-l').classList.remove("hide");
+
+      document.getElementById('water').classList.remove("hide");
+      document.getElementById('water-l').classList.remove("hide");
+
+      document.getElementById('management').classList.remove("hide");
+      document.getElementById('management-l').classList.remove("hide");
+
+      document.getElementById('fourth').classList.remove("hide");
+      document.getElementById('fourth-l').classList.remove("hide");
+
+      document.getElementById('late').classList.remove("hide");
+      document.getElementById('late-l').classList.remove("hide");
+
+      document.getElementById('center').classList.remove("hide");
+      document.getElementById('center-l').classList.remove("hide");
+    }
+    else {
+      document.getElementById(id).value = "False";
+
+      document.getElementById('clg-sports').classList.add("hide");
+      document.getElementById('clg-sports-l').classList.add("hide");
+
+      document.getElementById('board-sports').classList.add("hide");
+      document.getElementById('board-sports-l').classList.add("hide");
+
+      document.getElementById('transfer-l').classList.add("hide");
+      document.getElementById('transfer').classList.add("hide");
+
+      document.getElementById('certificate').classList.add("hide");
+      document.getElementById('certificate-l').classList.add("hide");
+
+      document.getElementById('ret-l').classList.add("hide");
+      document.getElementById('ret').classList.add("hide");
+
+      document.getElementById('test').classList.add("hide");
+      document.getElementById('test-l').classList.add("hide");
+
+      document.getElementById('paper-l').classList.add("hide");
+      document.getElementById('paper').classList.add("hide");
+
+      document.getElementById('practical').classList.add("hide");
+      document.getElementById('practical-l').classList.add("hide");
+
+      document.getElementById('water').classList.add("hide");
+      document.getElementById('water-l').classList.add("hide");
+
+      document.getElementById('management').classList.add("hide");
+      document.getElementById('management-l').classList.add("hide");
+
+      document.getElementById('fourth').classList.add("hide");
+      document.getElementById('fourth-l').classList.add("hide");
+
+      document.getElementById('late').classList.add("hide");
+      document.getElementById('late-l').classList.add("hide");
+
+      document.getElementById('center').classList.add("hide");
+      document.getElementById('center-l').classList.add("hide");
+    }
+
+  }
+
+  // end of othes fee switch
+
+  // end of switch control
+
   
 
-  /* 
+  /*
   $('#button').on('click', function () {
     alert(tmp);
   });
   */
- 
+
 
 </script>
 

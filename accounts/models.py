@@ -20,6 +20,7 @@ class Student(models.Model):
     name= models.CharField(max_length=100, null=True, blank=False)
     group= models.CharField(max_length=100, null=True, blank=False)
     course= models.CharField(max_length=100, null=True, blank=False)
+    session= models.CharField(max_length=100, null=True, blank=False)
     email= models.EmailField(max_length=100, null=True, blank=False)   
     img= models.ImageField(upload_to='profile/student/', blank=False) 
     # dept_name= models.OneToOneField(Depertment, on_delete=models.CASCADE)
@@ -70,7 +71,73 @@ class StudentAbout(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+# STUDENTS EXACT PAYMENT
+class StudentPayment(models.Model):
+    user= models.OneToOneField(Student, on_delete=models.CASCADE)
+    total= models.FloatField(default=0)
+    monthly= models.FloatField(default=0)
+
+    def __str__(self):
+        return self.user.name
+
+# DONATION
+class donation(models.Model):
+    donar_name= models.CharField(max_length=100, null=True, blank=True)
+    amount= models.FloatField(default=0)
+
+    def __str__(self):
+        return self.donar_name
+
+# TUTION FEE
+class TutionFee(models.Model):
+    class_name= models.CharField(max_length=50, null=True, blank=True)
+    # session= models.ForeignKey(SessionYear, on_delete=models.CASCADE)
+    fee= models.FloatField(default=0)
+    college_exam_fee= models.FloatField(default=0)
+    board_exam_fee= models.FloatField(default=0)
+    admision_fee= models.FloatField(default=0)
+    registration_fee= models.FloatField(default=0)
+    registration_fee= models.FloatField(default=0)
+    college_transfer_fee= models.FloatField(default=0)
+    id_fee= models.FloatField(default=0)
+    certificate_fee= models.FloatField(default=0)
+    retention_fee= models.FloatField(default=0)
+    tc_fee= models.FloatField(default=0)
+    management_fee= models.FloatField(default=0)
+    fourth_paper_fee= models.FloatField(default=0)
+    late_fee= models.FloatField(default=0)
+    center_fee= models.FloatField(default=0)
     
+
+    def __str__(self):
+        return self.class_name
+    
+
+# OTHERS CHARGES
+class OthersCharge(models.Model):
+    # class_name= models.OneToOneField(TutionFee, on_delete=models.CASCADE)
+    college_dev_fee= models.FloatField(default=0)
+    milad_puja_fee= models.FloatField(default=0)
+    library_fee= models.FloatField(default=0)
+    college_sports_fee= models.FloatField(default=0)
+    board_sports_fee= models.FloatField(default=0)
+    poor_fund= models.FloatField(default=0)
+    science_tech_fee= models.FloatField(default=0)
+    computer_lab_fee= models.FloatField(default=0)
+    computer_lab_fee= models.FloatField(default=0)
+    computer_lab_fee= models.FloatField(default=0)
+    college_rovers= models.FloatField(default=0)
+    board_rovers= models.FloatField(default=0)
+    paper_fee= models.FloatField(default=0)
+    practical_fee= models.FloatField(default=0)
+    bill= models.FloatField(default=0)
+
+    def __str__(self):
+        return str(self.college_dev_fee)
+
+
 
 # TEACHER
 class Teacher(models.Model):
@@ -146,8 +213,8 @@ class SessionYear(models.Model):
 class Year(models.Model):
 
     user= models.ForeignKey(Student, on_delete= models.CASCADE)
-    dept=  models.ForeignKey(Depertment, on_delete=models.CASCADE)
-    session= models.ForeignKey(SessionYear, on_delete= models.CASCADE)
+    # dept=  models.ForeignKey(Depertment, on_delete=models.CASCADE)
+    # session= models.ForeignKey(SessionYear, on_delete= models.CASCADE)
     year_name= models.CharField( max_length=50, null=True)
 
     def __str__(self):

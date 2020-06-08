@@ -11,7 +11,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from .models import Subject, Student, StudentEducation, StudentAbout, Teacher, TeacherEducation, TeacherAbout, Depertment, SessionYear, Staff, Year
+from .models import Subject, Student, StudentEducation, StudentAbout, Teacher, TeacherEducation, TeacherAbout, Depertment, SessionYear, Staff, Year, StudentPayment, TutionFee, OthersCharge
 # from .serializerElements import SessionSerializer
 from django.http import JsonResponse
 from non_working_files.models import Notice, Gallery
@@ -131,11 +131,12 @@ def signup_hsc(request):
         optional_sub_com= request.POST['subjectCom'] 
         # agree= request.POST['agree'] 
 
-        print(group_user)
-        print(optional_sub_science)
-        print(optional_sub_arts_a)
-        print(optional_sub_arts_b)
-        print(optional_sub_com)
+        # print(group_user)
+        # print(optional_sub_science)
+        # print(optional_sub_arts_a)
+        # print(optional_sub_arts_b)
+        # print(optional_sub_com)
+        session=  SessionYear.objects.all().last()
         try:
             user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
             user.is_active= False
@@ -147,8 +148,14 @@ def signup_hsc(request):
 
         if group_user == 'Science':
             print("On science")
-            student= Student(user= user, name= name, group= group_user, course='HSC', email= email, roll=None, img=uploaded_file )
+            student= Student(user= user, name= name, group= group_user, course='HSC', email= email, roll=None, img=uploaded_file, session=session)
             student.save()
+
+            year= Year(user= student, year_name="1st year")
+            year.save()
+
+            payment= StudentPayment(user= student, total=6000, monthly=250)
+            payment.save()
 
             about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
             about.save()
@@ -186,8 +193,14 @@ def signup_hsc(request):
 
         elif group_user == 'Business Studies':
             
-            student= Student(user= user, name= name, group= group_user, course='HSC', email= email, roll=None, img=uploaded_file )
+            student= Student(user= user, name= name, group= group_user, course='HSC', email= email, roll=None, img=uploaded_file, session=session )
             student.save()
+
+            year= Year(user= student, year_name="1st year")
+            year.save()
+
+            payment= StudentPayment(user= student, total=6000, monthly=250)
+            payment.save()
 
             about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
             about.save()
@@ -225,8 +238,14 @@ def signup_hsc(request):
 
         elif group_user == 'Humanities (A)':
             
-            student= Student(user= user, name= name, group= group_user, course='HSC', email= email, roll=None, img=uploaded_file )
+            student= Student(user= user, name= name, group= group_user, course='HSC', email= email, roll=None, img=uploaded_file, session=session )
             student.save()
+
+            year= Year(user= student, year_name="1st year")
+            year.save()
+
+            payment= StudentPayment(user= student, total=6000, monthly=250)
+            payment.save()
 
             about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
             about.save()
@@ -263,8 +282,14 @@ def signup_hsc(request):
 
         elif group_user == 'Humanities (B)':
             
-            student= Student(user= user, name= name, group= group_user, course='HSC', email= email, roll=None, img=uploaded_file )
+            student= Student(user= user, name= name, group= group_user, course='HSC', email= email, roll=None, img=uploaded_file , session=session)
             student.save()
+
+            year= Year(user= student, year_name="1st year")
+            year.save()
+
+            payment= StudentPayment(user= student, total=6000, monthly=250)
+            payment.save()
 
             about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
             about.save()
@@ -420,7 +445,7 @@ def signup_honours(request):
         hsc_board= request.POST['hsc_board']         
         group_user= request.POST['group'] 
         # agree= request.POST['agree']
-
+        session=  SessionYear.objects.all().last()
         group_user= request.POST['group'] 
         
         try:
@@ -434,8 +459,14 @@ def signup_honours(request):
 
         
             
-        student= Student(user= user, name= name, group= group_user, course='Honours', email= email, roll=None, img=uploaded_file )
+        student= Student(user= user, name= name, group= group_user, course='Honours', email= email, roll=None, img=uploaded_file, session=session )
         student.save()
+
+        year= Year(user= student, year_name="1st year")
+        year.save()
+
+        payment= StudentPayment(user= student, total=24000, monthly=500)
+        payment.save()
 
         about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
         about.save()
@@ -559,7 +590,7 @@ def signup_ibm(request):
         ssc_grade= request.POST['ssc_grade']  
         ssc_group= request.POST['ssc_group'] 
         ssc_board= request.POST['ssc_board']    
-
+        session=  SessionYear.objects.all().last()
         
         # agree= request.POST['agree']
 
@@ -576,8 +607,14 @@ def signup_ibm(request):
 
         
             
-        student= Student(user= user, name= name, group= 'IBM', course='IBM', email= email, roll=None, img=uploaded_file )
+        student= Student(user= user, name= name, group= 'IBM', course='IBM', email= email, roll=None, img=uploaded_file, session=session )
         student.save()
+
+        year= Year(user= student, year_name="1st year")
+        year.save()
+
+        payment= StudentPayment(user= student, total=6000, monthly=250)
+        payment.save()
 
         about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
         about.save()
@@ -642,7 +679,7 @@ def signup_degree(request):
         group_user= request.POST['group'] 
         # agree= request.POST['agree']
 
-
+        session=  SessionYear.objects.all().last()
         
         
          
@@ -660,8 +697,14 @@ def signup_degree(request):
 
         
             
-        student= Student(user= user, name= name, group= group_user, course='Degree (Pass)', email= email, roll=None, img=uploaded_file )
+        student= Student(user= user, name= name, group= group_user, course='Degree (Pass)', email= email, roll=None, img=uploaded_file , session=session)
         student.save()
+
+        year= Year(user= student, year_name="1st year")
+        year.save()
+
+        payment= StudentPayment(user= student, total=6000, monthly=250)
+        payment.save()
 
         about= StudentAbout(user= user, fathers_name= fathers_name, mothers_name= mothers_name, blood_group= blood_group, gender=gender, date_of_birth= date_of_birth, marital_status= marital_status, present_address= present_address, permanent_address= permanent_address, phone_number= phone_number, parents_number= parents_number, nid=nid, religion=religion)
         about.save()
@@ -1190,15 +1233,78 @@ def teachersList(request, dept_name):
 
 # PAYMENT
 def payment(request, id):
-    user= User.objects.get(id=id)
-    student= Student.objects.get(user=user)
-    context= {'user': user, 'student': student}
+
+    if request.method == 'POST':
+        
+
+        fee= request.POST.get('payfee', "")
+        admission= request.POST.get('payadmission', "")
+        exam= request.POST.get('payexam', "")
+        others= request.POST.get('payothers', "")
+
+        # FEE HERE 
+        if fee == "True" :
+            # print("ok on fee")
+            monthly_fee = request.POST['monthly-tuition-fee']
+            print(monthly_fee)
+
+
+        # ADMISSION PAYMENT HERE 
+        if admission == "True" :
+            admission_fee = request.POST['mp-fee']
+            library_fee = request.POST['library-fee']
+            poor_fund = request.POST['poor-fund']
+            st_fee = request.POST['st-fee']
+            cl_fee = request.POST['cl-fee']
+            id_fee = request.POST['id-fee']
+            # print(admission_fee)
+            # print(library_fee)
+            # print(poor_fund)
+            # print(cl_fee)
+            # print(st_fee)
+            # print(id_fee)
+
+
+        # EXAM PAYMENT HERE 
+        if exam == "True" :
+            exam_fee = request.POST['exam-fee']
+            board_exam_fee = request.POST['board-fee']
+            # print(exam_fee)
+            # print(board_exam_fee)
+
+
+        # OTHERS PAYMENT HERE 
+        if others == "True" :
+            clg_sports_fee = request.POST['clg-sports-fee']
+            board_sports_fee = request.POST['board-sports-fee']
+            transfer_fee = request.POST['transfer-fee']
+            certificate_fee = request.POST['certificate-fee']
+            ret_fee = request.POST['ret-fee']
+            test_fee = request.POST['test-fee']
+            paper_fee = request.POST['paper-fee']
+            practical_fee = request.POST['practical-fee']
+            management_fee = request.POST['management-fee']
+            fourth_fee = request.POST['fourth-fee']
+            late_fee = request.POST['late-fee']
+            center_fee = request.POST['center-fee']
+        # print("fee "+fee)
+        # print("fee "+admission)
+        # print("fee "+exam)
+        # print("fee "+others)
+
+    # user= User.objects.get(id=id)
+    student= Student.objects.get(id= id)
+    user= User.objects.get(id= student.user.id)
+    pay= StudentPayment.objects.get(user= student)
+
+    context= {'user': user, 'student': student, 'pay': pay}
+    
     return render(request, 'dashboard/payment.html', context)   
 
     
 # MONTHLY PAYMENT
 def monthly_payment(request):
-   
+    
     context= {}
     return render(request, 'dashboard/monthly-payment.html', context)   
 
