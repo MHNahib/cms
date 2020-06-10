@@ -12,7 +12,7 @@
     display: none;
   }
 
-  .disable{
+  .disable {
     display: none;
   }
 </style>
@@ -255,7 +255,7 @@
                       </div> -->
                         <label class="hide" id="monthly-fee-l" for="monthly-fee">Monthly Tuition fee</label>
                         <input type="number" class="form-control hide" id="monthly-fee" name="monthly-tuition-fee"
-                          placeholder="Tuition fee">
+                          placeholder="Tuition fee" readonly="true">
                         <div class="invalid-feedback">
                           Must contain number.
                         </div>
@@ -263,11 +263,12 @@
                       <!-- EXAM FEE -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide" id="exam-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-2" onchange="collegeExam(this.id);">
-                        <label class="custom-control-label" for="sw-2">
-                          <label for="exam">College Examination fee</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-2"
+                            onchange="collegeExam(this.id);">
+                          <label class="custom-control-label" for="sw-2">
+                            <label for="exam">College Examination fee</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="exam-l" for="exam">College Examination fee</label> -->
                         <input type="number" class="form-control hide" id="exam" name="exam-fee"
                           placeholder="College Examination fee">
@@ -278,11 +279,11 @@
                       <!-- BOARD OR UNIVERSITY EXAM FEE -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide" id="board-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-3" onchange="boardExam(this.id);">
-                        <label class="custom-control-label" for="sw-3">
-                          <label for="board">Board/ University Examination fee</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-3" onchange="boardExam(this.id);">
+                          <label class="custom-control-label" for="sw-3">
+                            <label for="board">Board/ University Examination fee</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="board-l" for="board">Board/ University Examination fee</label> -->
                         <input type="number" class="form-control hide" id="board" name="board-fee"
                           placeholder="Board/ University Examination fee">
@@ -337,11 +338,12 @@
                       <!-- COLLEGE SPORTS FEE -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide" id="clg-sports-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-7" onchange="collegeSports(this.id)">
-                        <label class="custom-control-label" for="sw-7">
-                          <label for="clg-sports">College sports fee</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-7"
+                            onchange="collegeSports(this.id)">
+                          <label class="custom-control-label" for="sw-7">
+                            <label for="clg-sports">College sports fee</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="clg-sports-l" for="clg-sports">College sports fee</label> -->
                         <input type="number" class="form-control hide" id="clg-sports" name="clg-sports-fee"
                           placeholder="College sports fee">
@@ -352,11 +354,12 @@
                       <!-- BOARD/ UNIVERSITY SPORTS FEE -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide" id="board-sports-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-8" onchange="boardSports(this.id);">
-                        <label class="custom-control-label" for="sw-8">
-                          <label for="board-sports">Board/ University sports fee</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-8"
+                            onchange="boardSports(this.id);">
+                          <label class="custom-control-label" for="sw-8">
+                            <label for="board-sports">Board/ University sports fee</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="board-sports-l" for="board-sports">Board/ University sports fee</label> -->
                         <input type="number" class="form-control hide" id="board-sports" name="board-sports-fee"
                           placeholder="Board/ University sports fee">
@@ -417,7 +420,7 @@
                           <label for="admissin">Admission fee</label>
                         </label>
                       </div> -->
-                        <label class="hide" for="admissin">Admission fee</label>
+                        <label class="hide" id="admissin-l" for="admissin">Admission fee</label>
                         <input type="number" class="form-control hide" id="admissin" name="admissin-fee"
                           placeholder="Admission fee">
                         <div class="invalid-feedback">
@@ -432,7 +435,7 @@
                           <label for="reg">Registration fee</label>
                         </label>
                       </div> -->
-                        <label class="hide" for="reg">Registration fee</label>
+                        <label class="hide" id="reg-l" for="reg">Registration fee</label>
                         <input type="number" class="form-control hide" id="reg" name="reg-fee"
                           placeholder="Registration fee">
                         <div class="invalid-feedback">
@@ -447,7 +450,7 @@
                           <label for="rov-clg">Rovers/ Girls guide College fee</label>
                         </label>
                       </div> -->
-                        <label class="hide" for="rov-clg">Rovers/ Girls guide College fee</label>
+                        <label class="hide" id="rov-clg-l" for="rov-clg">Rovers/ Girls guide College fee</label>
                         <input type="number" class="form-control hide" id="rov-clg" name="rov-clg-fee"
                           placeholder="Rovers/ Girls guide College fee">
                         <div class="invalid-feedback">
@@ -462,7 +465,8 @@
                           <label for="rov-board">Rovers/ Girls guide Board/ University fee</label>
                         </label>
                       </div> -->
-                        <label class="hide" for="rov-board">Rovers/ Girls guide Board/ University fee</label>
+                        <label class="hide" id="rov-board-l" for="rov-board">Rovers/ Girls guide Board/ University
+                          fee</label>
                         <input type="number" class="form-control hide" id="rov-board" name="rov-board-fee"
                           placeholder="Rovers/ Girls guide Board/ University fee">
                         <div class="invalid-feedback">
@@ -485,12 +489,13 @@
                     </div> -->
                       <!-- TRANSFER FEE -->
                       <div class="col-md-12 mb-3">
-                        <div class="custom-control custom-switch hide" id="transfer-l"> 
-                        <input type="checkbox" class="custom-control-input" id="sw-17" onchange="collegeTransfer(this.id);">
-                        <label class="custom-control-label" for="sw-17">
-                          <label for="transfer">College Transfer fee</label>
-                        </label>
-                      </div>
+                        <div class="custom-control custom-switch hide" id="transfer-l">
+                          <input type="checkbox" class="custom-control-input" id="sw-17"
+                            onchange="collegeTransfer(this.id);">
+                          <label class="custom-control-label" for="sw-17">
+                            <label for="transfer">College Transfer fee</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="transfer-l" for="transfer">College Transfer fee</label> -->
                         <input type="number" class="form-control hide" id="transfer" name="transfer-fee"
                           placeholder="College Transfer fee">
@@ -515,11 +520,12 @@
                       <!-- CERTIFICATE FEE -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide" id="certificate-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-19" onchange="certificateTrans(this.id);">
-                        <label class="custom-control-label" for="sw-19">
-                          <label for="certificate">Certificate/ Transcript fee</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-19"
+                            onchange="certificateTrans(this.id);">
+                          <label class="custom-control-label" for="sw-19">
+                            <label for="certificate">Certificate/ Transcript fee</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="certificate-l" for="certificate">Certificate/ Transcript fee</label> -->
                         <input type="number" class="form-control hide" id="certificate" name="certificate-fee"
                           placeholder="Certificate/ Transcript fee">
@@ -544,11 +550,11 @@
                       <!-- RETENTION FEE -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide" id="ret-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-21" onchange="retention(this.id);">
-                        <label class="custom-control-label" for="sw-21">
-                          <label for="ret">Retention fee</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-21" onchange="retention(this.id);">
+                          <label class="custom-control-label" for="sw-21">
+                            <label for="ret">Retention fee</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="ret-l" for="ret">Retention fee</label> -->
                         <input type="number" class="form-control hide" id="ret" name="ret-fee"
                           placeholder="Retention fee">
@@ -559,11 +565,12 @@
                       <!-- TESTIMONIAL/ CHAR/ OHTER FEE -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide" id="test-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-22" onchange="testimonial(this.id);">
-                        <label class="custom-control-label" for="sw-22">
-                          <label for="test">Testimonial/ Character/ Other Certificate fee</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-22"
+                            onchange="testimonial(this.id);">
+                          <label class="custom-control-label" for="sw-22">
+                            <label for="test">Testimonial/ Character/ Other Certificate fee</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="test-l" for="test">Testimonial/ Character/ Other Certificate fee</label> -->
                         <input type="number" class="form-control hide" id="test" name="test-fee"
                           placeholder="Testimonial/ Character/ Other Certificate fee">
@@ -574,11 +581,11 @@
                       <!-- PAPER MAGAZINES -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide" id="paper-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-23" onchange="paperMag(this.id);">
-                        <label class="custom-control-label" for="sw-23">
-                          <label for="paper">Paper/ Magazines</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-23" onchange="paperMag(this.id);">
+                          <label class="custom-control-label" for="sw-23">
+                            <label for="paper">Paper/ Magazines</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="paper-l" for="paper">Paper/ Magazines</label> -->
                         <input type="number" class="form-control hide" id="paper" name="paper-fee"
                           placeholder="Paper/ Magazines">
@@ -589,11 +596,12 @@
                       <!-- PRACTICAL -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide" id="practical-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-24" onchange="practicalFee(this.id);">
-                        <label class="custom-control-label" for="sw-24">
-                          <label for="practical">Practical fee</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-24"
+                            onchange="practicalFee(this.id);">
+                          <label class="custom-control-label" for="sw-24">
+                            <label for="practical">Practical fee</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="practical-l" for="practical">Practical fee</label> -->
                         <input type="number" class="form-control hide" id="practical" name="practical-fee"
                           placeholder="Practical fee">
@@ -604,11 +612,11 @@
                       <!-- WATER/ ELEC/ TEL -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide" id="water-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-25" onchange="billPay(this.id);">
-                        <label class="custom-control-label" for="sw-25">
-                          <label for="water">Water/ Electricity/ Telephone</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-25" onchange="billPay(this.id);">
+                          <label class="custom-control-label" for="sw-25">
+                            <label for="water">Water/ Electricity/ Telephone</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="water-l" for="water">Water/ Electricity/ Telephone</label> -->
                         <input type="number" class="form-control hide" id="water" name="bill"
                           placeholder="Water/ Electricity/ Telephone">
@@ -619,11 +627,12 @@
                       <!-- MANAGEMENT -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide" id="management-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-26" onchange="managementFee(this.id)">
-                        <label class="custom-control-label" for="sw-26">
-                          <label for="management">Management fee</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-26"
+                            onchange="managementFee(this.id)">
+                          <label class="custom-control-label" for="sw-26">
+                            <label for="management">Management fee</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="management-l" for="management">Management fee</label> -->
                         <input type="number" class="form-control hide" id="management" name="management-fee"
                           placeholder="Management fee">
@@ -634,11 +643,12 @@
                       <!-- 4th PAPER -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide" id="fourth-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-27" onchange="fourthPaper(this.id);">
-                        <label class="custom-control-label" for="sw-27">
-                          <label for="fourth">Fourth paper fee</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-27"
+                            onchange="fourthPaper(this.id);">
+                          <label class="custom-control-label" for="sw-27">
+                            <label for="fourth">Fourth paper fee</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="fourth-l" for="fourth">Fourth paper fee</label> -->
                         <input type="number" class="form-control hide " id="fourth" name="fourth-fee"
                           placeholder="Fourth paper fee">
@@ -649,11 +659,11 @@
                       <!-- LATE FINE -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide" id="late-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-28" onchange="lateFee(this.id);">
-                        <label class="custom-control-label" for="sw-28">
-                          <label for="late">Late fine</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-28" onchange="lateFee(this.id);">
+                          <label class="custom-control-label" for="sw-28">
+                            <label for="late">Late fine</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="late-l" for="late">Late fine</label> -->
                         <input type="number" class="form-control hide" id="late" name="late-fee"
                           placeholder="Late fine">
@@ -664,13 +674,17 @@
                       <!-- CENTER FEE -->
                       <div class="col-md-12 mb-3">
                         <div class="custom-control custom-switch hide hide" id="center-l">
-                        <input type="checkbox" class="custom-control-input" id="sw-29" onchange="centerFee(this.id)">
-                        <label class="custom-control-label" for="sw-29">
-                          <label for="center">Center fee</label>
-                        </label>
-                      </div>
+                          <input type="checkbox" class="custom-control-input" id="sw-29" onchange="centerFee(this.id)">
+                          <label class="custom-control-label" for="sw-29">
+                            <label for="center">Center fee</label>
+                          </label>
+                        </div>
                         <!-- <label class="hide" id="center-l" for="center">Center fee</label> -->
                         <input type="number" class="form-control hide" id="center" name="center-fee"
+                          placeholder="Center fee">
+                        <input type="number" class="form-control hide" id="monthly-tuition-fee-id" name="total-fee"
+                          placeholder="Center fee">
+                        <input type="text" class="form-control hide" id="monthly-list-id" name="monthly-list"
                           placeholder="Center fee">
                         <div class="invalid-feedback">
                           Must contain number.
@@ -681,37 +695,37 @@
                       </div> -->
                       <div class="col-md-12 mb-3">
                         <!-- <div class="container"> -->
-                          <!-- <button class="btn btn-success"><i class="fa fa-save"></i> Save</button> -->
-                          <!-- <button type="submit" class="btn btn-info"><i class="fa fa-print" aria-hidden="true"></i>
+                        <!-- <button class="btn btn-success"><i class="fa fa-save"></i> Save</button> -->
+                        <!-- <button type="submit" class="btn btn-info"><i class="fa fa-print" aria-hidden="true"></i>
                             Print</button> -->
-                            <!-- popup -->
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                              <i class="fa fa-save"></i> Save
-                            </button>
-                            
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                              aria-hidden="true">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                  <div class="modal-body">
-                                    <h5>Total fee: &#2547; <span id="total">0.0</span></h5>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                  </div>
-                                </div>
+                        <!-- popup -->
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" onclick="savePayment();">
+                          <i class="fa fa-save"></i> Save
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                          aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Total amount</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <h5>Total fee: &#2547; <span id="total">0.0</span></h5>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
                               </div>
                             </div>
-                            <!-- /popup -->
+                          </div>
+                        </div>
+                        <!-- /popup -->
                         <!-- </div> -->
                       </div>
 
@@ -767,10 +781,10 @@
 
 <script>
   // on page load
-  
+
   $(document).ready(function () {
-    
-    document.getElementById('monthly-fee').disabled = true;
+
+    document.getElementById('monthly-fee').disabled;
     document.getElementById('exam').disabled = true;
     document.getElementById('board').disabled = true;
     document.getElementById('development').disabled = true;
@@ -781,12 +795,12 @@
     // document.getElementById('poor').disabled = true;
     // document.getElementById('st').disabled = true;
     // document.getElementById('cl').disabled = true;
-    document.getElementById('admissin').disabled = true;
-    document.getElementById('reg').disabled = true;
-    document.getElementById('rov-clg').disabled = true;
-    document.getElementById('rov-board').disabled = true;
+    // document.getElementById('admissin').disabled = true;
+    // document.getElementById('reg').disabled = true;
+    // document.getElementById('rov-clg').disabled = true;
+    // document.getElementById('rov-board').disabled = true;
     document.getElementById('transfer').disabled = true;
-    document.getElementById('id').disabled = true;
+    // document.getElementById('id').disabled = true;
     document.getElementById('certificate').disabled = true;
     document.getElementById('ret').disabled = true;
     document.getElementById('test').disabled = true;
@@ -797,42 +811,65 @@
     document.getElementById('fourth').disabled = true;
     document.getElementById('late').disabled = true;
     document.getElementById('center').disabled = true;
-    
+
   });
-  
-  
+
+
   // end of on page load
 
-  var total=0.0;
 
+
+/*
   // check box (month)
-    var tmp = [];
-    var len = 0;
+  var tmp = [];
+  var len = 0;
 
-    $("input[type='checkbox']").change(function () {
-      var checked = $(this).val();
-      if(checked != 'on' || checked != 'on'){
-        if ($(this).is(':checked')) {
-          tmp.push(checked);
-        } else {
-          tmp.splice($.inArray(checked, tmp), 1);
-        }
+  $("input[type='checkbox']").change(function () {
+    var checked = $(this).val();
+    if (checked != 'on' || checked != 'on') {
+      if ($(this).is(':checked')) {
+        tmp.push(checked);
+      } else {
+        tmp.splice($.inArray(checked, tmp), 1);
       }
-      
-      len = tmp.length;
-      // console.log(len);
-      var pay= document.getElementById('monthly-fee');
-      var tk= '{{pay.monthly|floatformat:2}}';
-      console.log(tmp)
-      
-      pay.disabled = true;
-      pay.value= tk;
-      var payval= len*tk
-      pay.value= payval;
-      total+= payval;
-      document.getElementById('total').innerHTML= total;
-    });
+    }
+
+    len = tmp.length;
+    console.log(len);
+    var pay = document.getElementById('monthly-fee');
+    var tk = '{{pay.monthly|floatformat:2}}';
+    console.log(tmp)
+
+    pay.disabled = true;
+    pay.value = tk;
+    var payval = len * tk
+    pay.value = payval;
+    total += payval;
+    document.getElementById('total').innerHTML = total;
+  });
   // end of check box (month)
+  */
+
+  // check box
+
+  var tmp = [];
+  var len= 0;
+  var pay;
+  $("input[type='checkbox']").change(function () {
+    var checked = $(this).val();
+    if (checked != 'on' || checked != 'on') {
+      if ($(this).is(':checked')) {
+        tmp.push(checked);
+      } else {
+        tmp.splice($.inArray(checked, tmp), 1);
+      }
+    }
+    len= tmp.length;
+    pay= document.getElementById('monthly-fee').value= '{{pay.monthly|floatformat:2}}'*len;
+    // console.log(tmp);
+  });
+
+  // check box ends
 
 
   // switch control
@@ -844,69 +881,109 @@
     if (fee == true) {
       document.getElementById(id).value = "True";
 
+      document.getElementById('admissin-l').classList.remove("hide");
+      document.getElementById('admissin').classList.remove("hide");
+
+      document.getElementById('admissin').value = '{{tution.admision_fee}}';
+
+      document.getElementById('reg-l').classList.remove("hide");
+      document.getElementById('reg').classList.remove("hide");
+
+      document.getElementById('reg').value = '{{tution.registration_fee}}';
+
+      document.getElementById('rov-clg-l').classList.remove("hide");
+      document.getElementById('rov-clg').classList.remove("hide");
+
+      document.getElementById('rov-clg').value = '{{others.college_rovers}}';
+
+      document.getElementById('rov-board-l').classList.remove("hide");
+      document.getElementById('rov-board').classList.remove("hide");
+
+      document.getElementById('rov-board').value = '{{others.board_rovers}}';
+
       document.getElementById('mp-l').classList.remove("hide");
       document.getElementById('mp').classList.remove("hide");
 
-      document.getElementById('mp').value= '{{others.milad_puja_fee}}';
-      console.log('{{others.milad_puja_fee}}');
+      document.getElementById('mp').value = '{{others.milad_puja_fee}}';
+      // console.log('{{others.milad_puja_fee}}');
 
       document.getElementById('library-l').classList.remove("hide");
       document.getElementById('library').classList.remove("hide");
 
-      document.getElementById('library').value= '{{others.library_fee}}';
+      document.getElementById('library').value = '{{others.library_fee}}';
 
       document.getElementById('poor-l').classList.remove("hide");
       document.getElementById('poor').classList.remove("hide");
 
-      document.getElementById('poor').value= '{{others.poor_fund}}';
+      document.getElementById('poor').value = '{{others.poor_fund}}';
 
       document.getElementById('st-l').classList.remove("hide");
       document.getElementById('st').classList.remove("hide");
 
-      document.getElementById('st').value= '{{others.science_tech_fee}}';
+      document.getElementById('st').value = '{{others.science_tech_fee}}';
 
       document.getElementById('cl-l').classList.remove("hide");
       document.getElementById('cl').classList.remove("hide");
 
-      document.getElementById('cl').value= '{{others.computer_lab_fee}}';
+      document.getElementById('cl').value = '{{others.computer_lab_fee}}';
 
 
       document.getElementById('id').classList.remove("hide");
       document.getElementById('id-l').classList.remove("hide");
 
-      
-      document.getElementById('id').value= '{{tution.id_fee}}';
+
+      document.getElementById('id').value = '{{tution.id_fee}}';
     }
     else {
       document.getElementById(id).value = "False";
 
+      document.getElementById('admissin-l').classList.add("hide");
+      document.getElementById('admissin').classList.add("hide");
+
+      document.getElementById('admissin').value = '';
+
+      document.getElementById('reg-l').classList.add("hide");
+      document.getElementById('reg').classList.add("hide");
+
+      document.getElementById('reg').value = '';
+
+      document.getElementById('rov-clg-l').classList.add("hide");
+      document.getElementById('rov-clg').classList.add("hide");
+
+      document.getElementById('rov-clg').value = '';
+
+      document.getElementById('rov-board-l').classList.add("hide");
+      document.getElementById('rov-board').classList.add("hide");
+
+      document.getElementById('rov-board').value = '';
+
       document.getElementById('mp-l').classList.add("hide");
       document.getElementById('mp').classList.add("hide");
 
-      document.getElementById('mp').value='';
+      document.getElementById('mp').value = '';
 
       document.getElementById('library-l').classList.add("hide");
       document.getElementById('library').classList.add("hide");
 
-      document.getElementById('library').value='';
+      document.getElementById('library').value = '';
 
       document.getElementById('poor-l').classList.add("hide");
       document.getElementById('poor').classList.add("hide");
 
-      document.getElementById('poor').value='';
+      document.getElementById('poor').value = '';
 
       document.getElementById('st-l').classList.add("hide");
       document.getElementById('st').classList.add("hide");
 
-      document.getElementById('st').value='';
+      document.getElementById('st').value = '';
 
       document.getElementById('cl-l').classList.add("hide");
       document.getElementById('cl').classList.add("hide");
 
-      document.getElementById('cl').value='';
+      document.getElementById('cl').value = '';
 
       document.getElementById('id').classList.add("hide");
-      document.getElementById('id').value='';
+      document.getElementById('id').value = '';
       document.getElementById('id-l').classList.add("hide");
     }
 
@@ -917,22 +994,26 @@
   // monthly fee switch
   function monthlyfee(id) {
 
+  
     var fee = document.getElementById(id).checked;
 
     if (fee == true) {
+      
       document.getElementById(id).value = "True";
-
+      pay= document.getElementById('monthly-fee').value= '{{pay.monthly|floatformat:2}}'*len;
       document.getElementById('monthly-fee').classList.remove("hide");
       document.getElementById('monthly-fee-l').classList.remove("hide");
-      var pay= document.getElementById('monthly-fee');
       
-     
+
     }
     else {
       document.getElementById(id).value = "False";
-
+      
+      document.getElementById('monthly-fee').value= 0*len;
+      total-=pay;
       document.getElementById('monthly-fee').classList.add("hide");
       document.getElementById('monthly-fee-l').classList.add("hide");
+      
     }
 
 
@@ -948,12 +1029,12 @@
       document.getElementById(id).value = "True";
 
       document.getElementById('exam').classList.remove("hide");
-      document.getElementById('exam-l').classList.remove("hide");      
-      
+      document.getElementById('exam-l').classList.remove("hide");
+
 
       document.getElementById('board').classList.remove("hide");
       document.getElementById('board-l').classList.remove("hide");
-      
+
     }
     else {
       document.getElementById(id).value = "False";
@@ -1001,7 +1082,7 @@
 
       // document.getElementById('ret').value= '{{tution.retention_fee}}';
 
-     // document.getElementById('test').value= '{{tution.tc_fee}}';
+      // document.getElementById('test').value= '{{tution.tc_fee}}';
 
       document.getElementById('test').classList.remove("hide");
       document.getElementById('test-l').classList.remove("hide");
@@ -1093,16 +1174,16 @@
   // check id on off 
 
   // college exam starts 
-  function collegeExam(id){
+  function collegeExam(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('exam').disabled=false;
-      document.getElementById('exam').value= '{{tution.college_exam_fee}}';
+    if (sw) {
+      document.getElementById('exam').disabled = false;
+      document.getElementById('exam').value = '{{tution.college_exam_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('exam').value= '';
+    else {
+      document.getElementById('exam').value = '';
       document.getElementById('exam').disabled;
 
     }
@@ -1111,16 +1192,16 @@
 
   // board exam starts
 
-  function boardExam(id){
+  function boardExam(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('board').disabled=false;
-      document.getElementById('board').value= '{{tution.board_exam_fee}}';
+    if (sw) {
+      document.getElementById('board').disabled = false;
+      document.getElementById('board').value = '{{tution.board_exam_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('board').value= '';
+    else {
+      document.getElementById('board').value = '';
       document.getElementById('board').disabled;
 
     }
@@ -1130,16 +1211,16 @@
 
   // college Sports
 
-  function collegeSports(id){
+  function collegeSports(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('clg-sports').disabled=false;
-      document.getElementById('clg-sports').value= '{{others.college_sports_fee}}';
+    if (sw) {
+      document.getElementById('clg-sports').disabled = false;
+      document.getElementById('clg-sports').value = '{{others.college_sports_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('clg-sports').value= '';
+    else {
+      document.getElementById('clg-sports').value = '';
       document.getElementById('clg-sports').disabled;
 
     }
@@ -1149,16 +1230,16 @@
 
   // board Sports
 
-  function boardSports(id){
+  function boardSports(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('board-sports').disabled=false;
-      document.getElementById('board-sports').value= '{{others.board_sports_fee}}';
+    if (sw) {
+      document.getElementById('board-sports').disabled = false;
+      document.getElementById('board-sports').value = '{{others.board_sports_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('board-sports').value= '';
+    else {
+      document.getElementById('board-sports').value = '';
       document.getElementById('board-sports').disabled;
 
     }
@@ -1168,16 +1249,16 @@
 
   // college Transfer
 
-  function collegeTransfer(id){
+  function collegeTransfer(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('transfer').disabled=false;
-      document.getElementById('transfer').value= '{{tution.college_transfer_fee}}';
+    if (sw) {
+      document.getElementById('transfer').disabled = false;
+      document.getElementById('transfer').value = '{{tution.college_transfer_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('transfer').value= '';
+    else {
+      document.getElementById('transfer').value = '';
       document.getElementById('transfer').disabled;
 
     }
@@ -1187,16 +1268,16 @@
 
   // certificate
 
-  function certificateTrans(id){
+  function certificateTrans(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('certificate').disabled=false;
-      document.getElementById('certificate').value= '{{tution.tc_fee}}';
+    if (sw) {
+      document.getElementById('certificate').disabled = false;
+      document.getElementById('certificate').value = '{{tution.tc_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('certificate').value= '';
+    else {
+      document.getElementById('certificate').value = '';
       document.getElementById('certificate').disabled;
 
     }
@@ -1206,16 +1287,16 @@
 
   // retention
 
-  function retention(id){
+  function retention(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('ret').disabled=false;
-      document.getElementById('ret').value= '{{tution.retention_fee}}';
+    if (sw) {
+      document.getElementById('ret').disabled = false;
+      document.getElementById('ret').value = '{{tution.retention_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('ret').value= '';
+    else {
+      document.getElementById('ret').value = '';
       document.getElementById('ret').disabled;
 
     }
@@ -1225,16 +1306,16 @@
 
   // testimonial
 
-  function testimonial(id){
+  function testimonial(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('test').disabled=false;
-      document.getElementById('test').value= '{{tution.retention_fee}}';
+    if (sw) {
+      document.getElementById('test').disabled = false;
+      document.getElementById('test').value = '{{tution.retention_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('test').value= '';
+    else {
+      document.getElementById('test').value = '';
       document.getElementById('test').disabled;
 
     }
@@ -1244,16 +1325,16 @@
 
   // paperMag
 
-  function paperMag(id){
+  function paperMag(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('paper').disabled=false;
-      document.getElementById('paper').value= '{{others.paper_fee}}';
+    if (sw) {
+      document.getElementById('paper').disabled = false;
+      document.getElementById('paper').value = '{{others.paper_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('paper').value= '';
+    else {
+      document.getElementById('paper').value = '';
       document.getElementById('paper').disabled;
 
     }
@@ -1263,16 +1344,16 @@
 
   // practical Fee
 
-  function practicalFee(id){
+  function practicalFee(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('practical').disabled=false;
-      document.getElementById('practical').value= '{{others.practical_fee}}';
+    if (sw) {
+      document.getElementById('practical').disabled = false;
+      document.getElementById('practical').value = '{{others.practical_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('practical').value= '';
+    else {
+      document.getElementById('practical').value = '';
       document.getElementById('practical').disabled;
 
     }
@@ -1282,16 +1363,16 @@
 
   // bill
 
-  function billPay(id){
+  function billPay(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('water').disabled=false;
-      document.getElementById('water').value= '{{others.bill}}';
+    if (sw) {
+      document.getElementById('water').disabled = false;
+      document.getElementById('water').value = '{{others.bill}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('water').value= '';
+    else {
+      document.getElementById('water').value = '';
       document.getElementById('water').disabled;
 
     }
@@ -1301,16 +1382,16 @@
 
   // management Fee
 
-  function managementFee(id){
+  function managementFee(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('management').disabled=false;
-      document.getElementById('management').value= '{{tution.management_fee}}';
+    if (sw) {
+      document.getElementById('management').disabled = false;
+      document.getElementById('management').value = '{{tution.management_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('management').value= '';
+    else {
+      document.getElementById('management').value = '';
       document.getElementById('management').disabled;
 
     }
@@ -1320,16 +1401,16 @@
 
   // fourth Paper Fee
 
-  function fourthPaper(id){
+  function fourthPaper(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('fourth').disabled=false;
-      document.getElementById('fourth').value= '{{tution.fourth_paper_fee}}';
+    if (sw) {
+      document.getElementById('fourth').disabled = false;
+      document.getElementById('fourth').value = '{{tution.fourth_paper_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('fourth').value= '';
+    else {
+      document.getElementById('fourth').value = '';
       document.getElementById('fourth').disabled;
 
     }
@@ -1339,16 +1420,16 @@
 
   // late Fee
 
-  function lateFee(id){
+  function lateFee(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('late').disabled=false;
-      document.getElementById('late').value= '{{tution.late_fee}}';
+    if (sw) {
+      document.getElementById('late').disabled = false;
+      document.getElementById('late').value = '{{tution.late_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('late').value= '';
+    else {
+      document.getElementById('late').value = '';
       document.getElementById('late').disabled;
 
     }
@@ -1358,27 +1439,206 @@
 
   // center Fee
 
-  function centerFee(id){
+  function centerFee(id) {
     var sw = document.getElementById(id).checked;
     // console.log(sw);
-    if(sw){
-      document.getElementById('center').disabled=false;
-      document.getElementById('center').value= '{{tution.center_fee}}';
+    if (sw) {
+      document.getElementById('center').disabled = false;
+      document.getElementById('center').value = '{{tution.center_fee}}';
       // console.log('{{tution.college_exam_fee}}'*5)
     }
-    else{
-      document.getElementById('center').value= '';
+    else {
+      document.getElementById('center').value = '';
       document.getElementById('center').disabled;
 
     }
     // Check
-    if(isNaN(document.getElementById('center').value)){
-      total+= document.getElementById('center').value;
-      document.getElementById('total').innerHTML= total;
-    }
+    
   }
 
   // late fee ends
+
+  // save payment
+
+  function savePayment(){
+    var total=0.0;
+    
+    if(!isNaN( parseFloat(document.getElementById('monthly-fee').value))){
+      total+= parseFloat(document.getElementById('monthly-fee').value);
+      console.log('month: '+total);
+
+    }
+    else{
+      //total+= parseFloat(document.getElementById('monthly-fee').value);
+      // console.log('month: '+total);
+    }    
+    if(!isNaN( parseFloat(document.getElementById('exam').value))){
+      total+= parseFloat(document.getElementById('exam').value);
+      console.log('ex: '+total);
+    }
+   
+  
+    if(!isNaN(parseFloat(document.getElementById('board').value))){
+      total+= parseFloat(document.getElementById('board').value);
+      console.log('board: '+total);
+    }
+    
+   
+    
+    if(!isNaN(parseFloat(document.getElementById('development').value))){
+      total+= parseFloat(document.getElementById('development').value);
+    }
+    
+  
+    if(!isNaN(parseFloat(document.getElementById('mp').value))){
+      total+= parseFloat(document.getElementById('mp').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('library').value))){
+      total+= parseFloat(document.getElementById('library').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('clg-sports').value))){
+      total+= parseFloat(document.getElementById('clg-sports').value);
+    }
+    
+    
+    if(!isNaN(parseFloat(document.getElementById('board-sports').value))){
+      total+= parseFloat(document.getElementById('board-sports').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('poor').value))){
+      total+= parseFloat(document.getElementById('poor').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('st').value))){
+      total+= parseFloat(document.getElementById('st').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('cl').value))){
+      total+= parseFloat(document.getElementById('cl').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('admissin').value))){
+      total+= parseFloat(document.getElementById('admissin').value);
+    }
+    
+    if(!isNaN(parseFloat(document.getElementById('reg').value))){
+      total+= parseFloat(document.getElementById('reg').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('rov-clg').value))){
+      total+= parseFloat(document.getElementById('rov-clg').value);
+    }
+    
+    if(!isNaN(parseFloat(document.getElementById('rov-board').value))){
+      total+= parseFloat(document.getElementById('rov-board').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('transfer').value))){
+      total+= parseFloat(document.getElementById('transfer').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('id').value))){
+      total+= parseFloat(document.getElementById('id').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('certificate').value))){
+      total+= parseFloat(document.getElementById('certificate').value);
+    }
+    
+    
+    if(!isNaN(parseFloat(document.getElementById('ret').value))){
+      total+= parseFloat(document.getElementById('ret').value);
+    }
+   
+    
+    if(!isNaN(parseFloat(document.getElementById('test').value))){
+      total+= parseFloat(document.getElementById('test').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('paper').value))){
+      total+= parseFloat(document.getElementById('paper').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('practical').value))){
+      total+= parseFloat(document.getElementById('practical').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('water').value))){
+      total+= parseFloat(document.getElementById('water').value);
+    }
+    
+    if(!isNaN(parseFloat(document.getElementById('management').value))){
+      total+= parseFloat(document.getElementById('management').value);
+    }
+    
+
+    if(!isNaN(parseFloat(document.getElementById('fourth').value))){
+      total+= parseFloat(document.getElementById('fourth').value);
+    }
+    
+    if(!isNaN(parseFloat(document.getElementById('late').value))){
+      total+= parseFloat(document.getElementById('late').value);
+    }
+    
+    if(!isNaN(parseFloat(document.getElementById('center').value))){
+      total+= parseFloat(document.getElementById('center').value);
+    }
+   
+    
+    document.getElementById("total").innerHTML = total;
+    document.getElementById("monthly-tuition-fee-id").value = total;
+    document.getElementById("monthly-list-id").value = tmp;
+    console.log(total);
+
+    
+
+    /*   
+     
+   
+    document.getElementById('').disabled = true;
+    // document.getElementById('').disabled = true;
+    // document.getElementById('').disabled = true;
+    document.getElementById('').disabled = true;
+    document.getElementById('').disabled = true;
+    // document.getElementById('').disabled = true;
+    // document.getElementById('').disabled = true;
+    // document.getElementById('').disabled = true;
+    // document.getElementById('').disabled = true;
+    // document.getElementById('').disabled = true;
+    // document.getElementById('').disabled = true;
+    // document.getElementById('').disabled = true;
+    document.getElementById('').disabled = true;
+    // document.getElementById('').disabled = true;
+    document.getElementById('').disabled = true;
+    document.getElementById('').disabled = true;
+    document.getElementById('').disabled = true;
+    document.getElementById('').disabled = true;
+    document.getElementById('').disabled = true;
+    document.getElementById('').disabled = true;
+    document.getElementById('').disabled = true;
+    document.getElementById('').disabled = true;
+    document.getElementById('').disabled = true;
+    document.getElementById('').disabled = true;
+
+    */
+  }
+
+  // save payment ends
 
   /*
   $('#button').on('click', function () {

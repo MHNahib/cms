@@ -1242,51 +1242,77 @@ def payment(request, id):
         exam= request.POST.get('payexam', "")
         others= request.POST.get('payothers', "")
 
+        total= request.POST['total-fee']
+        print('total: ' ,total)
+
         # FEE HERE 
         if fee == "True" :
-            # print("ok on fee")
-            monthly_fee = request.POST['monthly-tuition-fee']
-            print(monthly_fee)
-
+            print("ok on fee")
+            monthly_fee = request.POST.get('monthly-tuition-fee')
+            monthly_list = request.POST.get('monthly-list')
+            monthly_list= monthly_list.split(",")
+            # for i in monthly_list:
+            #     print(i)
+            #     print()
 
         # ADMISSION PAYMENT HERE 
         if admission == "True" :
-            admission_fee = request.POST['mp-fee']
-            library_fee = request.POST['library-fee']
-            poor_fund = request.POST['poor-fund']
-            st_fee = request.POST['st-fee']
-            cl_fee = request.POST['cl-fee']
-            id_fee = request.POST['id-fee']
-            # print(admission_fee)
-            # print(library_fee)
-            # print(poor_fund)
-            # print(cl_fee)
-            # print(st_fee)
-            # print(id_fee)
+            mp = request.POST.get('mp-fee')
+            admission_fee = request.POST.get('admissin')
+            library_fee = request.POST.get('library-fee')
+            poor_fund = request.POST.get('poor-fund')
+            st_fee = request.POST.get('st-fee')
+            cl_fee = request.POST.get('cl-fee')
+            id_fee = request.POST.get('id-fee')
+            reg = request.POST.get('reg')
+            rov_college = request.POST.get('rov-clg')
+            rov_board = request.POST.get('rov-board')
+            print('admission: ', mp)
+            print('admission: ', admission_fee)
+            print('library: ',library_fee)
+            print('Poor: ',poor_fund)
+            print('clg: ',cl_fee)
+            print('st: ',st_fee)
+            print('id ',id_fee)
 
 
         # EXAM PAYMENT HERE 
         if exam == "True" :
-            exam_fee = request.POST['exam-fee']
-            board_exam_fee = request.POST['board-fee']
-            # print(exam_fee)
-            # print(board_exam_fee)
+            exam_fee = request.POST.get('exam-fee')
+            board_exam_fee = request.POST.get('board-fee')
+            print('exam_fee:',exam_fee)
+            print('board_exam_fee: ',board_exam_fee)
 
 
         # OTHERS PAYMENT HERE 
         if others == "True" :
-            clg_sports_fee = request.POST['clg-sports-fee']
-            board_sports_fee = request.POST['board-sports-fee']
-            transfer_fee = request.POST['transfer-fee']
-            certificate_fee = request.POST['certificate-fee']
-            ret_fee = request.POST['ret-fee']
-            test_fee = request.POST['test-fee']
-            paper_fee = request.POST['paper-fee']
-            practical_fee = request.POST['practical-fee']
-            management_fee = request.POST['management-fee']
-            fourth_fee = request.POST['fourth-fee']
-            late_fee = request.POST['late-fee']
-            center_fee = request.POST['center-fee']
+            clg_sports_fee = request.POST.get('clg-sports-fee')
+            board_sports_fee = request.POST.get('board-sports-fee')
+            transfer_fee = request.POST.get('transfer-fee')
+            certificate_fee = request.POST.get('certificate-fee')
+            ret_fee = request.POST.get('ret-fee')
+            test_fee = request.POST.get('test-fee')
+            paper_fee = request.POST.get('paper-fee')
+            practical_fee = request.POST.get('practical-fee')
+            water = request.POST.get('water')
+            management_fee = request.POST.get('management-fee')
+            fourth_fee = request.POST.get('fourth-fee')
+            late_fee = request.POST.get('late-fee')
+            center_fee = request.POST.get('center-fee')
+
+            print(clg_sports_fee)
+            print(board_sports_fee)
+            print(transfer_fee)
+            print(certificate_fee)
+            print(ret_fee)
+            print(ret_fee)
+            print(test_fee)
+            print(paper_fee)
+            print(practical_fee)
+            print(management_fee)
+            print(fourth_fee)
+            print(late_fee)
+            print(center_fee)
         # print("fee "+fee)
         # print("fee "+admission)
         # print("fee "+exam)
