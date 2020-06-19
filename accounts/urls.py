@@ -60,6 +60,8 @@ urlpatterns = [
     path('payment/', views.monthly_payment, name='monthly-payment'),
     path('payment/donation/', views.donation, name='donation'),
     path('payment/<str:id>/', views.payment, name='payment'),
+    path('pardon/<str:id>/', views.pardon , name='pardon'),
+    path('expense/', views.expense , name='expense'),
     
 
     path('activate/<uidb64>/<token>/',views.activate, name='activate'),

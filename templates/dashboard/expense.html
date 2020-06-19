@@ -1,0 +1,349 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+{% load static %}
+
+<!-- Bootstrap Switch Button CDN -->
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+  rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
+<style>
+  .hide {
+    display: none;
+  }
+
+  .disable {
+    display: none;
+  }
+</style>
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  {%	include	"dashboard/nav.html"	with	user=user	%}
+
+  <!-- SIDEBAR -->
+  {%	include	"dashboard/sidebar.html"	with	user=user	%}
+
+  <div class="content-header">
+    <div class="container-fluid">
+
+    </div><!-- /.container-fluid -->
+  </div>
+  <div class="content-wrapper" style="min-height: 1244.06px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    <form method="POST">
+      {% csrf_token %}
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+         
+          <div class="row">
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title container">Payment/ Expenses</h3>
+                </div>
+
+                <div class="card-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <!-- GOVT SALARY -->
+                      <div class="col-md-12 mb-3">                        
+                        <label id="govt-salary-l" for="govt-salary">Govt. salary</label>
+                        <input type="number" class="form-control" id="govt-salary" name="govt-salary-fee"
+                          placeholder="Govt. salary">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- HOUSE RENT AND BONUS -->
+                      <div class="col-md-12 mb-3">                        
+                        <label id="house-rent-bonus-l" for="house-rent-bonus">House rent and bonous</label>
+                        <input type="number" class="form-control" id="house-rent-bonus" name="house-rent-bonus-fee"
+                          placeholder="House rent and bonous">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- BOARD/ UNIVERSITY REGISTRATION FEE -->
+                      <div class="col-md-12 mb-3">                        
+                        <label id="board-reg-fee-l" for="board-reg">Board/ University registration fee</label>
+                        <input type="number" class="form-control" id="board-reg" name="board-reg-fee"
+                          placeholder="Board/ University registration fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- COLLEGE EXAMINATION EXPENSES -->
+                      <div class="col-md-12 mb-3">                        
+                        <label id="clg-exam-l" for="clg-exam">College Examination Expenses</label>
+                        <input type="number" class="form-control" id="clg-exam" name="clg-exam-fee"
+                          placeholder="College Examination Expenses">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- COLLEGE Development EXPENSES -->
+                      <div class="col-md-12 mb-3">                        
+                        <label id="clg-dev-l" for="clg-dev">College Development Expenses</label>
+                        <input type="number" class="form-control" id="clg-dev" name="clg-dev-fee"
+                          placeholder="College Development Expenses">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                     
+                      <!-- MILAD/ PUJA-->
+                      <div class="col-md-12 mb-3">                        
+                        <label id="mp-l" for="mp">Milad/ Puja Expenses</label>
+                        <input type="number" class="form-control" id="mp" name="mp-fee" placeholder="Milad/ Puja">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- LIBRARY FEE -->
+                      <div class="col-md-12 mb-3">
+                        
+                        <label id="library-l"  for="library">Library Expenses</label>
+                        <input type="number" class="form-control" id="library" name="library-fee"
+                          placeholder="Library Expenses">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- COLLEGE SPORTS FEE -->
+                      <div class="col-md-12 mb-3">                        
+                        <label  id="clg-sports-l" for="clg-sports">Sports Expenses</label>
+                        <input type="number" class="form-control" id="clg-sports" name="clg-sports-fee"
+                          placeholder="Sports Expenses">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      
+                      <!-- POOR FUND -->
+                      <div class="col-md-12 mb-3">
+                        
+                        <label  id="poor-l" for="poor">Poor fund Expenses</label>
+                        <input type="number" class="form-control" id="poor" name="poor-fund"
+                          placeholder="Poor fund">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- SCIENCE AND TECH FEE -->
+                      <div class="col-md-12 mb-3">
+                        
+                        <label id="st-l" for="st">Science and Technologic Expenses</label>
+                        <input type="number" class="form-control" id="st" name="st-fee"
+                          placeholder="Science and Technologic Expenses">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- COMPUTER LAB FEE -->
+                      <div class="col-md-12 mb-3">
+                        
+                        <label id="cl-l" for="cl">Computer lab Expenses</label>
+                        <input type="number" class="form-control" id="cl" name="cl-fee"
+                          placeholder="Computer lab Expenses">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- Entertainment Expenses FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="sw-12">
+                        <label class="custom-control-label" for="sw-12">
+                          <label for="admissin">Admission fee</label>
+                        </label>
+                      </div> -->
+                        <label  id="entertainment-exp-l" for="entertainment-exp">Entertainment Expenses</label>
+                        <input type="number" class="form-control" id="entertainment-exp" name="entertainment-exp-fee"
+                          placeholder="Entertainment Expenses">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- Conveyance FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="sw-13">
+                        <label class="custom-control-label" for="sw-13">
+                          <label for="reg">Registration fee</label>
+                        </label>
+                      </div> -->
+                        <label  id="conveyance-l" for="conveyance">Conveyance</label>
+                        <input type="number" class="form-control" id="conveyance-control" name="conveyance-fee"
+                          placeholder="Conveyance">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- Printing and Stationery FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="sw-14">
+                        <label class="custom-control-label" for="sw-14">
+                          <label for="rov-clg">Rovers/ Girls guide College fee</label>
+                        </label>
+                      </div> -->
+                        <label id="printing-stationary-l" for="printing-stationary">Printing and Stationery</label>
+                        <input type="number" class="form-control" id="printing-stationary" name="printing-stationary-fee"
+                          placeholder="Printing and Stationery">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- Management Expenses -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="sw-15">
+                        <label class="custom-control-label" for="sw-15">
+                          <label for="rov-board">Rovers/ Girls guide Board/ University fee</label>
+                        </label>
+                      </div> -->
+                        <label id="management-exp-l" for="management-exp">Management Expenses</label>
+                        <input type="number" class="form-control" id="management-exp" name="management-exp-fee"
+                          placeholder="Management Expenses">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- TRANSFER FEE -->
+                      <!-- <div class="col-md-12 mb-3">
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="sw-16">
+                        <label class="custom-control-label" for="sw-16">
+                          <label for="transfer">Transfer fee</label>
+                        </label>
+                      </div>
+                      <input type="number" class="form-control" id="transfer" name="transfer-fee"
+                        placeholder="Transfer fee">
+                      <div class="invalid-feedback">
+                        Must contain number.
+                      </div>
+                    </div> -->
+                      <!-- Others Expenses -->
+                      <div class="col-md-12 mb-3">
+                        
+                        <label id="others-exp-l" for="transfer">Others Expenses</label>
+                        <input type="number" class="form-control" id="others-exp" name="others-exp-fee"
+                          placeholder="Others Expenses">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- water bill -->
+                      <div class="col-md-12 mb-3">
+                        
+                        <label  id="water-bill-l" for="water-bill">Water bill</label>
+                        <input type="number" class="form-control" id="water-bill" name="water-bill-fee" placeholder="Water bill">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- Electricity bill -->
+                      <div class="col-md-12 mb-3">
+                        
+                        <label  id="electric-bill-l" for="electric-bill">Electricity bill</label>
+                        <input type="number" class="form-control" id="electric-bill" name="electric-bill-fee" placeholder="Electricity bill">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- Telephone bill -->
+                      <div class="col-md-12 mb-3">
+                        
+                        <label  id="telephone-bill-l" for="telephone-bill">Telephone bill</label>
+                        <input type="number" class="form-control" id="telephone-bill" name="telephone-bill-fee" placeholder="Telephone bill">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- Bank charges -->
+                      <div class="col-md-12 mb-3">
+                        
+                        <label  id="bank-charges-l" for="bank-charges">Bank charges</label>
+                        <input type="number" class="form-control" id="bank-charges" name="bank-charges-fee" placeholder="Bank charges">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                    
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="container"> -->
+                        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                        <!-- <button type="submit" class="btn btn-info"><i class="fa fa-print" aria-hidden="true"></i>
+                            Print</button> -->
+                        
+                        <!-- </div> -->
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div><!-- /.container-fluid -->
+
+
+
+      </section>
+      <!-- /.content -->
+    </form>
+  </div>
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 1991-
+      <script type="text/javascript">
+        document.write(new Date().getFullYear());
+      </script> <a href="{% url 'index' %}">Khan Bahadur Awlad Hossein Degree College</a>.</strong>
+    All rights reserved.
+
+  </footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+  // Add the following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function () {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+</script>
+<!-- bs-custom-file-input -->
+<script src="{% static 'dashboard/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dashboard/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dashboard/dist/js/demo.js' %}"></script>
+
+<script>
+ 
+</script>
+
+
+
+{% endblock %}

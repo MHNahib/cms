@@ -1,0 +1,385 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+{% load static %}
+
+<!-- Bootstrap Switch Button CDN -->
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+  rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
+<style>
+  .hide {
+    display: none;
+  }
+
+  .disable {
+    display: none;
+  }
+</style>
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  {%	include	"dashboard/nav.html"	with	user=user	%}
+
+  <!-- SIDEBAR -->
+  {%	include	"dashboard/sidebar.html"	with	user=user	%}
+
+  <div class="content-header">
+    <div class="container-fluid">
+
+    </div><!-- /.container-fluid -->
+  </div>
+  <div class="content-wrapper" style="min-height: 1244.06px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    <form method="POST">
+      {% csrf_token %}
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+              <!-- general form elements -->
+              <div class="card card-success">
+                <div class="card-header">
+                  <h3 class="card-title container">Students information</h3>
+                </div>
+
+                <div class="card-body">
+                  <div class="form-group">
+                    <!-- <div class="row"> -->
+                    <div class="col-6">
+                      <h6> <b>Name:</b> {{student.name}}</h6>
+                    </div>
+                    <div class="col-6">
+                      <h6><b>Roll:</b> {{student.roll}}</h6>
+                    </div>
+                    <div class="col-6">
+                      <h6><b>Class:</b> {{student.course}} ( {{student.group}} )</h6>
+                    </div>
+                    <div class="col-6">
+                      <h6><b>Year:</b> </h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title container">Paid month list</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <!-- <form method="POST"> -->
+                <!-- {% csrf_token %} -->
+                <div class="card-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-3">
+                        <div class="icheck-success ">
+                          <input type="checkbox" id="jan" value="January">
+                          <label for="jan">
+                            January
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="feb" value="February">
+                          <label for="feb">
+                            February
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="mar" value="March">
+                          <label for="mar">
+                            March
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="col-3">
+                        <div class="icheck-success">
+                          <input type="checkbox" id="apr" value="April">
+                          <label for="apr">
+                            April
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="may" value="May">
+                          <label for="may">
+                            May
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="june" value="June">
+                          <label for="june">
+                            June
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="col-3">
+                        <div class="icheck-success">
+                          <input type="checkbox" id="jul" value="July">
+                          <label for="jul">
+                            July
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="aug" value="August">
+                          <label for="aug">
+                            August
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="sept" value="September">
+                          <label for="sept">
+                            September
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="col-3">
+                        <div class="icheck-success">
+                          <input type="checkbox" id="oct" value="Octobor">
+                          <label for="oct">
+                            Octobor
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="nov" value="Novembor">
+                          <label for="nov">
+                            Novembor
+                          </label>
+                        </div>
+                        <div class="icheck-success">
+                          <input type="checkbox" id="dec" value="Decembor">
+                          <label for="dec">
+                            Decembor
+                          </label>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div class="form-group">
+
+
+                  </div>
+                  <div class="form-group">
+
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+
+                <!-- <div class="card-footer">
+                  <button type="submit" class="btn btn-primary swalDefaultSuccess">Add new depertment</button>
+                </div> -->
+                <!-- </form> -->
+
+                <!-- {% if messages %}
+              <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+              </div>
+              {% endif %} -->
+
+              </div>
+              <!-- /.card -->
+
+
+            </div>
+            <!--/.col (left) -->
+            <!-- right column -->
+
+            <!--/.col (right) -->
+          </div>
+          <!-- /.row -->
+          <div class="row">
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title container">Pardon fees</h3>
+                </div>
+
+                <div class="card-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <!-- TUITION FEE -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="sw-1">
+                        <label class="custom-control-label" for="sw-1">
+                          <label for="monthly-fee">Monthly Tuition fee</label>
+                        </label>
+                      </div> -->
+                        <label id="monthly-fee-l" for="monthly-fee">Fee to be pardoned</label>
+                        <input type="text" class="form-control" id="monthly-fee" name="monthly-tuition-fee"
+                          placeholder="Tuition fee" required>
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+
+                      <!-- CENTER FEE -->
+                      <div class="col-md-12 mb-3">
+                        <input type="number" class="form-control hide" id="monthly-tuition-fee-id" name="total-fee"
+                          placeholder="Center fee">
+                        <input type="text" class="form-control hide" id="monthly-list-id" name="monthly-list"
+                          placeholder="Center fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
+                      <!-- <div class="col-md-12 mb-3">
+                        <h5>Total fee: &#2547; <span id="total">0.0</span></h5>
+                      </div> -->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="container"> -->
+                        <!-- <button class="btn btn-success"><i class="fa fa-save"></i> Save</button> -->
+                        <!-- <button type="submit" class="btn btn-info"><i class="fa fa-print" aria-hidden="true"></i>
+                            Print</button> -->
+                        <!-- popup -->
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"
+                          onclick="savePayment();">
+                          <i class="fa fa-save"></i> Save
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                          aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Total amount</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <h5>Total fee to be paid: &#2547; <span id="total">0.0</span></h5>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" id="submit-btn" class="btn btn-primary">Save changes</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /popup -->
+                        <!-- </div> -->
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div><!-- /.container-fluid -->
+
+
+
+      </section>
+      <!-- /.content -->
+    </form>
+  </div>
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 1991-
+      <script type="text/javascript">
+        document.write(new Date().getFullYear());
+      </script> <a href="{% url 'index' %}">Khan Bahadur Awlad Hossein Degree College</a>.</strong>
+    All rights reserved.
+
+  </footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+  // Add the following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function () {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+</script>
+<!-- bs-custom-file-input -->
+<script src="{% static 'dashboard/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dashboard/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dashboard/dist/js/demo.js' %}"></script>
+
+<script>
+
+  // check box
+
+  var tmp = [];
+
+  $("input[type='checkbox']").change(function () {
+    var checked = $(this).val();
+    if (checked != 'on' || checked != 'on') {
+      if ($(this).is(':checked')) {
+        tmp.push(checked);
+      } else {
+        tmp.splice($.inArray(checked, tmp), 1);
+      }
+    }
+
+    // console.log(tmp);
+  });
+
+  // check box ends 
+
+  // save value
+
+  function savePayment() {
+    var total = 0.0;
+    if (!isNaN(parseFloat(document.getElementById('monthly-fee').value))) {
+      total += parseFloat(document.getElementById('monthly-fee').value);
+    }
+
+
+    document.getElementById("total").innerHTML = total;
+    document.getElementById("monthly-tuition-fee-id").value = total;
+    document.getElementById("monthly-list-id").value = tmp;
+    // console.log(document.getElementById("monthly-list-id").value);
+    if (document.getElementById("monthly-tuition-fee-id").value.length == 0 || document.getElementById("monthly-tuition-fee-id").value=='0') {
+      document.getElementById('submit-btn').disabled = true;  
+    }
+    else{
+      document.getElementById('submit-btn').disabled = false;  
+    }
+  }
+
+</script>
+
+
+
+{% endblock %}

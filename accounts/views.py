@@ -11,7 +11,8 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from .models import Subject, Student, StudentEducation, StudentAbout, Teacher, TeacherEducation, TeacherAbout, Depertment, SessionYear, Staff, Year, StudentPayment, TutionFee, OthersCharge
+# from .models import Subject, Student, StudentEducation, StudentAbout, Teacher, TeacherEducation, TeacherAbout, Depertment, SessionYear, Staff, Year, StudentPayment, TutionFee, OthersCharge, MonthlyPayment, TotalPaidMonths
+from .models import *
 # from .serializerElements import SessionSerializer
 from django.http import JsonResponse
 from non_working_files.models import Notice, Gallery
@@ -1248,7 +1249,7 @@ def payment(request, id):
         # FEE HERE 
         if fee == "True" :
             print("ok on fee")
-            monthly_fee = request.POST.get('monthly-tuition-fee')
+            monthly_fee = float(request.POST.get('monthly-tuition-fee'))
             monthly_list = request.POST.get('monthly-list')
             monthly_list= monthly_list.split(",")
             # for i in monthly_list:
@@ -1257,16 +1258,16 @@ def payment(request, id):
 
         # ADMISSION PAYMENT HERE 
         if admission == "True" :
-            mp = request.POST.get('mp-fee')
-            admission_fee = request.POST.get('admissin')
-            library_fee = request.POST.get('library-fee')
-            poor_fund = request.POST.get('poor-fund')
-            st_fee = request.POST.get('st-fee')
-            cl_fee = request.POST.get('cl-fee')
-            id_fee = request.POST.get('id-fee')
-            reg = request.POST.get('reg')
-            rov_college = request.POST.get('rov-clg')
-            rov_board = request.POST.get('rov-board')
+            mp =  float(request.POST.get('mp-fee'))
+            admission_fee =  float(request.POST.get('admissin'))
+            library_fee =  float(request.POST.get('library-fee'))
+            poor_fund =  float(request.POST.get('poor-fund'))
+            st_fee =  float(request.POST.get('st-fee'))
+            cl_fee =  float(request.POST.get('cl-fee'))
+            id_fee =  float(request.POST.get('id-fee'))
+            reg =  float(request.POST.get('reg'))
+            rov_college =  float(request.POST.get('rov-clg'))
+            rov_board = float( request.POST.get('rov-board'))
             print('admission: ', mp)
             print('admission: ', admission_fee)
             print('library: ',library_fee)
@@ -1278,27 +1279,27 @@ def payment(request, id):
 
         # EXAM PAYMENT HERE 
         if exam == "True" :
-            exam_fee = request.POST.get('exam-fee')
-            board_exam_fee = request.POST.get('board-fee')
+            exam_fee = float(request.POST.get('exam-fee'))
+            board_exam_fee = float(request.POST.get('board-fee'))
             print('exam_fee:',exam_fee)
             print('board_exam_fee: ',board_exam_fee)
 
 
         # OTHERS PAYMENT HERE 
         if others == "True" :
-            clg_sports_fee = request.POST.get('clg-sports-fee')
-            board_sports_fee = request.POST.get('board-sports-fee')
-            transfer_fee = request.POST.get('transfer-fee')
-            certificate_fee = request.POST.get('certificate-fee')
-            ret_fee = request.POST.get('ret-fee')
-            test_fee = request.POST.get('test-fee')
-            paper_fee = request.POST.get('paper-fee')
-            practical_fee = request.POST.get('practical-fee')
-            water = request.POST.get('water')
-            management_fee = request.POST.get('management-fee')
-            fourth_fee = request.POST.get('fourth-fee')
-            late_fee = request.POST.get('late-fee')
-            center_fee = request.POST.get('center-fee')
+            clg_sports_fee = float(request.POST.get('clg-sports-fee'))
+            board_sports_fee = float(request.POST.get('board-sports-fee'))
+            transfer_fee = float(request.POST.get('transfer-fee'))
+            certificate_fee = float(request.POST.get('certificate-fee'))
+            ret_fee = float(request.POST.get('ret-fee'))
+            test_fee = float(request.POST.get('test-fee'))
+            paper_fee = float(request.POST.get('paper-fee'))
+            practical_fee =float( request.POST.get('practical-fee'))
+            water = float(request.POST.get('water'))
+            management_fee = float(request.POST.get('management-fee'))
+            fourth_fee = float(request.POST.get('fourth-fee'))
+            late_fee = float(request.POST.get('late-fee'))
+            center_fee = float(request.POST.get('center-fee'))
 
             print(clg_sports_fee)
             print(board_sports_fee)
@@ -1333,6 +1334,94 @@ def payment(request, id):
     # print(pay.user.id)
     # print(pay.monthly)
     return render(request, 'dashboard/payment.html', context)   
+
+    
+# PARDON
+def pardon(request, id):
+
+    if request.method == 'POST':
+        monthly_fee = float(request.POST.get('monthly-tuition-fee'))
+        monthly_list = request.POST.get('monthly-list')
+        monthly_list= monthly_list.split(",")  
+        print(monthly_fee)
+        for i in monthly_list:
+            print(i)   
+
+        
+
+    # user= User.objects.get(id=id)
+    student= Student.objects.get(id= id)
+    user= User.objects.get(id= student.user.id)
+    # pay= StudentPayment.objects.get(user= student)
+    # tution= TutionFee.objects.get(class_name= student.course)
+    # others= OthersCharge.objects.all().first()
+    
+    # context= {'user': user, 'student': student, 'pay': pay, 'tution': tution, 'others': others}
+    context= {'user': user, 'student': student}
+    # print(student.name)
+    # print(student.id)
+    # print(student.email)
+    # print(user.email)
+    # print(pay.user.id)
+    # print(pay.monthly)
+    return render(request, 'dashboard/pardon.html', context)   
+
+
+# PARDON
+def expense(request):
+
+    if request.method == 'POST':
+        # monthly_fee = request.POST.get('monthly-tuition-fee')
+        govt_salary =  float(request.POST.get('govt-salary-fee'))
+        house_rent_bonus =  float(request.POST.get('house-rent-bonus-fee'))
+        board_reg_fee =  float(request.POST.get('board-reg-fee'))
+        # university_reg_fee =  request.POST.get('monthly-tuition-fee'))
+        clg_exam_fee =  float(request.POST.get('clg-exam-fee'))
+        clg_dev_fee =  float(request.POST.get('clg-dev-fee'))
+        milad_puja =  float(request.POST.get('mp-fee'))
+        library_exp =  float(request.POST.get('library-fee'))
+        sports_exp =  float(request.POST.get('clg-sports-fee'))
+        poor_fund =  float(request.POST.get('poor-fund'))
+        water_bill =  float(request.POST.get('water-bill-fee'))
+        electric_bill =  float(request.POST.get('electric-bill-fee'))
+        bank_charges =  float(request.POST.get('bank-charges-fee'))
+        telephone_bill =  float(request.POST.get('telephone-bill-fee'))
+        st_exp =  float(request.POST.get('st-fee'))
+        comp_lab =  float(request.POST.get('cl-fee'))
+        entertainment_exp =  float(request.POST.get('entertainment-exp-fee'))
+        conveyance =  float(request.POST.get('conveyance-fee'))
+        printing_stationary =  float(request.POST.get('printing-stationary-fee'))
+        management_exp = float( request.POST.get('management-exp-fee'))
+        # tutionfee_and_others_perdon =  request.POST.get('monthly-tuition-fee')
+        others_exp =  float(request.POST.get('others-exp-fee'))
+                    
+        # print(govt_salary)
+        # print(house_rent_bonus)
+        # print(board_reg_fee)
+        # # university_reg_fee
+        # print(clg_exam_fee +10)
+        # print(clg_dev_fee)
+        # print(milad_puja)
+        # print(library_exp)
+        # print(sports_exp)
+        # print(poor_fund)
+        # print(water_bill)
+        # print(electric_bill)
+        # print(bank_charges)
+        # print(telephone_bill)
+        # print(st_exp)
+        # print(comp_lab)
+        # print(entertainment_exp)
+        # print(conveyance)
+        # print(printing_stationary)
+        # print(management_exp)
+        # # tutionfee_and_others_perdon
+        # print(others_exp)
+
+    
+    context= {}
+    
+    return render(request, 'dashboard/expense.html', context)   
 
     
 # MONTHLY PAYMENT
