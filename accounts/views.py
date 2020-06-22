@@ -48,6 +48,15 @@ from django.core.mail import EmailMessage
 #     context= {'subject': subject, 'data': data}
 #     return render(request, 'accounts/test.html', context)
 
+# FLOAT CHECKER
+
+def isFloat(number):
+    try:
+        return float(number)
+        
+    except:
+        return False
+
 
 # GENERATE PASSWORD
 
@@ -1248,10 +1257,35 @@ def payment(request, id):
 
         # FEE HERE 
         if fee == "True" :
-            print("ok on fee")
-            monthly_fee = float(request.POST.get('monthly-tuition-fee'))
-            monthly_list = request.POST.get('monthly-list')
-            monthly_list= monthly_list.split(",")
+            # print("ok on fee")
+            # FLOAT CHECK
+            monthly_fee = isFloat(request.POST.get('monthly-tuition-fee'))
+            if type(monthly_fee )!= bool:
+                # DB CONNECTION
+                monthly_list = request.POST.get('monthly-list')
+                monthly_list= monthly_list.split(",")
+                monthly_payment_fee= MonthlyPayment(user=Student.objects.get(id=id) , amount= monthly_fee , student_year= Student.objects.get(id=id).student_year, month= json.dumps(monthly_list))
+                monthly_payment_fee.save()
+            else:
+                return render(request, 'accounts/failed.html', status= 401)
+
+           
+            # print(monthly_list)
+            # for i in monthly_list:
+            #     print(i)
+            
+            # for month_name in monthly_list:
+            #     payment_months= TotalPaidMonths(monthly_payment= MonthlyPayment.objects.filter(user= Student.objects.get(id=id)), month= month_name)
+            #     payment_months.save()
+            # try:
+            #     payment_months= TotalPaidMonths(monthly_payment= monthly_payment_fee, month= json.dumps(monthly_list))
+            #     payment_months.save()
+            # except :
+            #     return render(request, 'accounts/failed.html', status= 401)
+            
+
+            
+
             # for i in monthly_list:
             #     print(i)
             #     print()
@@ -1325,14 +1359,41 @@ def payment(request, id):
     pay= StudentPayment.objects.get(user= student)
     tution= TutionFee.objects.get(class_name= student.course)
     others= OthersCharge.objects.all().first()
+  
+      
+    months= MonthlyPayment.objects.filter(user= student, student_year=student.student_year)
+    jsonDec = json.decoder.JSONDecoder()
+    # m_list=[]
+    # for m in months:
+    #     if m_list:
+    #         row=[]
+    #         row=  jsonDec.decode(m.month)
+    #         for item in row:
+    #             m_list.append(item)
+    #     else:
+    #         m_list=  jsonDec.decode(m.month)
+    m_list=[]
+    for m in months:
+        if m_list:
+            row= []
+            row= jsonDec.decode(m.month) 
+            for item in row:   
+                m_list.append(item)
+        else:
+            m_list=  jsonDec.decode(m.month)
+            
+       
     
-    context= {'user': user, 'student': student, 'pay': pay, 'tution': tution, 'others': others}
+    
+    
+    context= {'user': user, 'student': student, 'pay': pay, 'tution': tution, 'others': others, 'months': m_list}
     # print(student.name)
     # print(student.id)
     # print(student.email)
     # print(user.email)
     # print(pay.user.id)
     # print(pay.monthly)
+    print(m_list)
     return render(request, 'dashboard/payment.html', context)   
 
     

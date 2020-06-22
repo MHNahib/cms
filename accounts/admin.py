@@ -16,7 +16,8 @@ admin.site.register(StudentPayment)
 admin.site.register(TutionFee)
 admin.site.register(OthersCharge)
 admin.site.register(MonthlyPayment)
-admin.site.register(TotalPaidMonths)
+# admin.site.register(TotalPaidMonths)
+# admin.site.register(YearWiseMonths)
 
 # INCOME TABLE STARTS (students part)
 # -------------------------------------------

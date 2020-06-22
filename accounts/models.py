@@ -99,19 +99,29 @@ class MonthlyPayment(models.Model):
     user= models.ForeignKey(Student, on_delete=models.CASCADE)
     amount= models.FloatField(default=0)
     student_year= models.CharField(null=True, max_length=55)
+    month= models.TextField(null=True)
     date_time= models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.user.name
 
 # STUDENTS MONTHLY PAID MONTHS
-class TotalPaidMonths(models.Model):
-    monthly_payment= models.ForeignKey(MonthlyPayment, on_delete=models.CASCADE)
-    month= models.CharField(null=True,  max_length=55)
+# class TotalPaidMonths(models.Model):
+#     monthly_payment= models.OneToOneField(MonthlyPayment, on_delete=models.CASCADE)
+#     month= models.TextField(null=True)
 
-    def __str__(self):
-        return self.monthly_payment.user.name
+#     def __str__(self):
+#         return self.monthly_payment.user.name
 
+# STUDENT YEAR WISE MONTH ADDITON
+# class YearWiseMonths(models.Model):
+#     user= models.OneToOneField(Student, on_delete=models.CASCADE)    
+#     student_year= models.CharField(null=True, max_length=55)
+#     month= models.TextField(null=True)
+
+#     def __str__(self):
+#         return self.user.name
 
 # College Exam Fee
 class CollegeExamFee(models.Model):

@@ -108,11 +108,16 @@
                 <!-- form start -->
                 <!-- <form method="POST"> -->
                 <!-- {% csrf_token %} -->
+
                 <div class="card-body">
                   <div class="form-group">
+                    <!-- check all the moths -->
+
                     <div class="row">
+
                       <div class="col-3">
                         <div class="icheck-success ">
+
                           <input type="checkbox" id="jan" value="January">
                           <label for="jan">
                             January
@@ -196,6 +201,7 @@
                       </div>
 
                     </div>
+
 
                   </div>
 
@@ -700,7 +706,8 @@
                             Print</button> -->
                         <!-- popup -->
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" onclick="savePayment();">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"
+                          onclick="savePayment();">
                           <i class="fa fa-save"></i> Save
                         </button>
 
@@ -819,41 +826,41 @@
 
 
 
-/*
-  // check box (month)
-  var tmp = [];
-  var len = 0;
-
-  $("input[type='checkbox']").change(function () {
-    var checked = $(this).val();
-    if (checked != 'on' || checked != 'on') {
-      if ($(this).is(':checked')) {
-        tmp.push(checked);
-      } else {
-        tmp.splice($.inArray(checked, tmp), 1);
+  /*
+    // check box (month)
+    var tmp = [];
+    var len = 0;
+  
+    $("input[type='checkbox']").change(function () {
+      var checked = $(this).val();
+      if (checked != 'on' || checked != 'on') {
+        if ($(this).is(':checked')) {
+          tmp.push(checked);
+        } else {
+          tmp.splice($.inArray(checked, tmp), 1);
+        }
       }
-    }
-
-    len = tmp.length;
-    console.log(len);
-    var pay = document.getElementById('monthly-fee');
-    var tk = '{{pay.monthly|floatformat:2}}';
-    console.log(tmp)
-
-    pay.disabled = true;
-    pay.value = tk;
-    var payval = len * tk
-    pay.value = payval;
-    total += payval;
-    document.getElementById('total').innerHTML = total;
-  });
-  // end of check box (month)
-  */
+  
+      len = tmp.length;
+      console.log(len);
+      var pay = document.getElementById('monthly-fee');
+      var tk = '{{pay.monthly|floatformat:2}}';
+      console.log(tmp)
+  
+      pay.disabled = true;
+      pay.value = tk;
+      var payval = len * tk
+      pay.value = payval;
+      total += payval;
+      document.getElementById('total').innerHTML = total;
+    });
+    // end of check box (month)
+    */
 
   // check box
 
   var tmp = [];
-  var len= 0;
+  var len = 0;
   var pay;
   $("input[type='checkbox']").change(function () {
     var checked = $(this).val();
@@ -864,8 +871,8 @@
         tmp.splice($.inArray(checked, tmp), 1);
       }
     }
-    len= tmp.length;
-    pay= document.getElementById('monthly-fee').value= '{{pay.monthly|floatformat:2}}'*len;
+    len = tmp.length;
+    pay = document.getElementById('monthly-fee').value = '{{pay.monthly|floatformat:2}}' * len;
     // console.log(tmp);
   });
 
@@ -994,26 +1001,26 @@
   // monthly fee switch
   function monthlyfee(id) {
 
-  
+
     var fee = document.getElementById(id).checked;
 
     if (fee == true) {
-      
+
       document.getElementById(id).value = "True";
-      pay= document.getElementById('monthly-fee').value= '{{pay.monthly|floatformat:2}}'*len;
+      pay = document.getElementById('monthly-fee').value = '{{pay.monthly|floatformat:2}}' * len;
       document.getElementById('monthly-fee').classList.remove("hide");
       document.getElementById('monthly-fee-l').classList.remove("hide");
-      
+
 
     }
     else {
       document.getElementById(id).value = "False";
-      
-      document.getElementById('monthly-fee').value= 0*len;
-      total-=pay;
+
+      document.getElementById('monthly-fee').value = 0 * len;
+      total -= pay;
       document.getElementById('monthly-fee').classList.add("hide");
       document.getElementById('monthly-fee-l').classList.add("hide");
-      
+
     }
 
 
@@ -1453,159 +1460,159 @@
 
     }
     // Check
-    
+
   }
 
   // late fee ends
 
   // save payment
 
-  function savePayment(){
-    var total=0.0;
-    
-    if(!isNaN( parseFloat(document.getElementById('monthly-fee').value))){
-      total+= parseFloat(document.getElementById('monthly-fee').value);
-      console.log('month: '+total);
+  function savePayment() {
+    var total = 0.0;
+
+    if (!isNaN(parseFloat(document.getElementById('monthly-fee').value))) {
+      total += parseFloat(document.getElementById('monthly-fee').value);
+      console.log('month: ' + total);
 
     }
-    else{
+    else {
       //total+= parseFloat(document.getElementById('monthly-fee').value);
       // console.log('month: '+total);
-    }    
-    if(!isNaN( parseFloat(document.getElementById('exam').value))){
-      total+= parseFloat(document.getElementById('exam').value);
-      console.log('ex: '+total);
     }
-   
-  
-    if(!isNaN(parseFloat(document.getElementById('board').value))){
-      total+= parseFloat(document.getElementById('board').value);
-      console.log('board: '+total);
+    if (!isNaN(parseFloat(document.getElementById('exam').value))) {
+      total += parseFloat(document.getElementById('exam').value);
+      console.log('ex: ' + total);
     }
-    
-   
-    
-    if(!isNaN(parseFloat(document.getElementById('development').value))){
-      total+= parseFloat(document.getElementById('development').value);
-    }
-    
-  
-    if(!isNaN(parseFloat(document.getElementById('mp').value))){
-      total+= parseFloat(document.getElementById('mp').value);
-    }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('library').value))){
-      total+= parseFloat(document.getElementById('library').value);
-    }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('clg-sports').value))){
-      total+= parseFloat(document.getElementById('clg-sports').value);
+    if (!isNaN(parseFloat(document.getElementById('board').value))) {
+      total += parseFloat(document.getElementById('board').value);
+      console.log('board: ' + total);
     }
-    
-    
-    if(!isNaN(parseFloat(document.getElementById('board-sports').value))){
-      total+= parseFloat(document.getElementById('board-sports').value);
-    }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('poor').value))){
-      total+= parseFloat(document.getElementById('poor').value);
-    }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('st').value))){
-      total+= parseFloat(document.getElementById('st').value);
-    }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('cl').value))){
-      total+= parseFloat(document.getElementById('cl').value);
+    if (!isNaN(parseFloat(document.getElementById('development').value))) {
+      total += parseFloat(document.getElementById('development').value);
     }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('admissin').value))){
-      total+= parseFloat(document.getElementById('admissin').value);
-    }
-    
-    if(!isNaN(parseFloat(document.getElementById('reg').value))){
-      total+= parseFloat(document.getElementById('reg').value);
-    }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('rov-clg').value))){
-      total+= parseFloat(document.getElementById('rov-clg').value);
+    if (!isNaN(parseFloat(document.getElementById('mp').value))) {
+      total += parseFloat(document.getElementById('mp').value);
     }
-    
-    if(!isNaN(parseFloat(document.getElementById('rov-board').value))){
-      total+= parseFloat(document.getElementById('rov-board').value);
-    }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('transfer').value))){
-      total+= parseFloat(document.getElementById('transfer').value);
-    }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('id').value))){
-      total+= parseFloat(document.getElementById('id').value);
+    if (!isNaN(parseFloat(document.getElementById('library').value))) {
+      total += parseFloat(document.getElementById('library').value);
     }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('certificate').value))){
-      total+= parseFloat(document.getElementById('certificate').value);
-    }
-    
-    
-    if(!isNaN(parseFloat(document.getElementById('ret').value))){
-      total+= parseFloat(document.getElementById('ret').value);
-    }
-   
-    
-    if(!isNaN(parseFloat(document.getElementById('test').value))){
-      total+= parseFloat(document.getElementById('test').value);
-    }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('paper').value))){
-      total+= parseFloat(document.getElementById('paper').value);
+    if (!isNaN(parseFloat(document.getElementById('clg-sports').value))) {
+      total += parseFloat(document.getElementById('clg-sports').value);
     }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('practical').value))){
-      total+= parseFloat(document.getElementById('practical').value);
-    }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('water').value))){
-      total+= parseFloat(document.getElementById('water').value);
+    if (!isNaN(parseFloat(document.getElementById('board-sports').value))) {
+      total += parseFloat(document.getElementById('board-sports').value);
     }
-    
-    if(!isNaN(parseFloat(document.getElementById('management').value))){
-      total+= parseFloat(document.getElementById('management').value);
-    }
-    
 
-    if(!isNaN(parseFloat(document.getElementById('fourth').value))){
-      total+= parseFloat(document.getElementById('fourth').value);
+
+    if (!isNaN(parseFloat(document.getElementById('poor').value))) {
+      total += parseFloat(document.getElementById('poor').value);
     }
-    
-    if(!isNaN(parseFloat(document.getElementById('late').value))){
-      total+= parseFloat(document.getElementById('late').value);
+
+
+    if (!isNaN(parseFloat(document.getElementById('st').value))) {
+      total += parseFloat(document.getElementById('st').value);
     }
-    
-    if(!isNaN(parseFloat(document.getElementById('center').value))){
-      total+= parseFloat(document.getElementById('center').value);
+
+
+    if (!isNaN(parseFloat(document.getElementById('cl').value))) {
+      total += parseFloat(document.getElementById('cl').value);
     }
-   
-    
+
+
+    if (!isNaN(parseFloat(document.getElementById('admissin').value))) {
+      total += parseFloat(document.getElementById('admissin').value);
+    }
+
+    if (!isNaN(parseFloat(document.getElementById('reg').value))) {
+      total += parseFloat(document.getElementById('reg').value);
+    }
+
+
+    if (!isNaN(parseFloat(document.getElementById('rov-clg').value))) {
+      total += parseFloat(document.getElementById('rov-clg').value);
+    }
+
+    if (!isNaN(parseFloat(document.getElementById('rov-board').value))) {
+      total += parseFloat(document.getElementById('rov-board').value);
+    }
+
+
+    if (!isNaN(parseFloat(document.getElementById('transfer').value))) {
+      total += parseFloat(document.getElementById('transfer').value);
+    }
+
+
+    if (!isNaN(parseFloat(document.getElementById('id').value))) {
+      total += parseFloat(document.getElementById('id').value);
+    }
+
+
+    if (!isNaN(parseFloat(document.getElementById('certificate').value))) {
+      total += parseFloat(document.getElementById('certificate').value);
+    }
+
+
+    if (!isNaN(parseFloat(document.getElementById('ret').value))) {
+      total += parseFloat(document.getElementById('ret').value);
+    }
+
+
+    if (!isNaN(parseFloat(document.getElementById('test').value))) {
+      total += parseFloat(document.getElementById('test').value);
+    }
+
+
+    if (!isNaN(parseFloat(document.getElementById('paper').value))) {
+      total += parseFloat(document.getElementById('paper').value);
+    }
+
+
+    if (!isNaN(parseFloat(document.getElementById('practical').value))) {
+      total += parseFloat(document.getElementById('practical').value);
+    }
+
+
+    if (!isNaN(parseFloat(document.getElementById('water').value))) {
+      total += parseFloat(document.getElementById('water').value);
+    }
+
+    if (!isNaN(parseFloat(document.getElementById('management').value))) {
+      total += parseFloat(document.getElementById('management').value);
+    }
+
+
+    if (!isNaN(parseFloat(document.getElementById('fourth').value))) {
+      total += parseFloat(document.getElementById('fourth').value);
+    }
+
+    if (!isNaN(parseFloat(document.getElementById('late').value))) {
+      total += parseFloat(document.getElementById('late').value);
+    }
+
+    if (!isNaN(parseFloat(document.getElementById('center').value))) {
+      total += parseFloat(document.getElementById('center').value);
+    }
+
+
     document.getElementById("total").innerHTML = total;
     document.getElementById("monthly-tuition-fee-id").value = total;
     document.getElementById("monthly-list-id").value = tmp;
     console.log(total);
 
-    
+
 
     /*   
      
@@ -1645,6 +1652,68 @@
     alert(tmp);
   });
   */
+
+  "{% if months %}"
+  var names = {{ months| safe}};
+  var months = [];
+  // remove duplicay
+  $.each(names, function (i, el) {
+    if ($.inArray(el, months) === -1) months.push(el);
+  });
+  console.log(months)
+  console.log(months)
+  for (i = 0; i < months.length; i++) {
+    if (document.getElementById('jan').value==months[i]){
+      //alert(document.getElementById('jan').value);
+      document.getElementById('jan').disabled=true;
+      document.getElementById('jan').checked=true;
+    }
+    if (document.getElementById('feb').value== months[i]){
+      document.getElementById('feb').disabled=true;
+      document.getElementById('feb').checked=true;
+    }
+    if (document.getElementById('mar').value== months[i]){
+      document.getElementById('mar').disabled=true;
+      document.getElementById('mar').checked=true;
+    }
+    if (document.getElementById('apr').value== months[i]){
+      document.getElementById('apr').disabled=true;
+      document.getElementById('apr').checked=true;
+    }
+    if (document.getElementById('may').value== months[i]){
+      document.getElementById('may').disabled=true;
+      document.getElementById('may').checked=true;
+    }
+    if (document.getElementById('june').value== months[i]){
+      document.getElementById('june').disabled=true;
+      document.getElementById('june').checked=true;
+    }
+    if (document.getElementById('jul').value== months[i]){
+      document.getElementById('jul').disabled=true;
+      document.getElementById('jul').checked=true;
+    }
+    if (document.getElementById('aug').value== months[i]){
+      document.getElementById('aug').disabled=true;
+      document.getElementById('aug').checked=true;
+    }
+    if (document.getElementById('sept').value== months[i]){
+      document.getElementById('sept').disabled=true;
+      document.getElementById('sept').checked=true;
+    }
+    if (document.getElementById('oct').value== months[i]){
+      document.getElementById('oct').disabled=true;
+      document.getElementById('oct').checked=true;
+    }
+    if (document.getElementById('nov').value== months[i]){
+      document.getElementById('nov').disabled=true;
+      document.getElementById('nov').checked=true;
+    }
+    if (document.getElementById('dec').value== months[i]){
+      document.getElementById('dec').disabled=true;
+      document.getElementById('dec').checked=true;
+    }
+  }
+  "{% endif %}"
 
 
 </script>
