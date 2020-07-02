@@ -44,8 +44,8 @@ class Library(models.Model):
     book_writter= models.CharField(max_length=200, null=True, blank=True)   
     book_subject= models.CharField(max_length=200, null=True, blank=True)   
     book_description= models.TextField(null=True, blank=False) 
-    book_file= models.FileField(upload_to='library/books/', blank=True)
-    book_img= models.ImageField(upload_to='library/img/', blank=False)
+    book_file= models.FileField(upload_to='library/books/', blank=True, null=True)
+    book_img= models.ImageField(upload_to='library/img/', blank=True, null=True)
     book_adding_date= models.DateTimeField(auto_now_add=True)
     slug= models.SlugField(blank=True, unique=True, allow_unicode=True)
 

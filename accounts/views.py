@@ -13,6 +13,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 # from .models import Subject, Student, StudentEducation, StudentAbout, Teacher, TeacherEducation, TeacherAbout, Depertment, SessionYear, Staff, Year, StudentPayment, TutionFee, OthersCharge, MonthlyPayment, TotalPaidMonths
 from .models import *
+from non_working_files.models import *
 # from .serializerElements import SessionSerializer
 from django.http import JsonResponse
 from non_working_files.models import Notice, Gallery
@@ -789,9 +790,13 @@ def notice(request):
     if request.method == 'POST':
         title = request.POST['title']
         body = request.POST['body']
-        uploaded_file= request.FILES['filename'] 
-        notice = Notice(notice_title=title, notice_body=body, notice_document=uploaded_file, user=User.objects.get(username=request.user))
-        notice.save()
+        try:
+            uploaded_file= request.FILES['filename'] 
+            notice = Notice(notice_title=title, notice_body=body, notice_document=uploaded_file, user=User.objects.get(username=request.user))
+            notice.save()
+        except:
+            notice = Notice(notice_title=title, notice_body=body, user=User.objects.get(username=request.user))
+            notice.save() 
              
         return redirect('notice')
     
@@ -822,76 +827,169 @@ def photo(request):
 # ADD TEACHER
 def add_teacher(request):
 
-    depertment= Depertment.objects.all()
+    # depertment= Depertment.objects.all()
 
     registered = False
     
     if request.method == 'POST':
+
         name = request.POST['name']
         email = request.POST['email']
-        dept_name = request.POST['dept']
-        dept_head = request.POST.get('dept_head')
+        gender = request.POST['gender']
+
+        # dept_name = request.POST['dept']
+        # dept_head = request.POST.get('dept_head')
         joining_date= request.POST['date']
-        uploaded_file= request.FILES['filename']
-    
+        phone1= request.POST['phone1']
+        phone2= request.POST['phone2']
 
-        if dept_head == 'on':
-            dept_head= True
+        ssc_ins= request.POST['ssc-i']
+        ssc_grade= request.POST['ssc-g']
+        hsc_ins= request.POST['hsc-i']
+        hsc_grade= request.POST['hsc-g']
 
-        else:
-            dept_head= False
+        hons= request.POST['hons']
+        hons_i= request.POST['hons-i']
+        hons_g= request.POST['hons-g']
+
+        try:
+            mast= request.POST['mast']
+            mast_i= request.POST['mast-i']
+            mast_g= request.POST['mast-g']
+        except:
+            mast= None
+            mast_i= None
+            mast_g= None
+
+        try:
+            phd_i= request.POST['phd-i']
+            phd_g= request.POST['phd-i']
+        except:
+            phd_i= None
+            phd_g= None
 
         
-        if User.objects.filter(email=email).exists():
 
-            messages.info(request, 'Email exists') 
+        dsg= request.POST['dsg']
+
+        teacher_of= request.POST['teacher']
+        try:
+            head= request.POST['head']
+        except:
+            head= None
+        
+        dept_head= None
+        if head:
+            dept_head= True
+        else:
+            dept_head= False
+        
+        uploaded_file= request.FILES['filename']
+
+        user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
+        user.is_active= True
+                
+        user.save() 
+
+        teacher= Teacher(
+            user= user, 
+            name= name,             
+            email= email,            
+            joining_date=joining_date, 
+            teacher_img=uploaded_file, 
+            gender= gender,
+            subject= teacher_of,
+            designation= dsg,
+            dept_head= dept_head,
+            dept_name= head,
+            phone_number= phone1,
+            phone_number_2= phone2,
+        )
+
+        teacher.save()
+        
+        education= TeacherEducation(
+
+            user= teacher,
+
+            ssc= ssc_ins,
+            ssc_grade= ssc_grade,
+            hsc= hsc_ins,
+            hsc_grade= hsc_grade,
+
+            honours= hons,
+            honours_from= hons_i,
+            honours_grade= hons_g,
+
+            masters= mast,
+            masters_from= mast_i,  
+            masters_grade= mast_g,
+
+            phd= phd_i,
+            subject= phd_g,
+        )
+        education.save()
+
+        registered = True
+    
+
+        # if dept_head == 'on':
+        #     dept_head= True
+
+        # else:
+        #     dept_head= False
+
+        
+        # if User.objects.filter(email=email).exists():
+
+        #     messages.info(request, 'Email exists') 
                   
-            return redirect('add-teacher')
+        #     return redirect('add-teacher')
 
-        else:        
+        # else:        
 
-            user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password='IamOK')
-            user.is_active= False
+        #     user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password='IamOK')
+        #     user.is_active= False
                     
-            user.save()      
+        #     user.save()      
 
-            dept= Depertment.objects.get(dept_name= dept_name)      
+        #     dept= Depertment.objects.get(dept_name= dept_name)      
 
-            teacher= Teacher(user= user, name= name, dept_name=dept, email= email, dept_head= dept_head, joining_date=joining_date, teacher_img=uploaded_file)
-            teacher.save()
-            about= TeacherAbout(user= user)
-            about.save()
-            education= TeacherEducation(user= user)
-            education.save()
+        #     teacher= Teacher(user= user, name= name, dept_name=dept, email= email, dept_head= dept_head, joining_date=joining_date, teacher_img=uploaded_file)
+        #     teacher.save()
+        #     about= TeacherAbout(user= user)
+        #     about.save()
+        #     education= TeacherEducation(user= user)
+        #     education.save()
 
             
-            group = Group.objects.get(name='teacher')
+        #     group = Group.objects.get(name='teacher')
 
-            user.groups.add(group)  
+        #     user.groups.add(group)  
 
-            registered = True   
+        #     registered = True   
 
-            # SEND EMAIL
+        #     # SEND EMAIL
 
-            site = get_current_site(request)
-            mail_subject = "Confirmation message from CMS"
-            msg= render_to_string('accounts/activate_email.html', 
-            {
-                'user': user,
-                'domain': site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': generate_token.make_token(user)
-            })
+        #     site = get_current_site(request)
+        #     mail_subject = "Confirmation message from CMS"
+        #     msg= render_to_string('accounts/activate_email.html', 
+        #     {
+        #         'user': user,
+        #         'domain': site.domain,
+        #         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        #         'token': generate_token.make_token(user)
+        #     })
 
-            email_msg = EmailMessage(
-            mail_subject,
-            msg,
-            settings.EMAIL_HOST_USER,
-            [email]
+        #     email_msg = EmailMessage(
+        #     mail_subject,
+        #     msg,
+        #     settings.EMAIL_HOST_USER,
+        #     [email]
             
-            )
+        #     )
 
-            email_msg.send()
+        #     email_msg.send()
 
 
            
@@ -900,65 +998,224 @@ def add_teacher(request):
     context= {'depertment':depertment, 'registered':registered }
     return render(request, 'dashboard/add-teacher.html', context)
 
+
+# ADD principal
+def add_principal(request):
+
+    # depertment= Depertment.objects.all()
+
+    registered = False
+    
+    if request.method == 'POST':
+
+        name = request.POST['name']
+        email = request.POST['email']
+        gender = request.POST['gender']
+
+        # dept_name = request.POST['dept']
+        # dept_head = request.POST.get('dept_head')
+        joining_date= request.POST['date']
+        phone1= request.POST['phone1']
+        phone2= request.POST['phone2']
+
+        ssc_ins= request.POST['ssc-i']
+        ssc_grade= request.POST['ssc-g']
+        hsc_ins= request.POST['hsc-i']
+        hsc_grade= request.POST['hsc-g']
+
+        hons= request.POST['hons']
+        hons_i= request.POST['hons-i']
+        hons_g= request.POST['hons-g']
+
+        try:
+            mast= request.POST['mast']
+            mast_i= request.POST['mast-i']
+            mast_g= request.POST['mast-g']
+        except:
+            mast= None
+            mast_i= None
+            mast_g= None
+
+        try:
+            phd_i= request.POST['phd-i']
+            phd_g= request.POST['phd-i']
+        except:
+            phd_i= None
+            phd_g= None       
+
+        
+        uploaded_file= request.FILES['filename']
+
+        user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password='IamOK')
+        user.is_active= True
+                
+        user.save() 
+
+        teacher= Principal(
+            user= user, 
+            name= name,             
+            email= email,            
+            joining_date=joining_date, 
+            teacher_img=uploaded_file, 
+            gender= gender,            
+            phone_number= phone1,
+            phone_number_2= phone2,
+        )
+
+        teacher.save()
+        
+        education= PrincipalEducation(
+
+            user= teacher,
+
+            ssc= ssc_ins,
+            ssc_grade= ssc_grade,
+            hsc= hsc_ins,
+            hsc_grade= hsc_grade,
+
+            honours= hons,
+            honours_from= hons_i,
+            honours_grade= hons_g,
+
+            masters= mast,
+            masters_from= mast_i,  
+            masters_grade= mast_g,
+
+            phd= phd_i,
+            subject= phd_g,
+        )
+        education.save()
+
+        registered = True
+
+
+    context= {'depertment':depertment, 'registered':registered }
+    return render(request, 'dashboard/add-principal.html', context)
+
+
 # ADD STAFF
 def add_staff(request):
 
     registered = False
     
     if request.method == 'POST':
-        name = request.POST['name']
-        email = request.POST['email']
-        phone1 = request.POST['p1']
-        phone2 = request.POST['p2']        
-        joining_date= request.POST['date']
+        try:
+            name = request.POST['name']
+        except:
+            name= None
+        try:
+            email = request.POST['email']
+        except:
+            email= None
+        try:
+            phone1 = request.POST['p1']
+        except:
+            phone1 = None
+        try:
+            phone2 = request.POST['p2'] 
+        except:
+            phone2= None
+        try:
+            designation = request.POST['class'] 
+        except:
+            designation = None     
+        try:
+            post = request.POST['post']  
+        except:
+            post= None       
+        try:
+            gender = request.POST['gender'] 
+        except:
+            gender= None       
+        try:
+            joining_date= request.POST['date']
+        except:
+            joining_date= None
+            
         uploaded_file= request.FILES['filename']
 
-        
-        if User.objects.filter(email=email).exists():
+        if designation == '3rd':
+            user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
+            user.is_active= True
+            user.save()  
+            staff= Staff(
+                user= user, 
+                name= name, 
+                email= email, 
+                joining_date=joining_date, 
+                phone_number= phone1, 
+                phone_number_2= phone2, 
+                gender= gender,
+                designation= designation,
+                post= post,
+                staff_img=uploaded_file
+                )
 
-            messages.info(request, 'Email exists') 
-                  
-            return redirect('add-staff')
-
-        else:        
-
-            user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password='IamOK')
-            user.is_active= False
-                    
-            user.save()      
-
-            staff= Staff(user= user, name= name, email= email, joining_date=joining_date, phone_number= phone1, parents_number= phone2, staff_img=uploaded_file)
             staff.save()
 
+        else:
+
+            staff= NormalStaff(                
+                name= name, 
+                email= email, 
+                joining_date=joining_date, 
+                phone_number= phone1, 
+                phone_number_2= phone2, 
+                gender= gender,
+                designation= designation,
+                post= post,
+                staff_img=uploaded_file
+                )
+
+            staff.save()
+        
+        registered = True 
+
+        # if User.objects.filter(email=email).exists():
+
+        #     messages.info(request, 'Email exists') 
+                  
+        #     return redirect('add-staff')
+
+        # else:        
+
+        #     user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password='IamOK')
+        #     user.is_active= False
+                    
+        #     user.save()      
+
+        #     staff= Staff(user= user, name= name, email= email, joining_date=joining_date, phone_number= phone1, parents_number= phone2, staff_img=uploaded_file)
+        #     staff.save()
+
             
-            group = Group.objects.get(name='staff')
+        #     group = Group.objects.get(name='staff')
 
-            user.groups.add(group)  
+        #     user.groups.add(group)  
 
-            registered = True     
+        #     registered = True     
 
 
-             # SEND EMAIL
+        #      # SEND EMAIL
 
-            site = get_current_site(request)
-            mail_subject = "Confirmation message from CMS"
-            msg= render_to_string('accounts/activate_email.html', 
-            {
-                'user': user,
-                'domain': site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': generate_token.make_token(user)
-            })
+        #     site = get_current_site(request)
+        #     mail_subject = "Confirmation message from CMS"
+        #     msg= render_to_string('accounts/activate_email.html', 
+        #     {
+        #         'user': user,
+        #         'domain': site.domain,
+        #         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        #         'token': generate_token.make_token(user)
+        #     })
 
-            email_msg = EmailMessage(
-            mail_subject,
-            msg,
-            settings.EMAIL_HOST_USER,
-            [email]
+        #     email_msg = EmailMessage(
+        #     mail_subject,
+        #     msg,
+        #     settings.EMAIL_HOST_USER,
+        #     [email]
             
-            )
+        #     )
 
-            email_msg.send()
+        #     email_msg.send()
     
         
     
@@ -1244,6 +1501,40 @@ def teachersList(request, dept_name):
 # PAYMENT
 def payment(request, id):
 
+    student= Student.objects.get(id= id)
+    user= User.objects.get(id= student.user.id)
+    pay= StudentPayment.objects.get(user= student)
+    tution= TutionFee.objects.get(class_name= student.course)
+    others= OthersCharge.objects.all().first()
+
+    monthly_fee=0
+    admission_fee= 0
+    mp= 0
+    cd= 0
+    library_fee=0
+    poor_fund=0
+    st_fee=0
+    cl_fee=0
+    id_fee=0
+    reg=0
+    rov_college=0
+    rov_board=0
+    exam_fee=0
+    board_exam_fee=0
+    clg_sports_fee= 0
+    board_sports_fee= 0   
+    transfer_fee= 0   
+    certificate_fee= 0   
+    ret_fee= 0   
+    test_fee= 0   
+    paper_fee= 0   
+    practical_fee= 0   
+    water= 0   
+    management_fee= 0   
+    fourth_fee=0   
+    late_fee= 0   
+    center_fee= 0      
+    
     if request.method == 'POST':
         
 
@@ -1252,13 +1543,18 @@ def payment(request, id):
         exam= request.POST.get('payexam', "")
         others= request.POST.get('payothers', "")
 
-        total= request.POST['total-fee']
+        total= float(request.POST['total-fee'])
         print('total: ' ,total)
+
+        # FIND SESSION
+        session= TotalIncome.objects.last()
 
         # FEE HERE 
         if fee == "True" :
             # print("ok on fee")
             # FLOAT CHECK
+            # sum_of_income=0.0
+
             monthly_fee = isFloat(request.POST.get('monthly-tuition-fee'))
             if type(monthly_fee )!= bool:
                 # DB CONNECTION
@@ -1266,8 +1562,45 @@ def payment(request, id):
                 monthly_list= monthly_list.split(",")
                 monthly_payment_fee= MonthlyPayment(user=Student.objects.get(id=id) , amount= monthly_fee , student_year= Student.objects.get(id=id).student_year, month= json.dumps(monthly_list))
                 monthly_payment_fee.save()
+
+                # sum_of_income= sum_of_income+ monthly_fee
+
+                # ADD IT TO TOTAL INCOME
+                if student.course== 'HSC':
+                    income= TotalIncome.objects.get(id= session.id)
+                    pay= income.hsc_tutionfee + monthly_fee
+                    
+                    income= TotalIncome.objects.filter(id= session.id).update(hsc_tutionfee= pay)
+                
+                elif student.course== 'Honours':
+                    income= TotalIncome.objects.get(id= session.id)
+                    pay= income.honours_tutionfee + monthly_fee
+                    # total_amount= TotalEarning.objects.get(session= session.session)
+                    # total_amount= TotalEarning.objects.filter(session= session.session).update(amount=total_amount.amount+ pay)
+                    income= TotalIncome.objects.filter(id= session.id).update(honours_tutionfee= pay)
+
+                elif student.course== 'IBM':
+                    income= TotalIncome.objects.get(id= session.id)
+                    pay= income.hsc_tutionfee + monthly_fee
+                    # total_amount= TotalEarning.objects.get(session= session.session)
+                    # total_amount= TotalEarning.objects.filter(session= session.session).update(amount=total_amount.amount+ pay)
+                    income= TotalIncome.objects.filter(id= session.id).update(hsc_tutionfee= pay)
+
+                elif student.course== 'Degree (Pass)':
+                    income= TotalIncome.objects.get(id= session.id)
+                    pay= income.degree_tutionfee + monthly_fee
+                    # total_amount= TotalEarning.objects.get(session= session.session)
+                    # total_amount= TotalEarning.objects.filter(session= session.session).update(amount=total_amount.amount+ pay)
+                    income= TotalIncome.objects.filter(id= session.id).update(degree_tutionfee= pay)
+
+                
+
+                
+                
+                
             else:
-                return render(request, 'accounts/failed.html', status= 401)
+                # return render(request, 'accounts/failed.html', status= 401)
+                monthly_fee=0
 
            
             # print(monthly_list)
@@ -1292,75 +1625,371 @@ def payment(request, id):
 
         # ADMISSION PAYMENT HERE 
         if admission == "True" :
-            mp =  float(request.POST.get('mp-fee'))
-            admission_fee =  float(request.POST.get('admissin'))
-            library_fee =  float(request.POST.get('library-fee'))
-            poor_fund =  float(request.POST.get('poor-fund'))
-            st_fee =  float(request.POST.get('st-fee'))
-            cl_fee =  float(request.POST.get('cl-fee'))
-            id_fee =  float(request.POST.get('id-fee'))
-            reg =  float(request.POST.get('reg'))
-            rov_college =  float(request.POST.get('rov-clg'))
-            rov_board = float( request.POST.get('rov-board'))
-            print('admission: ', mp)
-            print('admission: ', admission_fee)
-            print('library: ',library_fee)
-            print('Poor: ',poor_fund)
-            print('clg: ',cl_fee)
-            print('st: ',st_fee)
-            print('id ',id_fee)
+
+            mp =  isFloat(request.POST.get('mp-fee'))
+
+            if type(mp )!= bool:
+                payment= MiladPujaFee(user=Student.objects.get(id=id) , amount= mp)
+                payment.save()
+                
+                # income= TotalIncome.objects.get(id= session.id)
+                # income= income.milad_puja + mp
+                # total_amount= TotalEarning.objects.filter(session= session.session).update(amount= income)
+                # income= TotalIncome.objects.filter(id= session.id).update(milad_puja= income)
+            else:
+                mp=0
+
+            cd =  isFloat(request.POST.get('cd-fee'))
+
+            if type(cd )!= bool:
+                payment= CollegeDevelopmentFee(user=Student.objects.get(id=id) , amount= cd)
+                payment.save()
+                
+                # income= TotalIncome.objects.get(id= session.id)
+                # income= income.milad_puja + mp
+                # total_amount= TotalEarning.objects.filter(session= session.session).update(amount= income)
+                # income= TotalIncome.objects.filter(id= session.id).update(milad_puja= income)
+            else:
+                cd=0
+
+            admission_fee =  isFloat(request.POST.get('admissin-fee'))
+            
+            # try:
+            #     print("admission", admission_fee)
+            # except expression as identifier:
+            #     print("admission"+ admission_fee)
+
+            if type(admission_fee )!= bool:
+                print(admission_fee)
+                payment= AdmissionFee(user=Student.objects.get(id=id) , amount= admission_fee )
+                payment.save()
+
+                # income= TotalIncome.objects.get(id= session.id)
+                # income= income.admission_fee + admission_fee
+                # total_amount= TotalEarning.objects.filter(session= session.session).update(amount= income)
+                # income= TotalIncome.objects.filter(id= session.id).update(admission_fee= income)
+            else:
+                admission_fee=0
+
+            library_fee =  isFloat(request.POST.get('library-fee'))
+
+            if type(library_fee )!= bool:
+                payment= LibraryFee(user=Student.objects.get(id=id) , amount= library_fee )
+                payment.save()
+
+                # income= TotalIncome.objects.get(id= session.id)
+                # income= income.library_fee + library_fee
+                # total_amount= TotalEarning.objects.filter(session= session.session).update(amount= income)
+                # income= TotalIncome.objects.filter(id= session.id).update(library_fee= income)
+            else:
+                library_fee=0
+
+            poor_fund =  isFloat(request.POST.get('poor-fund'))
+
+            if type(poor_fund )!= bool:
+                payment= PoorFundFee(user=Student.objects.get(id=id) , amount= poor_fund )
+                payment.save()
+
+                # income= TotalIncome.objects.get(id= session.id)
+                # income= income.poor_fund + poor_fund
+                # total_amount= TotalEarning.objects.filter(session= session.session).update(amount= income)
+                # income= TotalIncome.objects.filter(id= session.id).update(poor_fund= income)
+            else:
+                poor_fund=0
+
+            st_fee =  isFloat(request.POST.get('st-fee'))
+
+            if type(st_fee )!= bool:
+                payment= ScienceAndTechnologyFee(user=Student.objects.get(id=id) , amount= st_fee )
+                payment.save()
+
+                # income= TotalIncome.objects.get(id= session.id)
+                # income= income.science_and_tech + st_fee
+                # total_amount= TotalEarning.objects.filter(session= session.session).update(amount= income)
+                # income= TotalIncome.objects.filter(id= session.id).update(science_and_tech= income)
+            else:
+                st_fee=0
+
+            cl_fee =  isFloat(request.POST.get('cl-fee'))
+            
+            if type(cl_fee )!= bool:
+                payment= ComputerLab(user=Student.objects.get(id=id) , amount= cl_fee)
+                payment.save()
+
+                # income= TotalIncome.objects.get(id= session.id)
+                # income= income.computer_lab_fee + cl_fee
+                # total_amount= TotalEarning.objects.filter(session= session.session).update(amount= income)
+                # income= TotalIncome.objects.filter(id= session.id).update(computer_lab_fee= income)
+            else:
+                cl_fee=0
+
+            id_fee =  isFloat(request.POST.get('id-fee'))
+            
+            if type(id_fee )!= bool:
+                payment= IdCardFee(user=Student.objects.get(id=id) , amount= id_fee)
+                payment.save()
+
+                # income= TotalIncome.objects.get(id= session.id)
+                # income= income.id_fee + id_fee
+                # total_amount= TotalEarning.objects.filter(session= session.session).update(amount= income)
+                # income= TotalIncome.objects.filter(id= session.id).update(id_fee= income)
+            else:
+                id_fee=0
+           
+            reg =  isFloat(request.POST.get('reg-fee'))
+                        
+            if type(reg )!= bool:
+                payment= RegistrationFee(user=Student.objects.get(id=id) , amount= reg )
+                payment.save()
+
+                # income= TotalIncome.objects.get(id= session.id)
+                # income= income.reg_fee + reg
+                # total_amount= TotalEarning.objects.filter(session= session.session).update(amount= income)
+                # income= TotalIncome.objects.filter(id= session.id).update(reg_fee= income)
+            else:
+                reg=0
+           
+            rov_college =  isFloat(request.POST.get('rov-clg-fee'))
+                                    
+            if type(rov_college )!= bool:
+                payment= CollegeRoversFee(user=Student.objects.get(id=id) , amount= rov_college )
+                payment.save()
+
+                # income= TotalIncome.objects.get(id= session.id)
+                # income= income.college_rovers + rov_college
+                # total_amount= TotalEarning.objects.filter(session= session.session).update(amount= income)
+                # income= TotalIncome.objects.filter(id= session.id).update(college_rovers= income)
+            else:
+                rov_college=0
+           
+            rov_board = isFloat( request.POST.get('rov-board-fee'))
+                                                
+            if type(rov_board )!= bool:
+                payment= BoardRoversFee(user=Student.objects.get(id=id) , amount= rov_board)
+                payment.save()
+
+                # income= TotalIncome.objects.get(id= session.id)
+                # income= income.board_rovers + rov_board
+                # total_amount= TotalEarning.objects.filter(session= session.session).update(amount= income)
+                # income= TotalIncome.objects.filter(id= session.id).update(board_rovers= income)
+            else:
+                rov_board=0
+            # print('admission: ', mp)
+            # print('admission: ', admission_fee)
+            # print('library: ',library_fee)
+            # print('Poor: ',poor_fund)
+            # print('clg: ',cl_fee)
+            # print('st: ',st_fee)
+            # print('id ',id_fee)
+
+            
+
+            income= TotalIncome.objects.get(id= session.id)
+            income= TotalIncome.objects.filter(id= session.id).update(
+                
+                # total_amount= income.total_amount+ sum_of_income,
+                admission_fee= income.admission_fee + admission_fee,
+                milad_puja= income.milad_puja+ mp,
+                college_devfee= income.college_devfee+ cd,
+                library_fee=income.library_fee+ library_fee,
+                poor_fund=income.poor_fund+ poor_fund,
+                science_and_tech=income.science_and_tech+ st_fee,
+                computer_lab_fee=income.computer_lab_fee+ cl_fee,
+                id_fee=income.id_fee+ id_fee,
+                reg_fee=income.reg_fee+ reg,
+                college_rovers=income.college_rovers+ rov_college,
+                board_rovers=income.college_rovers+ rov_board
+
+            )
+
+            # sum_of_income= sum_of_income+ mp+ admission_fee+ library_fee+ poor_fund+ st_fee+ cl_fee+id_fee+ reg+ rov_college+ rov_board
+            
 
 
         # EXAM PAYMENT HERE 
         if exam == "True" :
-            exam_fee = float(request.POST.get('exam-fee'))
-            board_exam_fee = float(request.POST.get('board-fee'))
-            print('exam_fee:',exam_fee)
-            print('board_exam_fee: ',board_exam_fee)
+            exam_fee = isFloat(request.POST.get('exam-fee'))
+
+            if type(exam_fee )!= bool:
+                payment= CollegeExamFee(user=Student.objects.get(id=id) , amount= exam_fee )
+                payment.save()
+
+            board_exam_fee = isFloat(request.POST.get('board-fee'))
+
+            if type(board_exam_fee )!= bool:
+                payment= BoardExamFee(user=Student.objects.get(id=id) , amount= board_exam_fee )
+                payment.save()
+
+            income= TotalIncome.objects.get(id= session.id)
+            income= TotalIncome.objects.filter(id= session.id).update(
+                
+                college_examfee=income.college_examfee  + exam_fee,
+                board_examfee=income.board_examfee  + board_exam_fee
+            )
+
 
 
         # OTHERS PAYMENT HERE 
         if others == "True" :
-            clg_sports_fee = float(request.POST.get('clg-sports-fee'))
-            board_sports_fee = float(request.POST.get('board-sports-fee'))
-            transfer_fee = float(request.POST.get('transfer-fee'))
-            certificate_fee = float(request.POST.get('certificate-fee'))
-            ret_fee = float(request.POST.get('ret-fee'))
-            test_fee = float(request.POST.get('test-fee'))
-            paper_fee = float(request.POST.get('paper-fee'))
-            practical_fee =float( request.POST.get('practical-fee'))
-            water = float(request.POST.get('water'))
-            management_fee = float(request.POST.get('management-fee'))
-            fourth_fee = float(request.POST.get('fourth-fee'))
-            late_fee = float(request.POST.get('late-fee'))
-            center_fee = float(request.POST.get('center-fee'))
+            clg_sports_fee = isFloat(request.POST.get('clg-sports-fee'))
 
-            print(clg_sports_fee)
-            print(board_sports_fee)
-            print(transfer_fee)
-            print(certificate_fee)
-            print(ret_fee)
-            print(ret_fee)
-            print(test_fee)
-            print(paper_fee)
-            print(practical_fee)
-            print(management_fee)
-            print(fourth_fee)
-            print(late_fee)
-            print(center_fee)
+            if type(clg_sports_fee )!= bool:
+                payment= CollegeSportsFee(user=Student.objects.get(id=id) , amount= clg_sports_fee )
+                payment.save()
+
+            board_sports_fee = isFloat(request.POST.get('board-sports-fee'))
+
+            if type(board_sports_fee )!= bool:
+                payment= BoardSportsFee(user=Student.objects.get(id=id) , amount= board_sports_fee )
+                payment.save()
+
+            transfer_fee = isFloat(request.POST.get('transfer-fee'))
+
+            if type(transfer_fee )!= bool:
+                payment= CollegeTranseferFee(user=Student.objects.get(id=id) , amount= transfer_fee )
+                payment.save()
+
+            certificate_fee = isFloat(request.POST.get('certificate-fee'))
+
+            if type(certificate_fee )!= bool:
+                payment= CertificateFee(user=Student.objects.get(id=id) , amount= certificate_fee )
+                payment.save()
+
+            ret_fee = isFloat(request.POST.get('ret-fee'))
+
+            if type(ret_fee )!= bool:
+                payment= RetentionFee(user=Student.objects.get(id=id) , amount= ret_fee )
+                payment.save()
+
+            test_fee = isFloat(request.POST.get('test-fee'))
+
+            if type(test_fee )!= bool:
+                payment= TestimonialFee(user=Student.objects.get(id=id) , amount= test_fee )
+                payment.save()
+
+            paper_fee = isFloat(request.POST.get('paper-fee'))
+
+            if type(paper_fee )!= bool:
+                payment= PaperMagazineFee(user=Student.objects.get(id=id) , amount= paper_fee )
+                payment.save()
+
+            practical_fee =isFloat( request.POST.get('practical-fee'))
+
+            if type(practical_fee )!= bool:
+                payment= PracticalFee(user=Student.objects.get(id=id) , amount= practical_fee )
+                payment.save()
+
+            water = isFloat(request.POST.get('bill'))
+
+            if type(water )!= bool:
+                payment= WaterFee(user=Student.objects.get(id=id) , amount= water )
+                payment.save()
+
+            management_fee = isFloat(request.POST.get('management-fee'))
+
+            if type(management_fee )!= bool:
+                payment= ManagementFee(user=Student.objects.get(id=id) , amount= management_fee )
+                payment.save()
+
+            fourth_fee = isFloat(request.POST.get('fourth-fee'))
+
+            if type(fourth_fee )!= bool:
+                payment= FourthPaperFee(user=Student.objects.get(id=id) , amount= fourth_fee )
+                payment.save()
+
+            late_fee = isFloat(request.POST.get('late-fee'))
+
+            if type(late_fee )!= bool:
+                payment= LateFee(user=Student.objects.get(id=id) , amount= late_fee )
+                payment.save()
+
+            center_fee = isFloat(request.POST.get('center-fee'))
+
+            if type(center_fee )!= bool:
+                payment= CenterFee(user=Student.objects.get(id=id) , amount= center_fee )
+                payment.save()
+
+
+            income= TotalIncome.objects.get(id= session.id)
+            income= TotalIncome.objects.filter(id= session.id).update(
+                
+                college_sports_fee= income.college_sports_fee  + clg_sports_fee,
+                board_sports_fee= income.board_sports_fee  + board_sports_fee,
+                college_transfer= income.college_transfer  + transfer_fee,
+                certificate_fee= income.certificate_fee  + certificate_fee,
+                retention_fee= income.retention_fee  + ret_fee,
+                testimonial_fee= income.testimonial_fee  + test_fee,
+                paper_magazine= income.paper_magazine  + paper_fee,
+                preactical_fee= income.preactical_fee  + practical_fee,
+                bill= income.bill  + water,
+                management_fee= income.management_fee  + management_fee,
+                fourth_paper=income.fourth_paper  + fourth_fee,
+                late_fine= income.late_fine  + late_fee,
+                center= income.center  + center_fee,
+
+            )
         # print("fee "+fee)
         # print("fee "+admission)
         # print("fee "+exam)
         # print("fee "+others)
 
     # user= User.objects.get(id=id)
-    student= Student.objects.get(id= id)
-    user= User.objects.get(id= student.user.id)
-    pay= StudentPayment.objects.get(user= student)
-    tution= TutionFee.objects.get(class_name= student.course)
-    others= OthersCharge.objects.all().first()
+        
+        income= TotalIncome.objects.get(id= session.id)
+        income= TotalIncome.objects.filter(id= session.id).update(
+                
+            total_amount= income.total_amount+ total,
+            
+        )
+
+        total_amount= TotalEarning.objects.get(session= session.session)
+
+        total_amount= TotalEarning.objects.filter(session= session.session).update(amount=total_amount.amount+ total)
+
+        pay_slip=  StudentReceipt(                   
+                    user= student,
+                    total_amount= total,
+                    year= student.student_year,  
+
+                    
+                    tutionfee= monthly_fee,
+                    board_examfee= board_exam_fee,
+                    college_examfee= exam_fee,
+                    college_devfee= cd,
+                    milad_puja= mp,
+                    library_fee= library_fee,
+                    college_sports_fee= clg_sports_fee,
+                    board_sports_fee= board_sports_fee,
+                    poor_fund= poor_fund,
+                    donation= 0,
+                    
+                    science_and_tech= st_fee,
+                    computer_lab_fee= cl_fee,
+                    admission_fee= admission_fee,
+                    reg_fee= reg,
+                    college_rovers= rov_college,
+                    board_rovers= rov_board,
+                    college_transfer= transfer_fee,
+                    id_fee= id_fee,
+                    certificate_fee= certificate_fee,
+                    retention_fee= ret_fee,
+                    testimonial_fee= test_fee,
+                    paper_magazine= paper_fee,
+                    preactical_fee= practical_fee,
+                    bill= water,
+                    management_fee= management_fee,
+                    fourth_paper= fourth_fee,
+                    late_fine= late_fee,
+                    center= center_fee,
+                    
+        )
+        pay_slip.save()
+        context= {'pay_slip': pay_slip, 'total': total}
+
+        return render(request, 'dashboard/receipts.html', context) 
+        
   
-      
+     
     months= MonthlyPayment.objects.filter(user= student, student_year=student.student_year)
     jsonDec = json.decoder.JSONDecoder()
     # m_list=[]
@@ -1431,30 +2060,321 @@ def pardon(request, id):
 # PARDON
 def expense(request):
 
+    govt_salary= 0
+    house_rent_bonus= 0
+    board_reg_fee= 0
+    clg_exam_fee = 0
+    clg_dev_fee= 0
+    milad_puja= 0
+    library_exp= 0
+    sports_exp= 0
+    poor_fund= 0
+    water_bill= 0
+    electric_bill= 0
+    bank_charges= 0
+    telephone_bill= 0
+    st_exp= 0
+    comp_lab= 0
+    entertainment_exp= 0
+    conveyance= 0
+    printing_stationary= 0
+    management_exp= 0
+    others_exp= 0
+
     if request.method == 'POST':
         # monthly_fee = request.POST.get('monthly-tuition-fee')
-        govt_salary =  float(request.POST.get('govt-salary-fee'))
-        house_rent_bonus =  float(request.POST.get('house-rent-bonus-fee'))
-        board_reg_fee =  float(request.POST.get('board-reg-fee'))
+        govt_salary =  isFloat(request.POST.get('govt-salary-fee'))
+        if type(govt_salary )!= bool:
+            payment= GovtSalaryExp(
+                amount= govt_salary,
+                details= request.POST.get('govt-salary-fee-d'),
+                vauture= request.POST.get('govt-salary-fee-v'),
+            )
+            payment.save()
+        else:
+            govt_salary=0
+
+        house_rent_bonus =  isFloat(request.POST.get('house-rent-bonus-fee'))
+        if type(house_rent_bonus )!= bool:
+            payment= HouseRentAndBonusExp(
+                amount= house_rent_bonus,
+                details= request.POST.get('house-rent-bonus-fee-d'),
+                vauture= request.POST.get('house-rent-bonus-fee-v'),
+            )
+            payment.save()
+        else:
+            house_rent_bonus=0
+
+        board_reg_fee =  isFloat(request.POST.get('board-reg-fee'))
+        if type(board_reg_fee )!= bool:
+            payment= BoardRegExp (
+                amount= board_reg_fee,
+                details= request.POST.get('board-reg-fee-d'),
+                vauture= request.POST.get('board-reg-fee-v'),
+            )
+            payment.save()
+        else:
+            board_reg_fee=0
+
         # university_reg_fee =  request.POST.get('monthly-tuition-fee'))
-        clg_exam_fee =  float(request.POST.get('clg-exam-fee'))
-        clg_dev_fee =  float(request.POST.get('clg-dev-fee'))
-        milad_puja =  float(request.POST.get('mp-fee'))
-        library_exp =  float(request.POST.get('library-fee'))
-        sports_exp =  float(request.POST.get('clg-sports-fee'))
-        poor_fund =  float(request.POST.get('poor-fund'))
-        water_bill =  float(request.POST.get('water-bill-fee'))
-        electric_bill =  float(request.POST.get('electric-bill-fee'))
-        bank_charges =  float(request.POST.get('bank-charges-fee'))
-        telephone_bill =  float(request.POST.get('telephone-bill-fee'))
-        st_exp =  float(request.POST.get('st-fee'))
-        comp_lab =  float(request.POST.get('cl-fee'))
-        entertainment_exp =  float(request.POST.get('entertainment-exp-fee'))
-        conveyance =  float(request.POST.get('conveyance-fee'))
-        printing_stationary =  float(request.POST.get('printing-stationary-fee'))
-        management_exp = float( request.POST.get('management-exp-fee'))
+        clg_exam_fee =  isFloat(request.POST.get('clg-exam-fee'))
+        if type(clg_exam_fee )!= bool:
+            
+            payment= CollegeExamExp (
+                amount= clg_exam_fee,
+                details= request.POST.get('clg-exam-fee-d'),
+                vauture= request.POST.get('clg-exam-fee-v'),
+            )
+            payment.save()
+        else:
+            clg_exam_fee=0
+
+        clg_dev_fee =  isFloat(request.POST.get('clg-dev-fee'))
+        if type(clg_dev_fee )!= bool:
+            
+            payment= CollegeDevExp (
+                amount= clg_dev_fee,
+                details= request.POST.get('clg-dev-fee-d'),
+                vauture= request.POST.get('clg-dev-fee-v'),
+            )
+            payment.save()
+        else:
+            clg_dev_fee=0
+
+        milad_puja =  isFloat(request.POST.get('mp-fee'))
+        if type(milad_puja )!= bool:
+            
+            payment= MiladPujaExp (
+                amount= milad_puja,
+                details= request.POST.get('mp-fee-d'),
+                vauture= request.POST.get('mp-fee-v'),
+            )
+            payment.save()
+        else:
+            milad_puja=0
+
+        library_exp =  isFloat(request.POST.get('library-fee'))
+        if type(library_exp )!= bool:
+            
+            payment= LibraryExp (
+                amount= library_exp,
+                details= request.POST.get('library-fee-d'),
+                vauture= request.POST.get('library-fee-v'),
+            )
+            payment.save()
+        else:
+            library_exp=0
+
+        sports_exp =  isFloat(request.POST.get('clg-sports-fee'))
+        if type(sports_exp )!= bool:
+            
+            payment= SportsExp (
+                amount= sports_exp,
+                details= request.POST.get('clg-sports-fee-d'),
+                vauture= request.POST.get('clg-sports-fee-v'),
+            )
+            payment.save()
+        else:
+            sports_exp=0
+
+        poor_fund =  isFloat(request.POST.get('poor-fund'))
+        if type(poor_fund )!= bool:
+            
+            payment= PoorFundExp (
+                amount= poor_fund,
+                details= request.POST.get('poor-fund-d'),
+                vauture= request.POST.get('poor-fund-v'),
+            )
+            payment.save()
+        else:
+            poor_fund=0
+
+        water_bill =  isFloat(request.POST.get('water-bill-fee'))
+        if type(water_bill )!= bool:
+             
+            payment= WaterExp (
+                amount= water_bill,
+                details= request.POST.get('water-bill-fee-d'),
+                vauture= request.POST.get('water-bill-fee-v'),
+            )
+            payment.save()
+        else:
+            water_bill=0
+
+        electric_bill =  isFloat(request.POST.get('electric-bill-fee'))
+        if type(electric_bill )!= bool:
+
+            payment= ElectricExp (
+                amount= electric_bill,
+                details= request.POST.get('electric-bill-fee-d'),
+                vauture= request.POST.get('electric-bill-fee-v'),
+            )
+            payment.save()
+        else:
+            electric_bill=0
+
+        bank_charges =  isFloat(request.POST.get('bank-charges-fee'))
+        if type(bank_charges )!= bool:
+                
+            payment= BankChargeExp (
+                amount= bank_charges,
+                details= request.POST.get('bank-charges-fee-d'),
+                vauture= request.POST.get('bank-charges-fee-v'),
+            )
+            payment.save()
+        else:
+            bank_charges=0
+
+        telephone_bill =  isFloat(request.POST.get('telephone-bill-fee'))
+        if type(telephone_bill )!= bool:
+                
+            payment= TelephoneBillExp (
+                amount= telephone_bill,
+                details= request.POST.get('telephone-bill-fee-d'),
+                vauture= request.POST.get('telephone-bill-fee-v'),
+            )
+            payment.save()
+        else:
+            telephone_bill=0
+
+
+        st_exp =  isFloat(request.POST.get('st-fee'))
+        if type(st_exp )!= bool:
+                
+            payment= ScienceAndTechnologyExp (
+                amount= st_exp,
+                details= request.POST.get('st-fee-d'),
+                vauture= request.POST.get('st-fee-v'),
+            )
+            payment.save()
+        else:
+            st_exp=0
+
+        comp_lab =  isFloat(request.POST.get('cl-fee'))
+        if type(comp_lab )!= bool:
+                 
+            payment= ComputerLabExp (
+                amount= comp_lab,
+                details= request.POST.get('cl-fee-d'),
+                vauture= request.POST.get('cl-fee-v'),
+            )
+            payment.save()
+        else:
+            comp_lab=0
+
+        entertainment_exp =  isFloat(request.POST.get('entertainment-exp-fee'))
+        if type(entertainment_exp )!= bool:
+                 
+            payment= EntertainmentExp (
+                amount= entertainment_exp,
+                details= request.POST.get('entertainment-exp-fee-d'),
+                vauture= request.POST.get('entertainment-exp-fee-v'),
+            )
+            payment.save()
+        else:
+            entertainment_exp=0
+
+        conveyance =  isFloat(request.POST.get('conveyance-fee'))
+        if type(conveyance )!= bool:
+                 
+            payment= ConveyanceExp (
+                amount= conveyance,
+                details= request.POST.get('conveyance-fee-d'),
+                vauture= request.POST.get('conveyance-fee-v'),
+            )
+            payment.save()
+        else:
+            conveyance=0
+
+        printing_stationary =  isFloat(request.POST.get('printing-stationary-fee'))
+        if type(printing_stationary )!= bool:
+                  
+            payment= PrintingAndStationaryExp (
+                amount= printing_stationary,
+                details= request.POST.get('printing-stationary-fee-d'),
+                vauture= request.POST.get('printing-stationary-fee-v'),
+            )
+            payment.save()
+        else:
+            printing_stationary=0
+
+        management_exp = isFloat( request.POST.get('management-exp-fee'))
+        if type(management_exp )!= bool:
+                  
+            payment= ManagementExp (
+                amount= management_exp,
+                details= request.POST.get('management-exp-fee-d'),
+                vauture= request.POST.get('management-exp-fee-v'),
+            )
+            payment.save()
+        else:
+            management_exp=0    
+
         # tutionfee_and_others_perdon =  request.POST.get('monthly-tuition-fee')
-        others_exp =  float(request.POST.get('others-exp-fee'))
+        others_exp =  isFloat(request.POST.get('others-exp-fee'))
+        if type(others_exp )!= bool:
+                  
+            payment= OtherExp (
+                amount= others_exp,
+                details= request.POST.get('others-exp-fee-d'),
+                vauture= request.POST.get('others-exp-fee-v'),
+            )
+            payment.save()
+        else:
+            others_exp=0
+
+        session= TotalIncome.objects.last()
+
+        total= (
+            govt_salary+
+            house_rent_bonus+
+            board_reg_fee+
+            clg_exam_fee +
+            clg_dev_fee+
+            milad_puja+
+            library_exp+
+            sports_exp+
+            poor_fund+
+            water_bill+
+            electric_bill+
+            bank_charges+
+            telephone_bill+
+            st_exp+
+            comp_lab+
+            entertainment_exp+
+            conveyance+
+            printing_stationary+
+            management_exp+
+            others_exp
+        )
+        all_exp= TotalExpances.objects.get(id= session.id)
+        all_exp= TotalExpances.objects.filter(id= session.id).update(
+            total_amount=all_exp.total_amount+ total,  
+            govt_salary=all_exp.govt_salary+ govt_salary,
+            house_rent=all_exp.house_rent+ house_rent_bonus,
+            board_reg= all_exp.board_reg+ board_reg_fee,
+            college_exam= all_exp.college_exam+  clg_exam_fee,
+            college_dev= all_exp.college_dev+  clg_dev_fee,
+            milad_puja= all_exp.milad_puja+  milad_puja,
+            library_exp= all_exp.library_exp +library_exp,
+            sports_exp= all_exp.sports_exp+ sports_exp,
+            poor_fund_exp= all_exp.poor_fund_exp+  poor_fund,
+            water_exp= all_exp.water_exp +water_bill,
+            electric_exp= all_exp.electric_exp +electric_bill,
+            telephone_exp= all_exp.telephone_exp +telephone_bill,
+            bank_charges= all_exp.bank_charges +bank_charges,
+            scinece_and_tech= all_exp.scinece_and_tech +st_exp,
+            computer_lab_exp= all_exp.computer_lab_exp +comp_lab,
+            entertainment_exp= all_exp.entertainment_exp +entertainment_exp,
+            conveyance= all_exp.conveyance + conveyance,
+            printing_and_stationary= all_exp.printing_and_stationary + printing_stationary,
+            management_exp= all_exp.management_exp + management_exp,
+            other= all_exp.other + management_exp,
+        )
+
+
+        messages.info(request, 'Successfully added') 
+        return HttpResponseRedirect(reverse('expense'))
                     
         # print(govt_salary)
         # print(house_rent_bonus)

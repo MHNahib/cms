@@ -27,7 +27,7 @@
 
   <div class="content-header">
     <div class="container-fluid">
-
+     
     </div><!-- /.container-fluid -->
   </div>
   <div class="content-wrapper" style="min-height: 1244.06px;">
@@ -35,6 +35,16 @@
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
+          {% if messages %}
+          <div class="alert alert-success alert-dismissible fade show col-md-12 mb-3" role="alert">
+              {% for message in messages %}
+              {{ message }}
+              {% endfor %}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          {% endif %}
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
@@ -65,6 +75,22 @@
                           Must contain number.
                         </div>
                       </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="govt-salary-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="govt-salary-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+
                       <!-- HOUSE RENT AND BONUS -->
                       <div class="col-md-12 mb-3">                        
                         <label id="house-rent-bonus-l" for="house-rent-bonus">House rent and bonous</label>
@@ -74,6 +100,22 @@
                           Must contain number.
                         </div>
                       </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="house-rent-bonus-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="house-rent-bonus-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+
                       <!-- BOARD/ UNIVERSITY REGISTRATION FEE -->
                       <div class="col-md-12 mb-3">                        
                         <label id="board-reg-fee-l" for="board-reg">Board/ University registration fee</label>
@@ -83,6 +125,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="board-reg-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="board-reg-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- COLLEGE EXAMINATION EXPENSES -->
                       <div class="col-md-12 mb-3">                        
                         <label id="clg-exam-l" for="clg-exam">College Examination Expenses</label>
@@ -92,6 +150,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="clg-exam-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="clg-exam-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- COLLEGE Development EXPENSES -->
                       <div class="col-md-12 mb-3">                        
                         <label id="clg-dev-l" for="clg-dev">College Development Expenses</label>
@@ -102,6 +176,21 @@
                         </div>
                       </div>
                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="clg-dev-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="clg-dev-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- MILAD/ PUJA-->
                       <div class="col-md-12 mb-3">                        
                         <label id="mp-l" for="mp">Milad/ Puja Expenses</label>
@@ -110,6 +199,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="mp-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="mp-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- LIBRARY FEE -->
                       <div class="col-md-12 mb-3">
                         
@@ -120,6 +225,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="library-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="library-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- COLLEGE SPORTS FEE -->
                       <div class="col-md-12 mb-3">                        
                         <label  id="clg-sports-l" for="clg-sports">Sports Expenses</label>
@@ -127,6 +248,21 @@
                           placeholder="Sports Expenses">
                         <div class="invalid-feedback">
                           Must contain number.
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="clg-sports-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="clg-sports-fee-v" >
+                        <div class="invalid-feedback">
+                          
                         </div>
                       </div>
                       
@@ -140,6 +276,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="poor-fund-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="poor-fund-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- SCIENCE AND TECH FEE -->
                       <div class="col-md-12 mb-3">
                         
@@ -150,6 +302,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="st-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="st-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- COMPUTER LAB FEE -->
                       <div class="col-md-12 mb-3">
                         
@@ -160,6 +328,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="cl-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="cl-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- Entertainment Expenses FEE -->
                       <div class="col-md-12 mb-3">
                         <!-- <div class="custom-control custom-switch">
@@ -175,6 +359,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="entertainment-exp-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="entertainment-exp-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- Conveyance FEE -->
                       <div class="col-md-12 mb-3">
                         <!-- <div class="custom-control custom-switch">
@@ -190,6 +390,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="conveyance-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="conveyance-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- Printing and Stationery FEE -->
                       <div class="col-md-12 mb-3">
                         <!-- <div class="custom-control custom-switch">
@@ -205,6 +421,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="printing-stationary-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="printing-stationary-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- Management Expenses -->
                       <div class="col-md-12 mb-3">
                         <!-- <div class="custom-control custom-switch">
@@ -220,6 +452,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="management-exp-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="management-exp-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- TRANSFER FEE -->
                       <!-- <div class="col-md-12 mb-3">
                       <div class="custom-control custom-switch">
@@ -244,6 +492,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="others-exp-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="others-exp-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- water bill -->
                       <div class="col-md-12 mb-3">
                         
@@ -253,6 +517,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="water-bill-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="water-bill-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- Electricity bill -->
                       <div class="col-md-12 mb-3">
                         
@@ -262,6 +542,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="electric-bill-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="electric-bill-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- Telephone bill -->
                       <div class="col-md-12 mb-3">
                         
@@ -271,6 +567,22 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="telephone-bill-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="telephone-bill-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
                       <!-- Bank charges -->
                       <div class="col-md-12 mb-3">
                         
@@ -280,6 +592,23 @@
                           Must contain number.
                         </div>
                       </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label >Details</label>
+                        <input type="text" class="form-control" placeholder="Details" name="bank-charges-fee-d" >
+                        <div class="invalid-feedback">
+                      
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Vouture No.</label>
+                        <input type="text" class="form-control" placeholder="Vouture No." name="bank-charges-fee-v" >
+                        <div class="invalid-feedback">
+                          
+                        </div>
+                      </div>
+                      
+                      <input type="hidden" id="total" name="total">
                     
                       <div class="col-md-12 mb-3">
                         <!-- <div class="container"> -->

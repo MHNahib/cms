@@ -41,33 +41,87 @@
               <div class="card-header">
                 <h3 class="card-title">Add new staff</h3>
               </div>
+              {% if registered %}
+              <br>
+              <!-- /.card-header -->
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>New principal added successuflly.</strong>
+                <button onclick="reload" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>              
+              
+              {% endif %}
               <!-- /.card-header -->
               <!-- form start -->
               <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" name="email" class="form-control" id="exampleInputEmail1"
-                      placeholder="Staff's email" required>
+                    <label for="email">Email </label>
+                    <input type="email" class="form-control" id="email-info" name="email" onkeyup="getEmail();"
+                      placeholder="you@example.com" required>
+                    <div class="invalid-feedback danger" id="email-exists">
+                      Email exitsts.
+                    </div>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Name</label>
                     <input type="text" name="name" class="form-control" placeholder="Staff's name" required>
                   </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Date of join</label>
-                    <input type="date" class="form-control" name="date" placeholder="Date of jion" required>
+                  <div class="form-group row">
+                    <div class="col-md-6 mb-3">
+                      <label for="exampleInputPassword1">Date of join</label>
+                      <input type="date" class="form-control" name="date" placeholder="Date of jion">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                      <label for="country">Gender</label>
+                      <select class="custom-select d-block w-100" name="gender">
+                        <option value="">Choose...</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                      </select>
+                      <div class="invalid-feedback">
+                        Please select a valid group.
+                      </div>
+                    </div>
                   </div>
-                 
+
+                  <div class="form-group row">
+                    <div class="col-md-6 mb-3">
+                      <label for="firstName">Fist phone number</label>
+                      <input type="text" id="p1" class="form-control" placeholder="Your phone number" name="p1"
+                        onkeyup="checkPhoneNumber();" required>
+                      <div class="invalid-feedback">
+                        Please enter valid information.
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                      <label for="lastName">Second phone number (optional)</label>
+                      <input type="text" id="p2" class="form-control" placeholder="Your phone number" name="p2"
+                        onkeyup="checkPhoneNumber();">
+                      <div id="phone" class="invalid-feedback danger">
+                        Please enter another phone number. Two phone number can't be same!
+                      </div>
+                    </div>
+                  </div>
+
+
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Phone Number</label>
-                    <input type="text" name="p1" class="form-control" placeholder="Staff's name" required>
+                    <label for="exampleInputPassword1">Class by position</label>
+                    <select class="custom-select d-block w-100" name="class">
+                      <option value="">Choose...</option>
+                      <option value="3rd">3rd</option>
+                      <option value="4th">4th</option>
+                      <option value="5th">5th</option>
+                    </select>
                   </div>
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Phone Number (2)</label>
-                    <input type="text" name="p2" class="form-control" placeholder="Staff's name" required>
+                    <label for="exampleInputPassword1">Position name</label>
+                    <input type="text" name="post" class="form-control" placeholder="Position name" required>
                   </div>
 
                   <div class="form-group">
@@ -76,30 +130,15 @@
                       <input type="file" class="custom-file-input" id="customFile" name="filename" required>
                       <label class="custom-file-label" for="customFile">Choose file</label>
                     </div>
-                  </div>                  
+                  </div>
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary swalDefaultSuccess">Add new staff</button>
+                  <button type="submit" id="add" class="btn btn-primary swalDefaultSuccess">Add new staff</button>
                 </div>
               </form>
-              {% if registered %}
-
-              <div class="alert alert-success" role="alert">
-                Singup successful. Please check your email.
-              </div>
-
-              {% endif %}
-
-              {% if messages %}
-              <div class="alert alert-danger" role="alert">
-                {% for message in messages %}
-                {{ message }}
-                {% endfor %}
-              </div>
-              {% endif %}
-
+              
             </div>
             <!-- /.card -->
 
@@ -149,6 +188,63 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{% static 'dashboard/dist/js/demo.js' %}"></script>
 
+<script>
+  // EMAIL CHECK 
+  function getEmail() {
+    email = document.getElementById('email-info').value;
+    console.log(email);
+    if (email != "") {
+      $.ajax({
+        url: "{% url 'user-list' %}",
+        data: {
+          'email': email
+        },
+        dataType: 'html',
+        success: function (data) {
+          // console.log("ok");
+          if (data == 'True') {
+            // console.log('found');
+            document.getElementById('email-exists').style.display = "block";
+            document.getElementById('add').disabled = true;
+          }
+          else {
+            document.getElementById('email-exists').style.display = "none";
+            document.getElementById('add').disabled = false;
+          }
+        }
+      });
+
+    }
+    else {
+      document.getElementById('email-exists').style.display = "none";
+      document.getElementById('add').disabled = false;
+    }
+
+  }
+
+  // PHONE NUMBER CHECKER
+  function checkPhoneNumber() {
+    var phone1 = document.getElementById('p1');
+    var phone2 = document.getElementById('p2');
+    // console.log('phone2');
+    // alert(phone2.value.trim());
+    // alert(phone1.value.trim());
+    if (phone1.value.trim() == phone2.value.trim()) {
+      if (phone2.value.trim() != '' || phone2.value.trim() != '') {
+        console.log("!");
+        document.getElementById('phone').style.display = "block";
+        
+      }
+
+    }
+    else {
+      console.log("k");
+      document.getElementById('phone').style.display = "none";
+    }
+
+  }
+
+</script>
 
 
 {% endblock %}

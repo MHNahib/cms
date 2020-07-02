@@ -2,193 +2,159 @@
 {% block body %}
 {%  load static %}
 
-<style>
-    .btn:focus,
-    .btn:active,
-    button:focus,
-    button:active {
-        outline: none !important;
-        box-shadow: none !important;
-    }
+<!doctype html>
+<html lang="en">
 
-    #image-gallery .modal-footer {
-        display: block;
-    }
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    .thumb {
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
+    <!-- Bootstrap CSS
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
 
-    .img-thumbnail {
-        padding: .25rem !important;
-        background-color: #fff !important;
-        border: 1px solid #dee2e6 !important;
-        border-radius: .25rem !important;
-        width: 217.5px !important;
-        height: 146.69px !important;
-        
-    }
-    
-</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css" />
+    <!-- <link rel="stylesheet" href="style.css"> -->
 
-<!-- Jquery SCRIPT -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-    let modalId = $('#image-gallery');
+    <style>
+        /* CSS Document */
+        .gallery-block {
+            padding-bottom: 60px;
+            padding-top: 60px;
+        }
 
-    $(document)
-        .ready(function () {
+        .gallery-block .heading {
+            margin-bottom: 50px;
+            text-align: center;
+        }
 
-            loadGallery(true, 'a.thumbnail');
+        .gallery-block .heading h2 {
+            font-weight: bold;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+        }
 
-            //This function disables buttons when needed
-            function disableButtons(counter_max, counter_current) {
-                $('#show-previous-image, #show-next-image')
-                    .show();
-                if (counter_max === counter_current) {
-                    $('#show-next-image')
-                        .hide();
-                } else if (counter_current === 1) {
-                    $('#show-previous-image')
-                        .hide();
-                }
+        .gallery-block.cards-gallery h6 {
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .gallery-block.cards-gallery .card {
+            transition: 0.4s easy;
+        }
+
+        .gallery-block.cards-gallery .card img {
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-block.cards-gallery .card-body {
+            text-align: center;
+        }
+
+        .gallery-block.cards-gallery .card-body p {
+            font-size: 15px;
+        }
+
+        .gallery-block.cards-gallery a {
+            color: #212529;
+        }
+
+        .gallery-block.cards-gallery a:hover {
+            text-decoration: none;
+        }
+
+        .gallery-block.cards-gallery .card {
+            margin-bottom: 30px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (min-width: 576px) {
+
+            .gallery-block .transform-on-hover:hover {
+                transform: translateY(-10px) scale(1.02);
+                box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.15) !important;
             }
+        }
+    </style>
 
-            /**
-             *
-             * @param setIDs        Sets IDs when DOM is loaded. If using a PHP counter, set to false.
-             * @param setClickAttr  Sets the attribute for the click handler.
-             */
+   
+</head>
 
-            function loadGallery(setIDs, setClickAttr) {
-                let current_image,
-                    selector,
-                    counter = 0;
-
-                $('#show-next-image, #show-previous-image')
-                    .click(function () {
-                        if ($(this)
-                            .attr('id') === 'show-previous-image') {
-                            current_image--;
-                        } else {
-                            current_image++;
-                        }
-
-                        selector = $('[data-image-id="' + current_image + '"]');
-                        updateGallery(selector);
-                    });
-
-                function updateGallery(selector) {
-                    let $sel = selector;
-                    current_image = $sel.data('image-id');
-                    $('#image-gallery-title')
-                        .text($sel.data('title'));
-                    $('#image-gallery-image')
-                        .attr('src', $sel.data('image'));
-                    disableButtons(counter, $sel.data('image-id'));
-                }
-
-                if (setIDs == true) {
-                    $('[data-image-id]')
-                        .each(function () {
-                            counter++;
-                            $(this)
-                                .attr('data-image-id', counter);
-                        });
-                }
-                $(setClickAttr)
-                    .on('click', function () {
-                        updateGallery($(this));
-                    });
-            }
-        });
-
-    // build key actions
-    $(document)
-        .keydown(function (e) {
-            switch (e.which) {
-                case 37: // left
-                    if ((modalId.data('bs.modal') || {})._isShown && $('#show-previous-image').is(":visible")) {
-                        $('#show-previous-image')
-                            .click();
-                    }
-                    break;
-
-                case 39: // right
-                    if ((modalId.data('bs.modal') || {})._isShown && $('#show-next-image').is(":visible")) {
-                        $('#show-next-image')
-                            .click();
-                    }
-                    break;
-
-                default:
-                    return; // exit this handler for other keys
-            }
-            e.preventDefault(); // prevent the default action (scroll / move caret)
-        });
-
-
-</script>
-
-<!-- /JS SCRIPT -->
-
-
-
-<!-- USER PART -->
-
-<h5 class="section-title h1" style="text-align: center;margin-bottom: 20px; margin-top:20px;">Photo gallery</h5>
-<div class="container">
-    <div class="row">
-        <div class="row"> 
-            {% for i in posts %}
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="{{i.photo_title}}"
-                    data-image="{{i.img.url}}"
-
-                    data-target="#image-gallery">
-                    <img class="img-thumbnail"
-                        src="{{i.img.url}}"
-                        alt="{{i.photo_title}}" >
-                </a>
-                
+<body>
+    <section class="gallery-block cards-gallery">
+        <div class="container">
+            <div class="heading">
+               
             </div>
-           {% endfor %}
-        </div>
-
-        <!-- WORKING PART -->
-        <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="image-gallery-title">Test</h4>
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
-                                class="sr-only">Close</span>
-                        </button>
+            <div class="row">
+                {% for i in posts %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 transform-on-hover">
+                        <a class="lightbox" href="{{i.img.url}}"><img src="{{i.img.url}}" alt="{{i.photo_title}}" height="289.98px" width="141.38px" class="card-img-top"></a>
+                        <div class="card-body">
+                            <h6>{{i.photo_title}}</h6>
+                            
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <img id="image-gallery-image" class="img-responsive col-md-12" src="">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary float-left" id="show-previous-image"><i
-                                class="fa fa-arrow-left"></i>
-                        </button>
+                </div>
+                {% endfor %}
 
-                        <button type="button" id="show-next-image" class="btn btn-secondary float-right"><i
-                                class="fa fa-arrow-right"></i>
-                        </button>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 transform-on-hover">
+                        <a class="lightbox" href="images/F2.jpg"><img src="images/F2.jpg" class="card-img-top"></a>
+                        <div class="card-body">
+                            <h6>Lorem Ipsum</h6>
+                            <p class="text-muted card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                Nunc quam urna.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 transform-on-hover">
+                        <a class="lightbox" href="images/F3.jpg"><img src="images/F3.jpg" class="card-img-top"></a>
+                        <div class="card-body">
+                            <h6>Lorem Ipsum</h6>
+                            <p class="text-muted card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                Nunc quam urna.</p>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
-    </div>
-     <!-- Paginator -->
-     {%	include	"pagination.html"	with	page=posts	%}
+    </section>
 
-     <!-- Paginator --> 
-</div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+    <script>
+        baguetteBox.run('.cards-gallery', { animation: 'slideIn' });
+    </script>
 
-<!-- /USER PART -->
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
 
 {% endblock %}

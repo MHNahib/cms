@@ -326,6 +326,20 @@
                           Must contain number.
                         </div>
                       </div>
+                      <!-- COLLEGE DEV FEE-->
+                      <div class="col-md-12 mb-3">
+                        <!-- <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="sw-5">
+                        <label class="custom-control-label" for="sw-5">
+                          <label for="mp">Milad/ Puja</label>
+                        </label>
+                      </div> -->
+                        <label id="cd-l" class="hide" for="cd">College development fee</label>
+                        <input type="number" class="form-control hide" id="cd" name="cd-fee" placeholder="College development fee">
+                        <div class="invalid-feedback">
+                          Must contain number.
+                        </div>
+                      </div>
                       <!-- LIBRARY FEE -->
                       <div class="col-md-12 mb-3">
                         <!-- <div class="custom-control custom-switch">
@@ -908,6 +922,9 @@
 
       document.getElementById('rov-board').value = '{{others.board_rovers}}';
 
+      document.getElementById('cd-l').classList.remove("hide");
+      document.getElementById('cd').classList.remove("hide");
+      
       document.getElementById('mp-l').classList.remove("hide");
       document.getElementById('mp').classList.remove("hide");
 
@@ -963,6 +980,11 @@
       document.getElementById('rov-board').classList.add("hide");
 
       document.getElementById('rov-board').value = '';
+
+      document.getElementById('cd-l').classList.add("hide");
+      document.getElementById('cd').classList.add("hide");
+
+      document.getElementById('cd').value = '';
 
       document.getElementById('mp-l').classList.add("hide");
       document.getElementById('mp').classList.add("hide");
@@ -1499,6 +1521,10 @@
 
     if (!isNaN(parseFloat(document.getElementById('mp').value))) {
       total += parseFloat(document.getElementById('mp').value);
+    }
+
+    if (!isNaN(parseFloat(document.getElementById('cd').value))) {
+      total += parseFloat(document.getElementById('cd').value);
     }
 
 

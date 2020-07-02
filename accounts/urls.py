@@ -29,8 +29,9 @@ urlpatterns = [
     path('admission/ibm/', views.signup_ibm, name='signup-ibm'),   
     path('admission/degree/', views.signup_degree, name='signup-degree'),   
     path('dashboard/', views.admin_dashboard, name='admin'),
+    path('add/principal/', views.add_principal, name='add-principal'),
     path('dashboard/add/teacher/', views.add_teacher, name='add-teacher'),
-    path('dashboard/add/staff/', views.add_staff, name='add-staff'),
+    path('add/staff/', views.add_staff, name='add-staff'),
     path('dashboard/profile/<str:id>/', views.profile, name='show-profile'),
     path('download/<str:username>/', views.download_form, name='download'),
     # path('dashboard/teacher/appoint/<str:id>/', views.wil_take, name='will-take'),
@@ -63,6 +64,7 @@ urlpatterns = [
     path('pardon/<str:id>/', views.pardon , name='pardon'),
     path('expense/', views.expense , name='expense'),
     
+    # path('add/notice/', views.notice, name='add-staff'),
 
     path('activate/<uidb64>/<token>/',views.activate, name='activate'),
     

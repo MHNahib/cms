@@ -368,7 +368,8 @@ class CenterFee(models.Model):
 # -----------------------------
 
 #  PoorFund Fee
-class PoorFundFee(models.Model):    
+class PoorFundFee(models.Model): 
+    user= models.ForeignKey(Student, on_delete=models.CASCADE)   
     amount= models.FloatField(default=0)    
     date_time= models.DateTimeField(auto_now_add=True)
 
@@ -403,190 +404,232 @@ class donation(models.Model):
 # Govt. salary Expenses
 class GovtSalaryExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # House rent and bonus Expenses
 class HouseRentAndBonusExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Board Registration Expenses
 class BoardRegExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # College Exam Expenses
 class CollegeExamExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # College Development Expenses
 class CollegeDevExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Milad Puja Expenses
 class MiladPujaExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Library Expenses
 class LibraryExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Sports Expenses
 class SportsExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Poor fund Expenses
 class PoorFundExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Water Expenses
 class WaterExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Electric Expenses
 class ElectricExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Bank Charge Expenses
 class BankChargeExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Telephone Bill Expenses
 class TelephoneBillExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Science and technology Expenses
 class ScienceAndTechnologyExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Computer lab Expenses
 class ComputerLabExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Entertainment Expenses
 class EntertainmentExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Conveyance Expenses
 class ConveyanceExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Printing and stationary Expenses
 class PrintingAndStationaryExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Management Expenses
 class ManagementExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Tution fee and other charges pardon
 class PardonExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 # Other Expenses
 class OtherExp(models.Model):    
     amount= models.FloatField(default=0)
+    details= models.CharField(null=True, max_length=250)
+    vauture= models.CharField(null=True, max_length=250)
     date= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 
@@ -618,6 +661,7 @@ class TotalIncome(models.Model):
     honours_tutionfee= models.FloatField(default=0)
     degree_tutionfee= models.FloatField(default=0)
     board_examfee= models.FloatField(default=0)
+    college_examfee= models.FloatField(default=0)
     college_devfee= models.FloatField(default=0)
     milad_puja= models.FloatField(default=0)
     library_fee= models.FloatField(default=0)
@@ -688,6 +732,50 @@ class TotalExpances(models.Model):
 
 
 
+
+# RECEIPT OF STUDENT
+class StudentReceipt(models.Model):
+    serial_no= models.AutoField(primary_key=True)
+    user= models.ForeignKey(Student, on_delete=models.CASCADE)
+    total_amount= models.FloatField(default=0)
+    year= models.CharField(max_length=100, null=True)
+    update_date= models.DateTimeField(auto_now_add=True)
+
+       
+    tutionfee= models.FloatField(default=0)
+    board_examfee= models.FloatField(default=0)
+    college_examfee= models.FloatField(default=0)
+    college_devfee= models.FloatField(default=0)
+    milad_puja= models.FloatField(default=0)
+    library_fee= models.FloatField(default=0)
+    college_sports_fee= models.FloatField(default=0)
+    board_sports_fee= models.FloatField(default=0)
+    poor_fund= models.FloatField(default=0)
+    donation= models.FloatField(default=0)
+    
+    science_and_tech= models.FloatField(default=0)
+    computer_lab_fee= models.FloatField(default=0)
+    admission_fee= models.FloatField(default=0)
+    reg_fee= models.FloatField(default=0)
+    college_rovers= models.FloatField(default=0)
+    board_rovers= models.FloatField(default=0)
+    college_transfer= models.FloatField(default=0)
+    id_fee= models.FloatField(default=0)
+    certificate_fee= models.FloatField(default=0)
+    retention_fee= models.FloatField(default=0)
+    testimonial_fee= models.FloatField(default=0)
+    paper_magazine= models.FloatField(default=0)
+    preactical_fee= models.FloatField(default=0)
+    bill= models.FloatField(default=0)
+    management_fee= models.FloatField(default=0)
+    fourth_paper= models.FloatField(default=0)
+    late_fine= models.FloatField(default=0)
+    center= models.FloatField(default=0)
+    def __str__(self):
+        return str(self.serial_no)
+
+
+
 # TUTION FEE
 class TutionFee(models.Model):
     class_name= models.CharField(max_length=50, null=True, blank=True)
@@ -743,11 +831,14 @@ class Teacher(models.Model):
     user= models.OneToOneField(User, on_delete=models.CASCADE)
     name= models.CharField(max_length=100, null=True)
     email= models.EmailField(max_length=100, null=True)
-    dept_name= models.ForeignKey(Depertment, on_delete=models.CASCADE)
+    gender= models.CharField(max_length=10, null=True, blank=False)
+    subject= models.CharField(max_length=10, null=True, blank=False)
+    designation= models.CharField(max_length=10, null=True, blank=False)
+    dept_name= models.CharField(max_length=10, null=True, blank=False)
     dept_head= models.BooleanField(default=False, blank=True)
     joining_date= models.DateField()
     phone_number= models.CharField(max_length=50, null=True)
-    parents_number= models.CharField(max_length=50, null=True)
+    phone_number_2= models.CharField(max_length=50, null=True)
     teacher_img= models.ImageField(upload_to='profile/teacher/', blank=False)
 
 
@@ -757,30 +848,87 @@ class Teacher(models.Model):
 # EDUCATIONAL QUALIFICATION OF TEACHER
 class TeacherEducation(models.Model):
 
-    user= models.OneToOneField(User, on_delete=models.CASCADE)
-    honours_year= models.CharField(max_length=100, null=True, blank=False)
+    user= models.OneToOneField(Teacher, on_delete=models.CASCADE)
+
+    ssc= models.CharField(max_length=100, null=True, blank=False)
+    ssc_grade= models.CharField(max_length=100, null=True, blank=False)
+    hsc= models.CharField(max_length=100, null=True, blank=False)
+    hsc_grade= models.CharField(max_length=100, null=True, blank=False)
+
+    honours= models.CharField(max_length=100, null=True, blank=False)
+    honours_from= models.CharField(max_length=100, null=True, blank=False)
     honours_grade= models.CharField(max_length=100, null=True, blank=False)
-    masters_year= models.CharField(max_length=100, null=True, blank=False)   
+
+    masters= models.CharField(max_length=100, null=True, blank=False)   
+    masters_from= models.CharField(max_length=100, null=True, blank=False)   
     masters_grade= models.CharField(max_length=100, null=True, blank=False)
 
-    def __str__(self):
-        return self.user.username
+    phd= models.CharField(max_length=100, null=True, blank=False)
+    subject= models.CharField(max_length=100, null=True, blank=False)
 
-# ABOUT TEACHER
-class TeacherAbout(models.Model):
+    def __str__(self):
+        return self.user.name
+
+
+#   PRINCIPAL
+class Principal(models.Model):
 
     user= models.OneToOneField(User, on_delete=models.CASCADE)
-    blood_group= models.CharField(max_length=10, null=True, blank=False)
-    date_of_birth= models.DateField(null= True)
-    marital_status= models.CharField(max_length=50, null=True, blank=True)
-    present_address= models.TextField(null=True, blank=False)
-    permanent_address= models.TextField(null=True, blank=False)
+    name= models.CharField(max_length=100, null=True)
+    email= models.EmailField(max_length=100, null=True)
     gender= models.CharField(max_length=10, null=True, blank=False)
-    nid= models.CharField(max_length=10, null=True, blank=False)
+    # subject= models.CharField(max_length=10, null=True, blank=False)
+    # designation= models.CharField(max_length=10, null=True, blank=False)
+    # dept_name= models.CharField(max_length=10, null=True, blank=False)
+    # dept_head= models.BooleanField(default=False, blank=True)
+    joining_date= models.DateField()
+    phone_number= models.CharField(max_length=50, null=True)
+    phone_number_2= models.CharField(max_length=50, null=True)
+    teacher_img= models.ImageField(upload_to='profile/principal/', blank=False)
 
 
     def __str__(self):
-        return self.user.username
+        return self.name
+
+# EDUCATIONAL QUALIFICATION OF TEACHER
+class PrincipalEducation(models.Model):
+
+    user= models.OneToOneField(Principal, on_delete=models.CASCADE)
+
+    ssc= models.CharField(max_length=100, null=True, blank=False)
+    ssc_grade= models.CharField(max_length=100, null=True, blank=False)
+    hsc= models.CharField(max_length=100, null=True, blank=False)
+    hsc_grade= models.CharField(max_length=100, null=True, blank=False)
+
+    honours= models.CharField(max_length=100, null=True, blank=False)
+    honours_from= models.CharField(max_length=100, null=True, blank=False)
+    honours_grade= models.CharField(max_length=100, null=True, blank=False)
+
+    masters= models.CharField(max_length=100, null=True, blank=False)   
+    masters_from= models.CharField(max_length=100, null=True, blank=False)   
+    masters_grade= models.CharField(max_length=100, null=True, blank=False)
+
+    phd= models.CharField(max_length=100, null=True, blank=False)
+    subject= models.CharField(max_length=100, null=True, blank=False)
+
+    def __str__(self):
+        return self.user.name
+
+# # ABOUT TEACHER
+# class TeacherAbout(models.Model):
+
+#     user= models.OneToOneField(User, on_delete=models.CASCADE)
+#     blood_group= models.CharField(max_length=10, null=True, blank=False)
+#     date_of_birth= models.DateField(null= True)
+#     marital_status= models.CharField(max_length=50, null=True, blank=True)
+#     present_address= models.TextField(null=True, blank=False)
+#     permanent_address= models.TextField(null=True, blank=False)
+#     gender= models.CharField(max_length=10, null=True, blank=False)
+#     nid= models.CharField(max_length=10, null=True, blank=False)
+
+
+#     def __str__(self):
+#         return self.user.username
 
 
 
@@ -837,10 +985,28 @@ class Subject(models.Model):
 class Staff(models.Model):
     user= models.OneToOneField(User, on_delete=models.CASCADE)
     name= models.CharField(max_length=100)
+    gender= models.CharField(max_length=100)
     email= models.EmailField(max_length=100, null=True)    
     joining_date= models.DateField()
     phone_number= models.CharField(max_length=50, null=True)
-    parents_number= models.CharField(max_length=50, null=True)
+    phone_number_2= models.CharField(max_length=50, null=True)
+    designation= models.CharField(max_length=50, null=True)
+    post= models.CharField(max_length=50, null=True)
+    staff_img= models.ImageField(upload_to='profile/staff/', blank=False)
+
+    def __str__(self):
+        return self.name
+
+class NormalStaff(models.Model):
+    
+    name= models.CharField(max_length=100)
+    gender= models.CharField(max_length=100)
+    email= models.EmailField(max_length=100, null=True)    
+    joining_date= models.DateField()
+    phone_number= models.CharField(max_length=50, null=True)
+    phone_number_2= models.CharField(max_length=50, null=True)
+    designation= models.CharField(max_length=50, null=True)
+    post= models.CharField(max_length=50, null=True)
     staff_img= models.ImageField(upload_to='profile/staff/', blank=False)
 
     def __str__(self):
