@@ -78,7 +78,7 @@
         <hr>
 
         <!-- Post Content -->
-        <p class="lead">{{book.book_description}}</p>
+        <p class="lead">{{book.book_description| safe}}</p>
 
 
         <hr>
@@ -103,7 +103,7 @@
             <ul class="list-group list-group-flush">
               {% for i in all_notice %}
               <a href="{% url 'show-notice' i.slug %}">
-                <li class="list-group-item">{{i.slug}}</li>
+                <li class="list-group-item">{{ i.notice_title }}</li>
               </a>
               {% endfor %}
             </ul>

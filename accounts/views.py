@@ -821,6 +821,48 @@ def photo(request):
     context={'registered': registered}
     return render(request, 'dashboard/add-photo.html', context)
 
+# # ADD BOOKS
+def books(request):
+
+    registered = False
+    
+    if request.method == 'POST':
+        title = request.POST['title']
+        body = request.POST['body']
+        written = request.POST['written']
+        subject = request.POST['subject']
+        img= request.FILES['filename'] 
+        try:
+            book= request.FILES['book'] 
+            add_book= Library(
+
+                    user=User.objects.get(username=request.user),
+                    book_title= title,  
+                    book_writter= written,
+                    book_subject= subject,
+                    book_description= body,
+                    book_file= book,
+                    book_img= img,
+                )
+            add_book.save()
+
+        except:
+            add_book= Library(
+                    user=User.objects.get(username=request.user),
+                    book_title= title,  
+                    book_writter= written,
+                    book_subject= subject,
+                    book_description= body,                    
+                    book_img= img,
+                )
+            add_book.save()
+
+        
+        return redirect('library')
+    
+    context={'registered': registered}
+    return render(request, 'dashboard/add-books.html', context)
+
 
 
 
