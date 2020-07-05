@@ -72,6 +72,9 @@
                                 <!-- <th style="width: 40px">Delete</th> -->
                               </tr>
                             </thead>
+                            {% for i in user %}
+                            <h2>{{i.name}}</h2>
+                            {% endfor %}
                             <tbody id="show-data">
                               {% for i in user %}
                               <tr id="row-{{i.user.id}}">

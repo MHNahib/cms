@@ -45,7 +45,7 @@
               <br>
               <!-- /.card-header -->
               <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>New staff added successuflly.</strong>
+                <strong>Update successful.</strong>
                 <button onclick="reload" type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -58,29 +58,28 @@
                 {% csrf_token %}
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="email">Email </label>
-                    <input type="email" class="form-control" id="email-info" name="email" onkeyup="getEmail();"
-                      placeholder="you@example.com">
-                    <div class="invalid-feedback danger" id="email-exists">
-                      Email exitsts.
-                    </div>
-                  </div>
-                  <div class="form-group">
                     <label for="exampleInputPassword1">Name</label>
-                    <input type="text" name="name" class="form-control" placeholder="Staff's name" required>
+                    <input type="text" name="name" class="form-control" placeholder="Staff's name" value="{{staff.name}}" required>
                   </div>
                   <div class="form-group row">
                     <div class="col-md-6 mb-3">
                       <label for="exampleInputPassword1">Date of join</label>
-                      <input type="date" class="form-control" name="date" placeholder="Date of jion">
+                      <input type="date" class="form-control" name="date" placeholder="Date of jion" value = "{{staff.joining_date | date:'Y-m-d' }}">
                     </div>
 
                     <div class="col-md-6 mb-3">
                       <label for="country">Gender</label>
                       <select class="custom-select d-block w-100" name="gender">
-                        <option value="">Choose...</option>
-                        <option>Male</option>
-                        <option>Female</option>
+                        {% if staff.gender == "Male"%}
+                            <option selected>Male</option>
+                            {% else %}
+                            <option >Male</option>
+                            {% endif %}
+                            {% if staff.gender == "Female"%}
+                            <option selected>Female</option>
+                            {% else %}
+                            <option >Female</option>
+                            {% endif %}
                       </select>
                       <div class="invalid-feedback">
                         Please select a valid group.
@@ -92,7 +91,7 @@
                     <div class="col-md-6 mb-3">
                       <label for="firstName">Fist phone number</label>
                       <input type="text" id="p1" class="form-control" placeholder="Your phone number" name="p1"
-                        onkeyup="checkPhoneNumber();" required>
+                        onkeyup="checkPhoneNumber();" value="{{staff.phone_number}}" required>
                       <div class="invalid-feedback">
                         Please enter valid information.
                       </div>
@@ -101,7 +100,7 @@
                     <div class="col-md-6 mb-3">
                       <label for="lastName">Second phone number (optional)</label>
                       <input type="text" id="p2" class="form-control" placeholder="Your phone number" name="p2"
-                        onkeyup="checkPhoneNumber();">
+                        onkeyup="checkPhoneNumber();" value="{{staff.phone_number_2}}">
                       <div id="phone" class="invalid-feedback danger">
                         Please enter another phone number. Two phone number can't be same!
                       </div>
@@ -113,21 +112,37 @@
                     <label for="exampleInputPassword1">Class by position</label>
                     <select class="custom-select d-block w-100" id="choise" name="class">
                       <option value="">Choose...</option>
-                      <option value="3rd">3rd</option>
-                      <option value="4th">4th</option>
-                      <option value="5th">5th</option>
+
+                      {% if staff.designation == "3rd"%}
+                      <option selected>3rd</option>
+                      {% else %}
+                      <option >3rd</option>
+                      {% endif %}
+
+                      {% if staff.designation == "4th"%}
+                      <option selected>4th</option>
+                      {% else %}
+                      <option >4th</option>
+                      {% endif %}
+
+                      {% if staff.designation == "5th"%}
+                      <option selected>5th</option>
+                      {% else %}
+                      <option >5th</option>
+                      {% endif %}
+                      
                     </select>
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">Position name</label>
-                    <input type="text" name="post" class="form-control" placeholder="Position name" required>
+                    <input type="text" name="post" class="form-control" placeholder="Position name" value="{{staff.post}}" required>
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputFile">Select photo</label>
                     <div class="input-group">
-                      <input type="file" class="custom-file-input" id="customFile" name="filename" required>
+                      <input type="file" class="custom-file-input" id="customFile" name="filename">
                       <label class="custom-file-label" for="customFile">Choose file</label>
                     </div>
                   </div>
@@ -135,7 +150,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" id="add" class="btn btn-primary swalDefaultSuccess">Add new staff</button>
+                  <button type="submit" id="add" class="btn btn-primary swalDefaultSuccess">Update</button>
                 </div>
               </form>
 

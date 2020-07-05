@@ -1,0 +1,719 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  {%	include	"dashboard/nav.html"	with	user=user	%}
+
+  <!-- SIDEBAR -->
+  {%	include	"dashboard/sidebar.html"	with	user=user	%}
+
+  <div class="content-header">
+    <div class="container-fluid">
+      <!-- {% if registered %}
+
+      <div class="alert alert-success" role="alert">
+        New user added successuflly.
+      </div>
+
+      {% endif %} -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <div class="content-wrapper" style="min-height: 1244.06px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Update</h3>
+                
+              </div>
+              {% if registered %}
+              <br>
+              <!-- /.card-header -->
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Updated successuflly.</strong>
+                <button onclick="reload" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>              
+              
+              {% endif %}
+            
+              <!-- form start -->
+              <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="name">Full Name </label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Your name" value="{{user_profile.name}}" required>
+                        <div class="invalid-feedback">
+                            Please enter your name as per as SSC registration card
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="name">Roll No </label>
+                        <input type="text" class="form-control" name="roll" placeholder="Roll" value="{{user_profile.roll}}" required>
+                        <div class="invalid-feedback">
+                            Please enter your name as per as SSC registration card
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">Father's name</label>
+                        <input type="text" class="form-control" placeholder="Enter your father's name" name="fname" value="{{about.fathers_name}}"
+                            required>
+                        <div class="invalid-feedback">
+                            Please enter your father's name as per as SSC registration card
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Mother's name</label>
+                        <input type="text" class="form-control" placeholder="Enter your mothers's name" name="mname" value="{{about.mothers_name}}"
+                            required>
+                        <div class="invalid-feedback">
+                            Please enter your mother's name as per as SSC registration card
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="name">Date of birth</label>
+                        <input type="date" class="form-control" id="date" name="date" placeholder="Your birth date" value = "{{about.date_of_birth | date:'Y-m-d' }}" required> 
+                        <div class="invalid-feedback">
+                            Please enter your birth date as per as SSC registration card
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="exampleInputFile">Select photo</label>
+                        <div class="input-group">
+                            <input type="file" class="custom-file-input" id="customFile" name="filename">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
+                        <div class="invalid-feedback danger" id="photo">
+                            Image size must be under 2 Mb and must contain passpoart size image.
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">Your phone number</label>
+                        <input type="text" id="p1" class="form-control" value="{{about.phone_number}}" placeholder="Your phone number"
+                            name="phone1" onkeyup="checkPhoneNumber();" required>
+                        <div class="invalid-feedback">
+                            Please enter valid information.
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Paresnts phone number</label>
+                        <input type="text" id="p2" class="form-control" placeholder="Your phone number"
+                            name="phone2" value="{{about.parents_number}}" onkeyup="checkPhoneNumber();" required>
+                        <div id="phone" class="invalid-feedback danger">
+                            Please enter another phone number. Two phone number can't be same!
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="country">Blood group</label>
+                        <select class="custom-select d-block w-100" name="blood_group">
+                            <option value="">Choose...</option>
+                            {% if about.blood_group == "A (+)"%}
+                            <option selected>A (+)</option>
+                            {% else %}
+                            <option>A (+)</option>
+                            {% endif %}
+                            {% if about.blood_group == "A (-)"%}
+                            <option selected>A (-)</option>
+                            {% else %}
+                            <option>A (-)</option>
+                            {% endif %}
+                            {% if about.blood_group == "B (+)"%}
+                            <option selected>B (+)</option>
+                            {% else %}
+                            <option>B (+)</option>
+                            {% endif %}
+                            {% if about.blood_group == "B (-)"%}
+                            <option selected>B (-)</option>
+                            {% else %}
+                            <option>B (-)</option>
+                            {% endif %}
+                            {% if about.blood_group == "O (+)"%}
+                            <option selected>O (+)</option>
+                            {% else %}
+                            <option>O (+)</option>
+                            {% endif %}
+                            {% if about.blood_group == "O (-)"%}
+                            <option selected>O (-)</option>
+                            {% else %}
+                            <option>O (-)</option>
+                            {% endif %}
+                            {% if about.blood_group == "AB (+)"%}
+                            <option selected>AB (+)</option>
+                            {% else %}
+                            <option>AB (+)</option>
+                            {% endif %}
+                            {% if about.blood_group == "AB (-)"%}
+                            <option selected>AB (-)</option>
+                            {% else %}
+                            <option>AB (-)</option>
+                            {% endif %}
+                          
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a valid board.
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="country">Gender</label>
+                        <select class="custom-select d-block w-100" name="gender" required>
+                            <option value="">Choose...</option>
+                            {% if about.gender == "Male"%}
+                            <option selected>Male</option>
+                            {% else %}
+                            <option >Male</option>
+                            {% endif %}
+                            {% if about.gender == "Female"%}
+                            <option selected>Female</option>
+                            {% else %}
+                            <option >Female</option>
+                            {% endif %}
+                            <!-- <option>Female</option> -->
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a valid group.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address"> Present address</label>
+                    <input type="textarea" class="form-control" name="paddress"
+                        placeholder="Village:   ,Post Office:   ,District:   ;" value="{{about.present_address}}" required>
+                    <div class="invalid-feedback">
+                        Please enter your present address.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address2">Permanent address</label>
+                    <input type="text" class="form-control" name="peraddress"
+                        placeholder="Village:   ,Post Office:   ,District:   ;" value="{{about.permanent_address}}" required>
+                    <div class="invalid-feedback">
+                        Please enter your premanent address.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address2">NID number</label>
+                    <input type="text" class="form-control" name="nid" placeholder="NID number (if any)" value="{{about.nid}}">
+                    <div class="invalid-feedback">
+                        NID number (if any)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <label for="state">Marital status</label>
+                        <select class="custom-select d-block w-100" name="marital" required>
+                            <option value="">Choose...</option>
+                            {% if about.marital_status == "Unmarried"%}
+                            <option selected>Unmarried</option>
+                            {% else %}
+                            <option >Unmarried</option>
+                            {% endif %}
+                            {% if about.marital_status == "Married"%}
+                            <option selected>Married</option>
+                            {% else %}
+                            <option >Married</option>
+                            {% endif %}
+                            {% if about.marital_status == "Engaged"%}
+                            <option selected>Engaged</option>
+                            {% else %}
+                            <option >Engaged</option>
+                            {% endif %}
+                            
+                        </select>
+                        <div class="invalid-feedback">
+                            Marital status required
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="state">Nationality</label>
+                        <select class="custom-select d-block w-100" name="nationality" id="state" required>
+                            <option value="">Choose...</option>
+                            <option selected>Bangladeshi by barth</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Nationality required
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="state">Religion</label>
+                        <select class="custom-select d-block w-100" name="religion" id="state" required>
+                            <option value="">Choose...</option>
+
+                            {% if about.religion == "Islam"%}
+                            <option selected>Islam</option>
+                            {% else %}
+                            <option >Islam</option>
+                            {% endif %}
+
+                            {% if about.religion == "Hinduism"%}
+                            <option selected>Hinduism</option>
+                            {% else %}
+                            <option >Hinduism</option>
+                            {% endif %}
+
+                            {% if about.religion == "Christianity"%}
+                            <option selected>Christianity</option>
+                            {% else %}
+                            <option >Christianity</option>
+                            {% endif %}
+
+                            {% if about.religion == "Buddhism"%}
+                            <option selected>Buddhism</option>
+                            {% else %}
+                            <option >Buddhism</option>
+                            {% endif %}
+
+                            {% if about.religion == "Others"%}
+                            <option selected>Others</option>
+                            {% else %}
+                            <option >Others</option>
+                            {% endif %}
+
+                            
+                        </select>
+                        <div class="invalid-feedback">
+                            Nationality required
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <br>
+                <hr class="mb-4">
+                <br>
+
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <label for="firstName">SSC roll#</label>
+                        <input type="text" class="form-control" placeholder="Enter your father's name"
+                            name="ssc_roll" value="{{education.ssc_roll }}" required>
+                        <div class="invalid-feedback">
+                            Please enter valid information.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="lastName">SSC registration#</label>
+                        <input type="text" class="form-control" placeholder="Enter your mothers's name"
+                            name="ssc_reg" value="{{education.ssc_reg }}" required>
+                        <div class="invalid-feedback">
+                            Please enter valid information.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="lastName">SSC passing year</label>
+                        <input type="text" class="form-control" placeholder="Enter your mothers's name"
+                            name="ssc_year" value="{{education.ssc_year }}" required>
+                        <div class="invalid-feedback">
+                            Please enter valid information.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="country">SSC Board name</label>
+                        <select class="custom-select d-block w-100" name="ssc_board" required>
+                            <option value="">Choose...</option>
+
+                            {% if education.ssc_board == "Barisal"%}
+                            <option selected>Barisal</option>
+                            {% else %}
+                            <option >Barisal</option>
+                            {% endif %}
+
+                            {% if education.ssc_board == "Chittagong"%}
+                            <option selected>Chittagong</option>
+                            {% else %}
+                            <option >Chittagong</option>
+                            {% endif %}
+
+                            {% if education.ssc_board == "Comilla"%}
+                            <option selected>Comilla</option>
+                            {% else %}
+                            <option >Comilla</option>
+                            {% endif %}
+
+                            {% if education.ssc_board == "Dhaka"%}
+                            <option selected>Dhaka</option>
+                            {% else %}
+                            <option >Dhaka</option>
+                            {% endif %}
+
+                            {% if education.ssc_board == "Dinajpur"%}
+                            <option selected>Dinajpur</option>
+                            {% else %}
+                            <option >Dinajpur</option>
+                            {% endif %}
+
+                            {% if education.ssc_board == "Jessore"%}
+                            <option selected>Jessore</option>
+                            {% else %}
+                            <option >Jessore</option>
+                            {% endif %}
+
+                            {% if education.ssc_board == "Mymensingh"%}
+                            <option selected>Mymensingh</option>
+                            {% else %}
+                            <option >Mymensingh</option>
+                            {% endif %}
+
+                            {% if education.ssc_board == "Rajshahi"%}
+                            <option selected>Rajshahi</option>
+                            {% else %}
+                            <option >Rajshahi</option>
+                            {% endif %}
+
+                            {% if education.ssc_board == "Sylhet"%}
+                            <option selected>Sylhet</option>
+                            {% else %}
+                            <option >Sylhet</option>
+                            {% endif %}
+                            
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a valid board.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="country">SSC Group</label>
+                        <select class="custom-select d-block w-100" name="ssc_group" required>
+                            <option value="">Choose...</option>
+
+                            {% if education.ssc_group == "Arts"%}
+                            <option selected>Arts</option>
+                            {% else %}
+                            <option >Arts</option>
+                            {% endif %}
+
+                            {% if education.ssc_group == "Comart"%}
+                            <option selected>Comart</option>
+                            {% else %}
+                            <option >Comart</option>
+                            {% endif %}
+
+                            {% if education.ssc_group == "Science"%}
+                            <option selected>Science</option>
+                            {% else %}
+                            <option >Science</option>
+                            {% endif %}
+                            
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a valid group.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="lastName">SSC GPA</label>
+                        <input type="text" class="form-control" placeholder="Enter your mothers's name"
+                            name="ssc_grade" value="{{education.ssc_grade }}" required>
+                        <div class="invalid-feedback">
+                            Please enter valid information.
+                        </div>
+                    </div>
+                    
+                    {% if education.hsc_year %}
+                    <div class="col-md-4 mb-4">
+                        <label for="firstName">HSC roll#</label>
+                        <input type="text" class="form-control" placeholder="Enter your father's name"
+                            name="hsc_roll" value="{{education.hsc_roll }}" required>
+                        <div class="invalid-feedback">
+                            Please enter valid information.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="lastName">HSC registration#</label>
+                        <input type="text" class="form-control" placeholder="Enter your mothers's name"
+                            name="hsc_reg" value="{{education.hsc_reg }}"  required>
+                        <div class="invalid-feedback">
+                            Please enter valid information.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="lastName">HSC passing year</label>
+                        <input type="text" class="form-control" placeholder="Enter your mothers's name"
+                            name="hsc_year" value="{{education.hsc_year }}"  required>
+                        <div class="invalid-feedback">
+                            Please enter valid information.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="country">HSC Board name</label>
+                        <select class="custom-select d-block w-100" name="hsc_board" required>
+                          {% if education.hsc_board == "Barisal"%}
+                          <option selected>Barisal</option>
+                          {% else %}
+                          <option >Barisal</option>
+                          {% endif %}
+
+                          {% if education.hsc_board == "Chittagong"%}
+                          <option selected>Chittagong</option>
+                          {% else %}
+                          <option >Chittagong</option>
+                          {% endif %}
+
+                          {% if education.hsc_board == "Comilla"%}
+                          <option selected>Comilla</option>
+                          {% else %}
+                          <option >Comilla</option>
+                          {% endif %}
+
+                          {% if education.hsc_board == "Dhaka"%}
+                          <option selected>Dhaka</option>
+                          {% else %}
+                          <option >Dhaka</option>
+                          {% endif %}
+
+                          {% if education.hsc_board == "Dinajpur"%}
+                          <option selected>Dinajpur</option>
+                          {% else %}
+                          <option >Dinajpur</option>
+                          {% endif %}
+
+                          {% if education.hsc_board == "Jessore"%}
+                          <option selected>Jessore</option>
+                          {% else %}
+                          <option >Jessore</option>
+                          {% endif %}
+
+                          {% if education.hsc_board == "Mymensingh"%}
+                          <option selected>Mymensingh</option>
+                          {% else %}
+                          <option >Mymensingh</option>
+                          {% endif %}
+
+                          {% if education.hsc_board == "Rajshahi"%}
+                          <option selected>Rajshahi</option>
+                          {% else %}
+                          <option >Rajshahi</option>
+                          {% endif %}
+
+                          {% if education.hsc_board == "Sylhet"%}
+                          <option selected>Sylhet</option>
+                          {% else %}
+                          <option >Sylhet</option>
+                          {% endif %}
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a valid board.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="country">HSC Group</label>
+                        <select class="custom-select d-block w-100" name="hsc_group" required>
+                            <option value="">Choose...</option>
+
+                            {% if education.hsc_group == "Arts"%}
+                            <option selected>Arts</option>
+                            {% else %}
+                            <option >Arts</option>
+                            {% endif %}
+
+                            {% if education.hsc_group == "Comart"%}
+                            <option selected>Comart</option>
+                            {% else %}
+                            <option >Comart</option>
+                            {% endif %}
+
+                            {% if education.hsc_group == "Science"%}
+                            <option selected>Science</option>
+                            {% else %}
+                            <option >Science</option>
+                            {% endif %}
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a valid group.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <label for="lastName">HSC GPA</label>
+                        <input type="text" class="form-control" placeholder="Enter your mothers's name"
+                            name="hsc_grade" value="{{education.hsc_grade }}" required>
+                        <div class="invalid-feedback">
+                            Please enter valid information.
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary swalDefaultSuccess" id="add">Update</button>
+                </div>
+              </form>
+              
+
+              {% if messages %}
+              <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+              </div>
+              {% endif %}
+
+            </div>
+            <!-- /.card -->
+
+
+          </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+
+          <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 1991-
+      <script type="text/javascript">
+        document.write(new Date().getFullYear());
+      </script> <a href="{% url 'index' %}">Khan Bahadur Awlad Hossein Degree College</a>.</strong>
+    All rights reserved.
+
+  </footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+  // Add the following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function () {
+    var fileName = $(this).val().split("\\").pop();
+    size = this.files[0].size / 1024 / 1024;
+    if (size > 2) {
+      document.getElementById('photo').style.display = "block";
+    }
+    else {
+      document.getElementById('photo').style.display = "none";
+    }
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+</script>
+<!-- bs-custom-file-input -->
+<script src="{% static 'dashboard/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dashboard/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dashboard/dist/js/demo.js' %}"></script>
+
+<script>
+
+  // DATE 
+  //document.getElementsByName("date").value = "{{about.date_of_birth| date:'mm-dd-YYYY'}}";
+
+  // PHONE NUMBER CHECKER
+  function checkPhoneNumber() {
+    var phone1 = document.getElementById('p1');
+    var phone2 = document.getElementById('p2');
+    // console.log('phone2');
+    // alert(phone2.value.trim());
+    // alert(phone1.value.trim());
+    if (phone1.value.trim() == phone2.value.trim()) {
+      if (phone2.value.trim() != '' || phone2.value.trim() != '') {
+        console.log("!");
+        document.getElementById('phone').style.display = "block";
+      }
+
+    }
+    else {
+      console.log("k");
+      document.getElementById('phone').style.display = "none";
+    }
+
+  }
+
+  // EMAIL CHECK 
+  function getEmail() {
+    email = document.getElementById('email-info').value;
+    console.log(email);
+    if (email != "") {
+      $.ajax({
+        url: "{% url 'user-list' %}",
+        data: {
+          'email': email
+        },
+        dataType: 'html',
+        success: function (data) {
+          // console.log("ok");
+          if (data == 'True') {
+            // console.log('found');
+            document.getElementById('email-exists').style.display = "block";
+            document.getElementById('add').disabled = true;
+          }
+          else {
+            document.getElementById('email-exists').style.display = "none";
+            document.getElementById('add').disabled = false;
+          }
+        }
+      });
+
+    }
+    else {
+      document.getElementById('email-exists').style.display = "none";
+      document.getElementById('add').disabled = false;
+    }
+
+  }
+
+
+
+  // CHECK CHEKCBOX IS CHECKED OR NOT
+
+
+</script>
+
+{% endblock %}

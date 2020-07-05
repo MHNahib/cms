@@ -39,14 +39,14 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Add new teacher</h3>
+                <h3 class="card-title"> Update</h3>
                 
               </div>
               {% if registered %}
               <br>
               <!-- /.card-header -->
               <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>New teacher added successuflly.</strong>
+                <strong>Update successful.</strong>
                 <button onclick="reload" type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -59,31 +59,29 @@
                 {% csrf_token %}
                 <div class="card-body">
                   <div class="form-group">
-
-                    <label for="email">Email </label>
-                    <input type="email" class="form-control" id="email-info" name="email" onkeyup="getEmail();"
-                      placeholder="you@example.com" required>
-                    <div class="invalid-feedback danger" id="email-exists">
-                      Email exitsts.
-                    </div>
-
-                  </div>
-                  <div class="form-group">
                     <label for="exampleInputPassword1">Name</label>
-                    <input type="text" name="name" class="form-control" placeholder="Name" required>
+                    <input type="text" name="name" class="form-control" placeholder="Name" value="{{teacher.name}}" required>
                   </div>
                   
                   <div class="form-group row">
                     <div class="col-md-6 mb-3">
                       <label for="exampleInputPassword1">Date of join</label>
-                      <input type="date" class="form-control" name="date" placeholder="Date of join" required>
+                      <input type="date" class="form-control" name="date" placeholder="Date of join" value = "{{teacher.joining_date | date:'Y-m-d' }}" required>
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="country">Gender</label>
                       <select class="custom-select d-block w-100" name="gender" required>
                         <option value="">Choose...</option>
-                        <option>Male</option>
-                        <option>Female</option>
+                        {% if teacher.gender == "Male"%}
+                            <option selected>Male</option>
+                            {% else %}
+                            <option >Male</option>
+                            {% endif %}
+                            {% if teacher.gender == "Female"%}
+                            <option selected>Female</option>
+                            {% else %}
+                            <option >Female</option>
+                            {% endif %}
                       </select>
                       <div class="invalid-feedback">
                         Please select a valid group.
@@ -95,7 +93,7 @@
                     <div class="col-md-6 mb-3">
                       <label for="firstName">Fist phone number</label>
                       <input type="text" id="p1" class="form-control" placeholder="Your phone number" name="phone1"
-                        onkeyup="checkPhoneNumber();" required>
+                        onkeyup="checkPhoneNumber();" value="{{teacher.phone_number}}" required>
                       <div class="invalid-feedback">
                         Please enter valid information.
                       </div>
@@ -103,7 +101,7 @@
 
                     <div class="col-md-6 mb-3">
                       <label for="lastName">Second phone number (optional)</label>
-                      <input type="text" id="p2" class="form-control" placeholder="Your phone number" name="phone2"
+                      <input type="text" id="p2" class="form-control" placeholder="Your phone number" name="phone2" value="{{teacher.phone_number_2}}"
                         onkeyup="checkPhoneNumber();">
                       <div id="phone" class="invalid-feedback danger">
                         Please enter another phone number. Two phone number can't be same!
@@ -115,14 +113,14 @@
 
                     <div class="col-md-6 mb-3">
                       <label for="firstName">SSC institute name</label>
-                      <input type="text" class="form-control" placeholder="Institution name" name="ssc-i">
+                      <input type="text" class="form-control" placeholder="Institution name" name="ssc-i" value="{{education.ssc}}">
                       <div class="invalid-feedback">
 
                       </div>
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="lastName">SSC Grade/ Class</label>
-                      <input type="text" class="form-control" placeholder="Grade/ Class" name="ssc-g">
+                      <input type="text" class="form-control" placeholder="Grade/ Class" name="ssc-g" value="{{education.ssc_grade}}">
                       <div class="invalid-feedback">
 
                       </div>
@@ -131,14 +129,14 @@
 
                     <div class="col-md-6 mb-3">
                       <label for="firstName">HSC institute name</label>
-                      <input type="text" class="form-control" placeholder="Institution name" name="hsc-i">
+                      <input type="text" class="form-control" placeholder="Institution name" name="hsc-i" value="{{education.hsc}}">
                       <div class="invalid-feedback">
 
                       </div>
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="lastName">HSC Grade/ Class</label>
-                      <input type="text" class="form-control" placeholder="Grade/ Class" name="hsc-g">
+                      <input type="text" class="form-control" placeholder="Grade/ Class" name="hsc-g" value="{{education.hsc_grade}}">
                       <div class="invalid-feedback">
 
                       </div>
@@ -148,25 +146,62 @@
                       <label for="country">Honours/ Degree</label>
                       <select class="custom-select d-block w-100" name="hons">
                         <option value="">Choose...</option>
-                        <option value="B. Com">B. Com</option>
+
+                          {% if education.honours == "B. Com"%}
+                          <option value="B. Com" selected>B. Com</option>
+                            {% else %}
+                            <option value="B. Com">B. Com</option>
+                            {% endif %}
+                            
+                            {% if education.honours == "B. Com (Honours)"%}
+                            <option value="B. Com (Honours)" selected>B. Com (Honours)</option>
+                            {% else %}
+                            <option value="B. Com (Honours)">B. Com (Honours)</option>
+                            {% endif %}
+
+                          {% if education.honours == "B. SC"%}
+                          <option value="B. SC" selected>B. SC</option>
+                            {% else %}
+                            <option value="B. SC">B. SC</option>
+                            {% endif %}
+                            
+                            {% if education.honours == "B. SC (Honours)"%}
+                            <option value="B. SC (Honours)" selected>B. SC (Honours)</option>
+                            {% else %}
+                            <option value="B. SC (Honours)">B. SC (Honours)</option>
+                            {% endif %}
+
+                          {% if education.honours == "BA"%}
+                          <option value="BA" selected>BA</option>
+                            {% else %}
+                            <option value="BA">BA</option>
+                            {% endif %}
+                            
+                            {% if education.honours == "BA (Honours)"%}
+                            <option value="BA (Honours)" selected>BA (Honours)</option>
+                            {% else %}
+                            <option value="BA (Honours)">BA (Honours)</option>
+                            {% endif %}
+
+                        <!-- <option value="B. Com">B. Com</option>
                         <option value="B. Com (Honours)">B. Com (Honours)</option>
                         <option value="B. SC">B. SC</option>
                         <option value="B. SC (Honours)">B. SC (Honours)</option>
                         <option value="BA">BA</option>
-                        <option value="BA (Honours)">BA (Honours)</option>
+                        <option value="BA (Honours)">BA (Honours)</option> -->
                       </select>
 
                     </div>
 
                     <div class="col-md-4 mb-4">
                       <label for="country">From</label>
-                      <input type="text" class="form-control" placeholder="Institution name" name="hons-i">
+                      <input type="text" class="form-control" placeholder="Institution name" name="hons-i" value="{{education.honours_from}}">
 
                     </div>
 
                     <div class="col-md-4 mb-4">
                       <label for="lastName">Grade/ Class</label>
-                      <input type="text" class="form-control" placeholder="Grade/ Class" name="hons-g">
+                      <input type="text" class="form-control" placeholder="Grade/ Class" name="hons-g" value="{{education.honours_grade}}">
 
                     </div>
 
@@ -174,9 +209,30 @@
                       <label for="country">Master's Degree</label>
                       <select class="custom-select d-block w-100" name="mast">
                         <option value="">Choose...</option>
-                        <option value="MA">MA</option>
+
+                        {% if education.masters == "MA"%}
+                        <option value="MA" selected>MA</option>
+                          {% else %}
+                          <option value="MA">MA</option>
+                          {% endif %}
+                          
+
+                        {% if education.masters == "M. Com"%}
+                        <option value="M. Com" selected>M. Com</option>
+                          {% else %}
+                          <option value="M. Com">M. Com</option>
+                          {% endif %}
+                          
+
+                        {% if education.masters == "M. SC"%}
+                        <option value="M. SC" selected>M. SC</option>
+                          {% else %}
+                          <option value="M. SC">M. SC</option>
+                          {% endif %}
+                          
+                        <!-- <option value="MA">MA</option>
                         <option value="M. Com">M. Com</option>
-                        <option value="M. SC">M. SC</option>
+                        <option value="M. SC">M. SC</option> -->
 
                       </select>
 
@@ -184,26 +240,26 @@
 
                     <div class="col-md-4 mb-4">
                       <label for="country">From</label>
-                      <input type="text" class="form-control" placeholder="Institution name" name="mast-i">
+                      <input type="text" class="form-control" placeholder="Institution name" name="mast-i" value="{{education.masters_from}}">
 
                     </div>
 
                     <div class="col-md-4 mb-4">
                       <label for="lastName">Grade/ Class</label>
-                      <input type="text" class="form-control" placeholder="Grade/ Class" name="mast-g">
+                      <input type="text" class="form-control" placeholder="Grade/ Class" name="mast-g" value="{{education.masters_grade}}">
 
                     </div>
 
                     <div class="col-md-6 mb-3">
                       <label for="firstName">PhD from</label>
-                      <input type="text" class="form-control" placeholder="Institution name" name="phd-i">
+                      <input type="text" class="form-control" placeholder="Institution name" name="phd-i" value="{{education.phd}}">
                       <div class="invalid-feedback">
 
                       </div>
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="lastName">Subject</label>
-                      <input type="text" class="form-control" placeholder="Subject" name="phd-g">
+                      <input type="text" class="form-control" placeholder="Subject" name="phd-g" value="{{education.subject}}">
                       <div class="invalid-feedback">
 
                       </div>
@@ -217,9 +273,27 @@
 
                       <select class="custom-select d-block w-100" name="dsg">
                         <option value="">Choose...</option>
+                        {% if teacher.designation == "Assistant professor"%}
+                        <option value="Assistant professor" selected>Assistant professor</option>
+                          {% else %}
+                          <option value="Assistant professor">Assistant professor</option>
+                          {% endif %}
+
+                        {% if teacher.designation == "Professor"%}
+                        <option value="Professor" selected>Professor</option>
+                          {% else %}
+                          <option value="Professor">Professor</option>
+                          {% endif %}
+
+                        {% if teacher.designation == "Lecturer"%}
+                        <option value="Lecturer" selected>Lecturer</option>
+                          {% else %}
+                          <option value="Lecturer">Lecturer</option>
+                          {% endif %}
+<!-- 
                         <option value="Assistant professor">Assistant professor</option>
                         <option value="Professor">Professor</option>
-                        <option value="Lecturer">Lecturer</option>
+                        <option value="Lecturer">Lecturer</option> -->
 
                       </select>
                     </div>
@@ -229,7 +303,107 @@
 
                       <select class="custom-select d-block w-100" name="teacher">
                         <option value="">Choose...</option>
-                        <option value="Accounting">Accounting</option>
+                        
+                        {% if teacher.subject == "Accounting"%}
+                        <option value="Accounting" selected>Accounting</option>
+                          {% else %}
+                          <option value="Accounting">Accounting</option>
+                          {% endif %}
+
+                        {% if teacher.subject == "Bangla"%}
+                        <option value="Bangla" selected>Bangla</option>
+                          {% else %}
+                          <option value="Bangla">Bangla</option>
+                          {% endif %}
+
+                        {% if teacher.subject == "Biology"%}
+                        <option value="Biology" selected>Biology</option>
+                          {% else %}
+                          <option value="Biology">Biology</option>
+                          {% endif %}
+
+                        {% if teacher.subject == "Chemistry"%}
+                        <option value="Chemistry" selected>Chemistry</option>
+                          {% else %}
+                          <option value="Chemistry">Chemistry</option>
+                          {% endif %}
+
+                          {% if teacher.subject == "Civics"%}
+                          <option value="Civics" selected>Civics</option>
+                            {% else %}
+                            <option value="Civics">Civics</option>
+                            {% endif %}
+
+                        {% if teacher.subject == "Economics"%}
+                        <option value="Economics" selected>Economics</option>
+                          {% else %}
+                          <option value="Economics">Economics</option>
+                          {% endif %}
+
+                       
+                        {% if teacher.subject == "English"%}
+                        <option value="English" selected>English</option>
+                          {% else %}
+                          <option value="English">English</option>
+                          {% endif %}
+                       
+                        {% if teacher.subject == "Finance"%}
+                        <option value="Finance" selected>Finance</option>
+                          {% else %}
+                          <option value="Finance">Finance</option>
+                          {% endif %}
+                       
+                        {% if teacher.subject == "Geography"%}
+                        <option value="Geography" selected>Geography</option>
+                          {% else %}
+                          <option value="Geography">Geography</option>
+                          {% endif %}
+
+                        {% if teacher.subject == "Islamic History"%}
+                        <option value="Islamic History" selected>Islamic History</option>
+                          {% else %}
+                          <option value="Islamic History">Islamic History</option>
+                          {% endif %}
+
+                        {% if teacher.subject == "Islamic Study"%}
+                        <option value="Islamic Study" selected>Islamic Study</option>
+                          {% else %}
+                          <option value="Islamic Study">Islamic Study</option>
+                          {% endif %}
+
+                        {% if teacher.subject == "Management"%}
+                        <option value="Management" selected>Management</option>
+                          {% else %}
+                          <option value="Management">Management</option>
+                          {% endif %}
+
+                        {% if teacher.subject == "Marketing"%}
+                        <option value="Marketing" selected>Marketing</option>
+                          {% else %}
+                          <option value="Marketing">Marketing</option>
+                          {% endif %}
+
+                        {% if teacher.subject == "Math"%}
+                        <option value="Math" selected>Math</option>
+                          {% else %}
+                          <option value="Math">Math</option>
+                          {% endif %}
+
+                        {% if teacher.subject == "Physics"%}
+                        <option value="Physics" selected>Physics</option>
+                          {% else %}
+                          <option value="Physics">Physics</option>
+                          {% endif %}
+
+                        {% if teacher.subject == "Sociology"%}
+                        <option value="Sociology" selected>Sociology</option>
+                          {% else %}
+                          <option value="Sociology">Sociology</option>
+                          {% endif %}
+
+                       
+
+                        <!-- <option value="Accounting">Accounting</option>
                         <option value="Bangla">Bangla</option>
                         <option value="Biology">Biology</option>
                         <option value="Chemistry">Chemistry</option>
@@ -244,7 +418,7 @@
                         <option value="Marketing">Marketing</option>
                         <option value="Math">Math</option>
                         <option value="Physics">Physics</option>
-                        <option value="Sociology">Sociology</option>
+                        <option value="Sociology">Sociology</option> -->
 
                       </select>
                     </div>
@@ -253,7 +427,7 @@
                   <div class="form-group">
                     <label for="exampleInputFile">Select photo</label>
                     <div class="input-group">
-                      <input type="file" class="custom-file-input" id="customFile" name="filename" required>
+                      <input type="file" class="custom-file-input" id="customFile" name="filename">
                       <label class="custom-file-label" for="customFile">Choose file</label>
                     </div>
                   </div>
@@ -263,35 +437,22 @@
 
                   <div class="form-group ">
 
-                    <h5> <b> Depertment Head of: </b></h5>
+                    
 
 
                     <div class="form-check">
                       <!-- Material checked -->
                       <div class="form-check">
-                        <input type="radio" class="form-check-input" id="ac" name="head" value="Accounting">
+                        {% if teacher.dept_head%}
+                        <input type="checkbox" class="form-check-input" id="ac" name="head" value="Accounting" checked>
+                        {% else %}
+                        <input type="checkbox" class="form-check-input" id="ac" name="head" value="Accounting">
+                        {% endif %}
                         <label class="form-check-label" for="ac">
-                          <h6>Accounting</h6>
+                          <h5> <b> Depertment Head </b></h5>
                         </label>
                       </div>
-                      <div class="form-check">
-                        <input type="radio" class="form-check-input" id="mn" name="head" value="Management">
-                        <label class="form-check-label" for="mn">
-                          <h6>Management</h6>
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input type="radio" class="form-check-input" id="ban" name="head" value="Bangla">
-                        <label class="form-check-label" for="ban">
-                          <h6>Bangla</h6>
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input type="radio" class="form-check-input" id="geo" name="head" value="Geography">
-                        <label class="form-check-label" for="geo">
-                          <h6>Geography</h6>
-                        </label>
-                      </div>
+                      
 
                     </div>
                   </div>

@@ -975,70 +975,130 @@ def add_teacher(request):
         registered = True
     
 
-        # if dept_head == 'on':
-        #     dept_head= True
-
-        # else:
-        #     dept_head= False
-
-        
-        # if User.objects.filter(email=email).exists():
-
-        #     messages.info(request, 'Email exists') 
-                  
-        #     return redirect('add-teacher')
-
-        # else:        
-
-        #     user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password='IamOK')
-        #     user.is_active= False
-                    
-        #     user.save()      
-
-        #     dept= Depertment.objects.get(dept_name= dept_name)      
-
-        #     teacher= Teacher(user= user, name= name, dept_name=dept, email= email, dept_head= dept_head, joining_date=joining_date, teacher_img=uploaded_file)
-        #     teacher.save()
-        #     about= TeacherAbout(user= user)
-        #     about.save()
-        #     education= TeacherEducation(user= user)
-        #     education.save()
-
-            
-        #     group = Group.objects.get(name='teacher')
-
-        #     user.groups.add(group)  
-
-        #     registered = True   
-
-        #     # SEND EMAIL
-
-        #     site = get_current_site(request)
-        #     mail_subject = "Confirmation message from CMS"
-        #     msg= render_to_string('accounts/activate_email.html', 
-        #     {
-        #         'user': user,
-        #         'domain': site.domain,
-        #         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        #         'token': generate_token.make_token(user)
-        #     })
-
-        #     email_msg = EmailMessage(
-        #     mail_subject,
-        #     msg,
-        #     settings.EMAIL_HOST_USER,
-        #     [email]
-            
-        #     )
-
-        #     email_msg.send()
-
-
-           
-    
 
     context= {'depertment':depertment, 'registered':registered }
     return render(request, 'dashboard/add-teacher.html', context)
+
+
+#  EDIT TEACHER
+def edit_teacher(request, id):
+
+    # depertment= Depertment.objects.all()
+
+    employee= Teacher.objects.get(id= id)
+    education= TeacherEducation.objects.get(user= employee)
+
+    registered = False
+    
+    if request.method == 'POST':
+
+        name = request.POST['name']
+       
+        gender = request.POST['gender']
+
+        # dept_name = request.POST['dept']
+        # dept_head = request.POST.get('dept_head')
+        joining_date= request.POST['date']
+        phone1= request.POST['phone1']
+        phone2= request.POST['phone2']
+
+        ssc_ins= request.POST['ssc-i']
+        ssc_grade= request.POST['ssc-g']
+        hsc_ins= request.POST['hsc-i']
+        hsc_grade= request.POST['hsc-g']
+
+        hons= request.POST['hons']
+        hons_i= request.POST['hons-i']
+        hons_g= request.POST['hons-g']
+
+        try:
+            mast= request.POST['mast']
+            mast_i= request.POST['mast-i']
+            mast_g= request.POST['mast-g']
+        except:
+            mast= None
+            mast_i= None
+            mast_g= None
+
+        try:
+            phd_i= request.POST['phd-i']
+            phd_g= request.POST['phd-i']
+        except:
+            phd_i= None
+            phd_g= None
+
+        
+
+        dsg= request.POST['dsg']
+
+        teacher_of= request.POST['teacher']
+        try:
+            head= request.POST['head']
+        except:
+            head= None
+        
+        dept_head= None
+        if head:
+            dept_head= True
+        else:
+            dept_head= False
+        
+        uploaded_file= None
+        try:
+            uploaded_file= request.FILES['filename']
+        except:
+            pass
+        
+
+         
+
+        Teacher.objects.filter(id=id).update(
+            
+            name= name, 
+            joining_date=joining_date, 
+            
+            gender= gender,
+            subject= teacher_of,
+            designation= dsg,
+            dept_head= dept_head,
+            dept_name= head,
+            phone_number= phone1,
+            phone_number_2= phone2,
+        )
+
+        if uploaded_file:
+            img= Teacher.objects.get(id=id)
+            img.teacher_img=uploaded_file
+            img.save()
+        
+
+        
+        TeacherEducation.objects.filter(user= employee).update(
+
+            ssc= ssc_ins,
+            ssc_grade= ssc_grade,
+            hsc= hsc_ins,
+            hsc_grade= hsc_grade,
+
+            honours= hons,
+            honours_from= hons_i,
+            honours_grade= hons_g,
+
+            masters= mast,
+            masters_from= mast_i,  
+            masters_grade= mast_g,
+
+            phd= phd_i,
+            subject= phd_g,
+        )
+        education.save()
+
+        registered = True
+    
+
+
+    context= {'depertment':depertment, 'registered':registered, 'teacher': employee, 'education': education }
+    return render(request, 'dashboard/edit-teacher.html', context)
 
 
 # ADD principal
@@ -1135,6 +1195,63 @@ def add_principal(request):
     return render(request, 'dashboard/add-principal.html', context)
 
 
+# STUDENT SEARCH FOR PAYMENT
+def payment_search(request):
+
+    registered = False
+    
+    if request.method == 'POST':
+        
+        roll = request.POST['roll']
+        session_name = request.POST['session']
+        class_name = request.POST['class']
+        year = request.POST['year']
+
+        try:
+            element= Student.objects.filter(roll= roll, session= session_name, course= class_name, student_year= year)
+            for i in element:
+                store_id= i.id
+                return HttpResponseRedirect(reverse('payment', args=(store_id,))) 
+        except:
+            registered = True 
+        
+        
+
+    session= SessionYear.objects.all().order_by('-session_name')
+
+        
+    context= {'registered':registered, 'session': session, 'registered':registered, "name": "payment" }
+    return render(request, 'dashboard/serach.html', context)
+
+
+# STUDENT SEARCH FOR EDIT
+def edit_search(request):
+
+    registered = False
+    
+    if request.method == 'POST':
+        
+        roll = request.POST['roll']
+        session_name = request.POST['session']
+        class_name = request.POST['class']
+        year = request.POST['year']
+
+        try:
+            element= Student.objects.filter(roll= roll, session= session_name, course= class_name, student_year= year)
+            for i in element:
+                store_id= i.id
+                return HttpResponseRedirect(reverse('edit-profile', args=(store_id,))) 
+        except:
+            registered = True 
+        
+        
+
+    session= SessionYear.objects.all().order_by('-session_name')
+
+        
+    context= {'registered':registered, 'session': session, 'registered':registered , "name": "edit"}
+    return render(request, 'dashboard/serach.html', context)
+
 # ADD STAFF
 def add_staff(request):
 
@@ -1177,27 +1294,31 @@ def add_staff(request):
         uploaded_file= request.FILES['filename']
 
         if designation == '3rd':
-            user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
-            user.is_active= True
-            user.save()  
-            staff= Staff(
-                user= user, 
-                name= name, 
-                email= email, 
-                joining_date=joining_date, 
-                phone_number= phone1, 
-                phone_number_2= phone2, 
-                gender= gender,
-                designation= designation,
-                post= post,
-                staff_img=uploaded_file
-                )
+            if email:
+                user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
+                user.is_active= True
+                user.save()  
+                staff= Staff(
+                    user= user, 
+                    name= name, 
+                    email= email, 
+                    joining_date=joining_date, 
+                    phone_number= phone1, 
+                    phone_number_2= phone2, 
+                    gender= gender,
+                    designation= designation,
+                    post= post,
+                    staff_img=uploaded_file
+                    )
 
-            staff.save()
+                staff.save()
+            else:
+                return render(request, 'accounts/failed.html', status= 404)
 
         else:
-
-            staff= NormalStaff(                
+            user= User.objects.create_user(username=name, first_name=name, last_name= name)
+            staff= Staff(
+                user= user, 
                 name= name, 
                 email= email, 
                 joining_date=joining_date, 
@@ -1213,84 +1334,201 @@ def add_staff(request):
         
         registered = True 
 
-        # if User.objects.filter(email=email).exists():
-
-        #     messages.info(request, 'Email exists') 
-                  
-        #     return redirect('add-staff')
-
-        # else:        
-
-        #     user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password='IamOK')
-        #     user.is_active= False
-                    
-        #     user.save()      
-
-        #     staff= Staff(user= user, name= name, email= email, joining_date=joining_date, phone_number= phone1, parents_number= phone2, staff_img=uploaded_file)
-        #     staff.save()
-
-            
-        #     group = Group.objects.get(name='staff')
-
-        #     user.groups.add(group)  
-
-        #     registered = True     
-
-
-        #      # SEND EMAIL
-
-        #     site = get_current_site(request)
-        #     mail_subject = "Confirmation message from CMS"
-        #     msg= render_to_string('accounts/activate_email.html', 
-        #     {
-        #         'user': user,
-        #         'domain': site.domain,
-        #         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        #         'token': generate_token.make_token(user)
-        #     })
-
-        #     email_msg = EmailMessage(
-        #     mail_subject,
-        #     msg,
-        #     settings.EMAIL_HOST_USER,
-        #     [email]
-            
-        #     )
-
-        #     email_msg.send()
-    
         
-    
-
     context= {'registered':registered }
     return render(request, 'dashboard/add-staff.html', context)
+    
+# EDIT STAFF
+def edit_staff(request, id):
+
+    registered = False
+    user_details= User.objects.get(id=id)
+    employee = Staff.objects.get(user= user_details)
+    
+    if request.method == 'POST':
+       
+        name = request.POST['name']
+        phone1 = request.POST['p1']
+        phone2 = request.POST['p2'] 
+        designation = request.POST['class'] 
+        post_name = request.POST['post']  
+        gender = request.POST['gender'] 
+        joining_date= request.POST['date']
+
+        # print(post)
+        
+        uploaded_file= None
+        try:
+            uploaded_file= request.FILES['filename']
+        except:
+            pass
+
+        
+        Staff.objects.filter(user= user_details).update(
+            
+            name= name,             
+            joining_date=joining_date, 
+            phone_number= phone1, 
+            phone_number_2= phone2, 
+            gender= gender,
+            designation= designation,
+            post= post_name
+        )
+
+        if uploaded_file:
+            staff= Staff.objects.get(user= user_details)
+
+            staff.staff_img=uploaded_file
+            staff.save()
+            
+            
+
+        
+        registered = True 
+
+        employee = Staff.objects.get(user= user_details)
+
+        
+    context= {'registered':registered, "staff": employee }
+    return render(request, 'dashboard/edit-staff.html', context)
 
 
 # PROFILE
 def profile(request, id):
     
-    user= User.objects.get(id= id)
-
-    group= Group.objects.get(user= user)
-
-    if group.name == 'teacher':
-        user_profile= Teacher.objects.get(user=user)
-        about= TeacherAbout.objects.get(user=user)
-        education= TeacherEducation.objects.get(user=user)
-
-    elif group.name == 'student':
-        user_profile= Student.objects.get(user=user)
-        about= StudentAbout.objects.get(user=user)
-        education= StudentEducation.objects.get(user=user)
-
-    else:
-        user_profile= Staff.objects.get(user= user)
-        about= ''
-        education=''
+    
+    user_profile= Student.objects.get(id=id)
+    student_id= User.objects.get(id= user_profile.user_id)
+    about= StudentAbout.objects.get(user= student_id)
+    education= StudentEducation.objects.get(user= student_id)
+    recepits= StudentReceipt.objects.filter(user= user_profile)
+    
+    group=""
 
 
-    context= {'user':  user, 'user_profile': user_profile, 'group': group, 'about': about, 'education': education}
-    return render(request, 'dashboard/profile.html', context)   
+    # context= {'user':  user, 'user_profile': user_profile, 'group': group, 'about': about, 'education': education}
+    context= { 'user_profile': user_profile, 'group': group, 'about': about, 'education': education, 'recepits':recepits}
+    return render(request, 'dashboard/profile-student.html', context)   
+
+
+# PROFILE EDIT 
+def profile_edit(request, id):
+    
+    
+    user_profile= Student.objects.get(id=id)
+    student_id= User.objects.get(id= user_profile.user_id)
+    about= StudentAbout.objects.get(user= student_id)
+    education= StudentEducation.objects.get(user= student_id)
+    # recepits= StudentReceipt.objects.filter(user= user_profile)
+
+    registered = False
+    
+    if request.method == 'POST':        
+
+        name = request.POST['name']
+        uploaded_file= None
+        hsc_roll= None
+        hsc_reg= None
+        hsc_year= None
+        hsc_grade= None 
+        hsc_group= None
+        hsc_board=  None
+
+        # password = request.POST['pws']
+        roll = request.POST['roll']
+        fathers_name = request.POST['fname']
+        mothers_name = request.POST['mname']
+        date_of_birth = request.POST['date']
+        marital_status = request.POST['marital']
+        present_address = request.POST['paddress'] 
+        permanent_address = request.POST['peraddress']
+        phone_number = request.POST['phone1']
+        parents_number = request.POST['phone2']
+        blood_group= request.POST['blood_group']
+        gender= request.POST['gender']
+        nid= request.POST['nid']
+        religion= request.POST['religion']
+        print(fathers_name)
+        try:    
+            uploaded_file= request.FILES['filename']
+        except:
+            pass 
+
+        ssc_roll= request.POST['ssc_roll']  
+        ssc_reg= request.POST['ssc_reg'] 
+        ssc_year= request.POST['ssc_year'] 
+        ssc_grade= request.POST['ssc_grade']  
+        ssc_group= request.POST['ssc_group'] 
+        ssc_board= request.POST['ssc_board']    
+        try:
+            hsc_roll= request.POST['hsc_roll']  
+            hsc_reg= request.POST['hsc_reg'] 
+            hsc_year= request.POST['hsc_year'] 
+            hsc_grade= request.POST['hsc_grade']  
+            hsc_group= request.POST['hsc_group'] 
+            hsc_board= request.POST['hsc_board'] 
+        except:
+            hsc_roll= None
+            hsc_reg= None
+            hsc_year= None
+            hsc_grade= None 
+            hsc_group= None
+            hsc_board=  None
+
+        
+        Student.objects.filter(id=id).update(
+            roll= roll,
+            name= name        
+        )
+
+        if uploaded_file:
+            Student.objects.filter(id=id).update(
+            img= uploaded_file       
+            )
+
+        StudentAbout.objects.filter(user= student_id).update(
+            
+            fathers_name= fathers_name,
+            mothers_name= mothers_name,
+            blood_group= blood_group,
+            gender= gender,
+            nid= nid,
+            date_of_birth= date_of_birth,
+            marital_status= marital_status,
+            present_address= present_address,
+            permanent_address= permanent_address,
+            phone_number= phone_number,
+            parents_number= parents_number,
+            religion= religion
+        )
+
+        StudentEducation.objects.filter(user= student_id).update(
+            ssc_roll= ssc_roll,
+            ssc_reg= ssc_reg,
+            ssc_year= ssc_year,
+            ssc_grade= ssc_grade,
+            ssc_group= ssc_group, 
+            ssc_board= ssc_board,   
+
+            hsc_roll= hsc_roll,
+            hsc_reg= hsc_reg,
+            hsc_year= hsc_year,
+            hsc_grade= hsc_grade,
+            hsc_group= hsc_group,
+            hsc_board= hsc_board
+        )
+
+        registered = True
+        user_profile= Student.objects.get(id=id)
+        student_id= User.objects.get(id= user_profile.user_id)
+        about= StudentAbout.objects.get(user= student_id)
+        education= StudentEducation.objects.get(user= student_id)
+        context= { 'user_profile': user_profile, 'about': about, 'education': education, "registered": registered}
+
+
+    # context= {'user':  user, 'user_profile': user_profile, 'group': group, 'about': about, 'education': education}
+    context= { 'user_profile': user_profile, 'about': about, 'education': education, "registered": registered}
+    return render(request, 'dashboard/edit-student.html', context)   
 
 
 # ADD DEPERTMENT
@@ -1308,6 +1546,22 @@ def depertment(request):
         
     context= {'registered': registered}
     return render(request, 'dashboard/depertment.html', context)    
+
+# # ADD DEPERTMENT
+# def list_students(request):
+
+#     registered = False
+    
+#     if request.method == 'POST':
+#         dept_name = request.POST['dept']
+
+#         dept= Depertment(dept_name= dept_name)
+#         dept.save()
+
+#         registered= True
+        
+#     context= {'registered': registered}
+#     return render(request, 'dashboard/depertment.html', context)    
 
 # ADD YEAR
 def year(request):
@@ -1507,23 +1761,24 @@ def user_list(request):
 
 
 # SHOW TEACHER'S LIST
-def teachersList(request, dept_name):
+def teachersList(request):
 
-    dept= Depertment.objects.get(dept_name= dept_name)
+    # dept= Depertment.objects.get(dept_name= dept_name)
 
-    count=0
+    # count=0
 
-    if count==0:     
-        teacher= Teacher.objects.filter(dept_name= dept, dept_head=True)
-        count+=1
-    else:
-        teacher= Teacher.objects.filter(dept_name= dept)
+    # if count==0:     
+    #     teacher= Teacher.objects.filter(dept_name= dept, dept_head=True)
+    #     count+=1
+    # else:
+    #     teacher= Teacher.objects.filter(dept_name= dept)
 
+    teacher= Teacher.objects.all().order_by('joining_date')
     # teacher= Teacher.objects.filter(dept_name= dept)
 
     # subject= TeacherWillTake.objects.get(teacher= teacher.id)
 
-    paginator = Paginator(teacher, 10)
+    paginator = Paginator(teacher, 20)
     page = request.GET.get('page')
  
     try:
@@ -1536,8 +1791,43 @@ def teachersList(request, dept_name):
    
             
     context= {'teacher': teacher, 'page':page,'posts':posts}
-    count=0
-    return render(request, 'dashboard/user-list.html', context)    
+    
+    return render(request, 'dashboard/teachers-list.html', context)    
+
+
+# SHOW TEACHER'S LIST
+def staffsList(request):
+
+    # dept= Depertment.objects.get(dept_name= dept_name)
+
+    # count=0
+
+    # if count==0:     
+    #     teacher= Teacher.objects.filter(dept_name= dept, dept_head=True)
+    #     count+=1
+    # else:
+    #     teacher= Teacher.objects.filter(dept_name= dept)
+
+    staffs= Staff.objects.all().order_by('joining_date')
+    # teacher= Teacher.objects.filter(dept_name= dept)
+
+    # subject= TeacherWillTake.objects.get(teacher= teacher.id)
+
+    paginator = Paginator(staffs, 20)
+    page = request.GET.get('page')
+ 
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1) 
+
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)       
+   
+            
+    context= {'staffs': staffs, 'page':page,'posts':posts}
+    
+    return render(request, 'dashboard/staffs-list.html', context)    
 
 
 # PAYMENT
@@ -2099,7 +2389,7 @@ def pardon(request, id):
     return render(request, 'dashboard/pardon.html', context)   
 
 
-# PARDON
+# EXPENSES
 def expense(request):
 
     govt_salary= 0
@@ -2413,6 +2703,10 @@ def expense(request):
             management_exp= all_exp.management_exp + management_exp,
             other= all_exp.other + management_exp,
         )
+
+        total_amount= TotalEarning.objects.get(session= session.session)
+
+        total_amount= TotalEarning.objects.filter(session= session.session).update(amount=total_amount.amount- total)
 
 
         messages.info(request, 'Successfully added') 

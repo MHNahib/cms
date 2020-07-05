@@ -35,7 +35,7 @@
       <div class="card-body pb-0">
         <div class="row d-flex align-items-stretch">
 
-          {% for i in teacher %}
+          {% for i in staffs %}
           
           <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
             <div class="card bg-light">
@@ -50,19 +50,25 @@
                     <ul class="ml-4 mb-0 fa-ul text-muted">
                       <!-- <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Present Address: {{j.present_address}}</li>
                       <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Premanent Address: {{j.permanent_address}}</li> -->
-                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: {{i.phone_number}}</li>
-                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: {{i.parents_number}}</li>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> {{i.phone_number}}</li>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> {{i.phone_number_2}}</li>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span> {{i.email}}</li>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa fa-file"></i></span>Post: {{i.post}}</li>
+                      
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa fa-file"></i></span>Designation: {{i.designation}}</li>
+                      
+                      <!-- <li class="small"><span class="fa-li"><i class="fas fa-lg fa fa-file"></i></span>Depertment: {{i.dept_name}}</li> -->
                     </ul>
                   </div>
                   <div class="col-5 text-center">
-                    <img src="{{i.teacher_img.url}}" alt="" class="img-circle img-fluid">
+                    <img src="{{i.staff_img.url}}" height="480px" width="480px" alt="" class="img-circle img-fluid">
                   </div>
                 </div>
               </div>
               <div class="card-footer">
                 <div class="text-right">
                   <a href="#" class="btn btn-sm bg-teal">
-                    <i class="fas fa-comments"></i> Add new class
+                    <i class="fa fa-edit "></i> Edit
                   </a>
                   <a href="{% url 'show-profile' i.user.id %}" class="btn btn-sm btn-primary">
                     <i class="fas fa-user"></i> View Profile

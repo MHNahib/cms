@@ -1,0 +1,266 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  {%	include	"dashboard/nav.html"	with	user=user	%}
+
+  <!-- SIDEBAR -->
+  {%	include	"dashboard/sidebar.html"	with	user=user	%}
+
+  <div class="content-header">
+    <div class="container-fluid">
+      <!-- {% if registered %}
+
+      <div class="alert alert-success" role="alert">
+        New user added successuflly.
+      </div>
+
+      {% endif %} -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <div class="content-wrapper" style="min-height: 1244.06px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+
+            <!-- Profile Image -->
+            <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle" src="{{user_profile.img.url}}" height="128px" width="128px" alt="User profile picture">
+                </div>
+
+                <h3 class="profile-username text-center">{{user_profile.name}}</h3>
+
+                <p class="text-muted text-center">Roll: {{user_profile.roll}}
+                  
+                </p>
+ 
+              <!-- /.card-header -->
+              <div class="card-body">
+                <strong><i class="fas fa-book mr-1"></i> Course information </strong>
+
+                <p class="text-muted">
+                  {{user_profile.course}} ({{user_profile.group}})
+                </p>
+
+                <hr>
+
+                <strong><i class="fas fa-map-marker-alt mr-1"></i> Present address</strong>
+
+                <p class="text-muted">{{about.present_address}}</p>
+
+                <hr>
+
+                <strong><i class="fas fa-map-marker-alt mr-1"></i> Permanent address</strong>
+
+                <p class="text-muted">{{about.permanent_address}}</p>
+
+                <hr>
+
+                <strong><i class="fas fa-phone mr-1"></i> Phone number</strong>
+
+                <p class="text-muted">
+                  <span class="tag tag-danger">{{about.phone_number}}</span>
+                  <br>
+                  <span class="tag tag-success">{{about.parents_number}}</span>
+                  
+                </p>
+
+                <hr>
+
+                <strong><i class="far fa-envelope mr-1"></i> Email</strong>
+
+                <p class="text-muted">{{user_profile.email}}</p>
+              </div>
+              <!-- /.card-body -->
+                <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+         
+          </div>
+          <!-- /.col -->
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">All payments</a></li>                  
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="tab-pane active" id="activity">
+                    <!-- Post -->
+                    <div class="post">
+                      <div class="user-block">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="card">
+                              <div class="card-header">
+                                <h3 class="card-title">Receipt with details</h3>
+                
+                                <div class="card-tools">
+                                  
+                                </div>
+                              </div>
+                              <!-- /.card-header -->
+                              <div class="card-body table-responsive p-0" style="height: 300px;">
+                                <table class="table table-head-fixed text-nowrap table table-hover">
+                                  <thead>
+                                    <tr>
+                                      <th>Serial No.</th>
+                                      <th>Tution Fee</th>
+                                      <th>College Exam Fee</th>
+                                      <th>Board/ University Exam Fee</th>
+                                      <th>College Development Fee</th>
+                                      <th>Milad/ Puja</th>
+                                      <th>Library Fee</th>
+                                      <th>College Sports Fee</th>
+                                      <th>Board/ University Sports Fee</th>
+                                      <th>Poor Fund</th>
+                                      <th>Govt/ Public donation</th>
+                                      <th>Science and Technology Fee</th>
+                                      <th>Computer lab Fee</th>
+                                      <th>Admission Fee</th>
+                                      <th>Reg. Fee</th>
+                                      <th>Rovers/ Girls guide (College)</th>
+                                      <th>Rovers/ Girls guide (Board/ University)</th>
+                                      <th>College Transfer Fee</th>
+                                      <th>Id Card Fee</th>
+                                      <th>Certificate/ Transfer Fee</th>
+                                      <th>Retention Fee</th>
+                                      <th>Testimonial/ Character/ Other Certificate Fee</th>
+                                      <th>Paper/ Magazine</th>
+                                      <th>Practical Fee</th>
+                                      <th>Bill</th>
+                                      <th>Management Fee</th>
+                                      <th>4th paper Fee</th>
+                                      <th>Late Fee</th>
+                                      <th>Center Fee</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% for recepit in recepits %}
+                                    <tr style="text-align: center;">
+                                      <td>{{recepit.serial_no  }}</td>
+                                      <td>{{recepit.tutionfee  }}</td>
+                                      <td>{{recepit.college_examfee  }}</td>
+                                      <td>{{recepit.board_examfee  }}</td>
+                                      <td>{{recepit.college_devfee  }}</td>
+                                      <td>{{recepit.milad_puja  }}</td>
+                                      <td>{{recepit.library_fee  }}</td>
+                                      <td>{{recepit.college_sports_fee  }}</td>
+                                      <td>{{recepit.board_sports_fee  }}</td>
+                                      <td>{{recepit.poor_fund  }}</td>
+                                      <td>{{recepit.donation  }}</td>
+                                      <td>{{recepit.science_and_tech  }}</td>
+                                      <td>{{recepit.computer_lab_fee  }}</td>
+                                      <td>{{recepit.admission_fee  }}</td>
+                                      <td>{{recepit.reg_fee  }}</td>
+                                      <td>{{recepit.college_rovers  }}</td>
+                                      <td>{{recepit.board_rovers  }}</td>
+                                      <td>{{recepit.college_transfer  }}</td>
+                                      <td>{{recepit.id_fee  }}</td>
+                                      <td>{{recepit.certificate_fee  }}</td>
+                                      <td>{{recepit.retention_fee  }}</td>
+                                      <td>{{recepit.testimonial_fee  }}</td>
+                                      <td>{{recepit.paper_magazine  }}</td>
+                                      <td>{{recepit.preactical_fee  }}</td>
+                                      <td>{{recepit.bill  }}</td>
+                                      <td>{{recepit.management_fee  }}</td>
+                                      <td>{{recepit.fourth_paper  }}</td>
+                                      <td>{{recepit.late_fine  }}</td>
+                                      <td>{{recepit.center  }}</td>
+                                      
+                                    </tr>
+                                    {% endfor %}
+                                     </tbody>
+                                </table>
+                              </div>
+                              <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                          </div>
+                        </div>
+                      </div>
+                      <!-- /.user-block -->
+                  </div>
+                  
+
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 1991-
+      <script type="text/javascript">
+        document.write(new Date().getFullYear());
+      </script> <a href="{% url 'index' %}">Khan Bahadur Awlad Hossein Degree College</a>.</strong>
+    All rights reserved.
+
+  </footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+  // Add the following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function () {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+</script>
+<!-- bs-custom-file-input -->
+<script src="{% static 'dashboard/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dashboard/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dashboard/dist/js/demo.js' %}"></script>
+
+<script>
+  $(document).ready(function() {
+    $('#summernote').summernote({
+      height: 300,                 // set editor height
+      minHeight: null,             // set minimum height of editor
+      maxHeight: null,             // set maximum height of editor
+      focus: true                  // set focus to editable area after initializing summernote
+    });
+});
+</script>
+
+
+{% endblock %}

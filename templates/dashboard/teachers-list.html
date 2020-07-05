@@ -1,0 +1,133 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  {%	include	"dashboard/nav.html"	with	user=user	%}
+
+  <!-- SIDEBAR -->
+  {%	include	"dashboard/sidebar.html"	with	user=user	%}
+
+  <div class="content-header">
+    <div class="container-fluid">
+      <!-- {% if registered %}
+
+      <div class="alert alert-success" role="alert">
+        New user added successuflly.
+      </div>
+
+      {% endif %} -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <div class="content-wrapper" style="min-height: 1244.06px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    <!-- Main content -->
+    <div class="card card-solid">
+      <div class="card-body pb-0">
+        <div class="row d-flex align-items-stretch">
+
+          {% for i in teacher %}
+          
+          <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+            <div class="card bg-light">
+              <div class="card-header text-muted border-bottom-0">
+                
+              </div>
+              <div class="card-body pt-0">
+                <div class="row">
+                  <div class="col-7">
+                    <h2 class="lead"><b>{{i.name}}</b></h2>
+                    <!-- <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p> -->
+                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                      <!-- <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Present Address: {{j.present_address}}</li>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Premanent Address: {{j.permanent_address}}</li> -->
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> {{i.phone_number}}</li>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> {{i.phone_number_2}}</li>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span> {{i.email}}</li>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa fa-file"></i></span>Subject: {{i.subject}}</li>
+                      {% if i.dept_head %}
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa fa-file"></i></span>Designation: {{i.designation}} (Head of the depertment)</li>
+                      {% else %}
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa fa-file"></i></span>Designation: {{i.designation}}</li>
+                      {% endif %}
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa fa-file"></i></span>Depertment: {{i.dept_name}}</li>
+                    </ul>
+                  </div>
+                  <div class="col-5 text-center">
+                    <img src="{{i.teacher_img.url}}" height="480px" width="480px" alt="" class="img-circle img-fluid">
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="text-right">
+                  <a href="#" class="btn btn-sm bg-teal">
+                    <i class="fa fa-edit "></i> Edit
+                  </a>
+                  <a href="{% url 'show-profile' i.user.id %}" class="btn btn-sm btn-primary">
+                    <i class="fas fa-user"></i> View Profile
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {% endfor %}
+
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        <nav aria-label="Contacts Page Navigation">
+          {%	include	"pagination.html"	with	page=posts	%}
+        </nav>
+      </div>
+      <!-- /.card-footer -->
+    </div>
+    <!-- /.content -->
+  </div>
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 1991-
+      <script type="text/javascript">
+        document.write(new Date().getFullYear());
+      </script> <a href="{% url 'index' %}">Khan Bahadur Awlad Hossein Degree College</a>.</strong>
+    All rights reserved.
+
+  </footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+  // Add the following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function () {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+</script>
+<!-- bs-custom-file-input -->
+<script src="{% static 'dashboard/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dashboard/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dashboard/dist/js/demo.js' %}"></script>
+
+
+
+{% endblock %}

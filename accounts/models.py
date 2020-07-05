@@ -997,20 +997,20 @@ class Staff(models.Model):
     def __str__(self):
         return self.name
 
-class NormalStaff(models.Model):
+# class NormalStaff(models.Model):
     
-    name= models.CharField(max_length=100)
-    gender= models.CharField(max_length=100)
-    email= models.EmailField(max_length=100, null=True)    
-    joining_date= models.DateField()
-    phone_number= models.CharField(max_length=50, null=True)
-    phone_number_2= models.CharField(max_length=50, null=True)
-    designation= models.CharField(max_length=50, null=True)
-    post= models.CharField(max_length=50, null=True)
-    staff_img= models.ImageField(upload_to='profile/staff/', blank=False)
+#     name= models.CharField(max_length=100)
+#     gender= models.CharField(max_length=100)
+#     email= models.EmailField(max_length=100, null=True)    
+#     joining_date= models.DateField()
+#     phone_number= models.CharField(max_length=50, null=True)
+#     phone_number_2= models.CharField(max_length=50, null=True)
+#     designation= models.CharField(max_length=50, null=True)
+#     post= models.CharField(max_length=50, null=True)
+#     staff_img= models.ImageField(upload_to='profile/staff/', blank=False)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 
 # # TEACHERS CLASS
