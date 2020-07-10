@@ -368,6 +368,15 @@ class CenterFee(models.Model):
 # -----------------------------
 
 #  PoorFund Fee
+class GovtRemuneration(models.Model): 
+    details= models.CharField(null=True, max_length=250)
+    amount= models.FloatField(default=0)    
+    date_time= models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.name
+
+#  PoorFund Fee
 class PoorFundFee(models.Model): 
     user= models.ForeignKey(Student, on_delete=models.CASCADE)   
     amount= models.FloatField(default=0)    

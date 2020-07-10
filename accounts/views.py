@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, Http404, get_object_or_404
 import random, string
+from datetime import datetime, timedelta
+from django.db.models import Sum
 from io import BytesIO
 from django.template.loader import get_template
 from xhtml2pdf import pisa
@@ -1251,6 +1253,569 @@ def edit_search(request):
         
     context= {'registered':registered, 'session': session, 'registered':registered , "name": "edit"}
     return render(request, 'dashboard/serach.html', context)
+
+
+# DISPLAY INCOME
+def display_income(request):
+
+    registered = False
+    total = 0.0
+    exp= 0.0
+    if request.method == 'POST':
+
+        start_date= request.POST['start-date']
+        end_date= request.POST['end-date']
+
+        start_date= datetime.strptime(start_date, '%Y-%m-%d')
+        end_date_show= datetime.strptime(end_date, '%Y-%m-%d')
+        end_date = (datetime.strptime(end_date, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d')
+        
+        # INCOME SIDE STARTS 
+
+        hsc= MonthlyPayment.objects.filter(user__in= Student.objects.filter(course="HSC"),date_time__range= [start_date, end_date])
+        hsc_sum= MonthlyPayment.objects.filter(user__in= Student.objects.filter(course="HSC"),date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+        
+        if hsc_sum.get('amount__sum'):
+            total= total+  hsc_sum.get('amount__sum')
+
+        honours= MonthlyPayment.objects.filter(user__in= Student.objects.filter(course="Honours"),date_time__range= [start_date, end_date])
+        honours_sum= MonthlyPayment.objects.filter(user__in= Student.objects.filter(course="Honours"),date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+        
+        if honours_sum.get('amount__sum'):
+            total= total+  honours_sum.get('amount__sum')
+
+        degree= MonthlyPayment.objects.filter(user__in= Student.objects.filter(course="Degree (Pass)"),date_time__range= [start_date, end_date])
+        degree_sum= MonthlyPayment.objects.filter(user__in= Student.objects.filter(course="Degree (Pass)"),date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+   
+        if degree_sum.get('amount__sum'):
+            total= total+  degree_sum.get('amount__sum')
+
+        govt_remu = GovtRemuneration.objects.filter(date_time__range= [start_date, end_date])
+        govt_remu_sum = GovtRemuneration.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if govt_remu_sum.get('amount__sum'):
+            total= total+  govt_remu_sum.get('amount__sum')
+
+        college_exam = CollegeExamFee.objects.filter(date_time__range= [start_date, end_date])
+        college_exam_sum = CollegeExamFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if college_exam_sum.get('amount__sum'):
+            total= total+  college_exam_sum.get('amount__sum')
+
+        board_exam = BoardExamFee.objects.filter(date_time__range= [start_date, end_date])
+        board_exam_sum = BoardExamFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if board_exam_sum.get('amount__sum'):
+            total= total+  board_exam_sum.get('amount__sum')
+
+        college_dev = CollegeDevelopmentFee.objects.filter(date_time__range= [start_date, end_date])
+        college_dev_sum = CollegeDevelopmentFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if college_dev_sum.get('amount__sum'):
+            total= total+  college_dev_sum.get('amount__sum')
+
+        milad_puja = MiladPujaFee.objects.filter(date_time__range= [start_date, end_date])
+        milad_puja_sum = MiladPujaFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if milad_puja_sum.get('amount__sum'):
+            total= total+  milad_puja_sum.get('amount__sum')
+
+        library = LibraryFee.objects.filter(date_time__range= [start_date, end_date])
+        library_sum = LibraryFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if library_sum.get('amount__sum'):
+            total= total+  library_sum.get('amount__sum')
+
+        college_sports = CollegeSportsFee.objects.filter(date_time__range= [start_date, end_date])
+        college_sports_sum = CollegeSportsFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if college_sports_sum.get('amount__sum'):
+            total= total+  college_sports_sum.get('amount__sum')
+
+        board_sports = BoardSportsFee.objects.filter(date_time__range= [start_date, end_date])
+        board_sports_sum = BoardSportsFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if board_sports_sum.get('amount__sum'):
+            total= total+  board_sports_sum.get('amount__sum')
+
+        science_tech = ScienceAndTechnologyFee.objects.filter(date_time__range= [start_date, end_date])
+        science_tech_sum = ScienceAndTechnologyFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if science_tech_sum.get('amount__sum'):
+            total= total+  science_tech_sum.get('amount__sum')
+
+        computer_lab = ComputerLab.objects.filter(date_time__range= [start_date, end_date])
+        computer_lab_sum = ComputerLab.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if computer_lab_sum.get('amount__sum'):
+            total= total+  computer_lab_sum.get('amount__sum')
+
+        admission = AdmissionFee.objects.filter(date_time__range= [start_date, end_date])
+        admission_sum = AdmissionFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if admission_sum.get('amount__sum'):
+            total= total+  admission_sum.get('amount__sum')
+
+        reg = RegistrationFee.objects.filter(date_time__range= [start_date, end_date])
+        reg_sum = RegistrationFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if reg_sum.get('amount__sum'):
+            total= total+  reg_sum.get('amount__sum')
+
+        college_rov = CollegeRoversFee.objects.filter(date_time__range= [start_date, end_date])
+        college_rov_sum = CollegeRoversFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if college_rov_sum.get('amount__sum'):
+            total= total+  college_rov_sum.get('amount__sum')
+
+        board_rov = BoardRoversFee.objects.filter(date_time__range= [start_date, end_date])
+        board_rov_sum = BoardRoversFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if board_rov_sum.get('amount__sum'):
+            total= total+  board_rov_sum.get('amount__sum')
+
+        transfer = CollegeTranseferFee.objects.filter(date_time__range= [start_date, end_date])
+        transfer_sum = CollegeTranseferFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if transfer_sum.get('amount__sum'):
+            total= total+  transfer_sum.get('amount__sum')
+
+        id_card = IdCardFee.objects.filter(date_time__range= [start_date, end_date])
+        id_card_sum = IdCardFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if id_card_sum.get('amount__sum'):
+            total= total+  id_card_sum.get('amount__sum')
+
+        certificate = CertificateFee.objects.filter(date_time__range= [start_date, end_date])
+        certificate_sum = CertificateFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if certificate_sum.get('amount__sum'):
+            total= total+  certificate_sum.get('amount__sum')
+
+        retention = RetentionFee.objects.filter(date_time__range= [start_date, end_date])
+        retention_sum = RetentionFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if retention_sum.get('amount__sum'):
+            total= total+  retention_sum.get('amount__sum')
+
+        tc = TestimonialFee.objects.filter(date_time__range= [start_date, end_date])
+        tc_sum = TestimonialFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if tc_sum.get('amount__sum'):
+            total= total+  tc_sum.get('amount__sum')
+
+        paper = PaperMagazineFee.objects.filter(date_time__range= [start_date, end_date])
+        paper_sum = PaperMagazineFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if paper_sum.get('amount__sum'):
+            total= total+  paper_sum.get('amount__sum')
+
+        practical = PracticalFee.objects.filter(date_time__range= [start_date, end_date])
+        practical_sum = PracticalFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if practical_sum.get('amount__sum'):
+            total= total+  practical_sum.get('amount__sum')
+
+        bill = WaterFee.objects.filter(date_time__range= [start_date, end_date])
+        bill_sum = WaterFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if bill_sum.get('amount__sum'):
+            total= total+  bill_sum.get('amount__sum')
+
+        management = ManagementFee.objects.filter(date_time__range= [start_date, end_date])
+        management_sum = ManagementFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if management_sum.get('amount__sum'):
+            total= total+  management_sum.get('amount__sum')
+
+        fourth = FourthPaperFee.objects.filter(date_time__range= [start_date, end_date])
+        fourth_sum = FourthPaperFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if fourth_sum.get('amount__sum'):
+            total= total+  fourth_sum.get('amount__sum')
+
+        late_fee = LateFee.objects.filter(date_time__range= [start_date, end_date])
+        late_fee_sum = LateFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if late_fee_sum.get('amount__sum'):
+            total= total+  late_fee_sum.get('amount__sum')
+
+        center_fee = CenterFee.objects.filter(date_time__range= [start_date, end_date])
+        center_fee_sum = CenterFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if center_fee_sum.get('amount__sum'):
+            total= total+  center_fee_sum.get('amount__sum')
+
+        poor = PoorFundFee.objects.filter(date_time__range= [start_date, end_date])
+        poor_sum = PoorFundFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if poor_sum.get('amount__sum'):
+            total= total+  poor_sum.get('amount__sum')
+
+        bank = BankInterestFee.objects.filter(date_time__range= [start_date, end_date])
+        bank_sum = BankInterestFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if bank_sum.get('amount__sum'):
+            total= total+  bank_sum.get('amount__sum')
+
+        d = donation.objects.filter(date__range=[start_date, end_date])
+        d_sum = donation.objects.filter(date__range=[start_date, end_date]).aggregate(Sum('amount'))
+        
+        if d_sum.get('amount__sum'):
+            total= total+  d_sum.get('amount__sum')
+
+        # INCOME SIDE ENDS
+
+        # EXPENCE STATS
+            
+        print(exp)
+
+        salery = GovtSalaryExp.objects.filter(date__range= [start_date, end_date])
+        salery_sum = GovtSalaryExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if salery_sum.get('amount__sum'):
+            print(exp)
+            exp= exp+  salery_sum.get('amount__sum')
+            
+
+        house = HouseRentAndBonusExp.objects.filter(date__range= [start_date, end_date])
+        house_sum = HouseRentAndBonusExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if house_sum.get('amount__sum'):
+            exp= exp+  house_sum.get('amount__sum')
+          
+
+        board_exp = BoardRegExp.objects.filter(date__range= [start_date, end_date])
+        board_exp_sum = BoardRegExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if board_exp_sum.get('amount__sum'):
+            exp= exp+  board_exp_sum.get('amount__sum')
+    
+        
+        college_exam_exp = CollegeExamExp.objects.filter(date__range= [start_date, end_date])
+        college_exam_sum = CollegeExamExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if college_exam_sum.get('amount__sum'):
+            exp= exp+  college_exam_sum.get('amount__sum')
+    
+      
+        college_dev_exp = CollegeDevExp.objects.filter(date__range= [start_date, end_date])
+        college_dev_sum = CollegeDevExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if college_dev_sum.get('amount__sum'):
+            exp= exp+  college_dev_sum.get('amount__sum')
+    
+       
+        milad_puja_exp = MiladPujaExp.objects.filter(date__range= [start_date, end_date])
+        milad_puja_exp_sum = MiladPujaExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if milad_puja_exp_sum.get('amount__sum'):
+            exp= exp+  milad_puja_exp_sum.get('amount__sum')
+    
+        
+        library_exp = LibraryExp.objects.filter(date__range= [start_date, end_date])
+        library_exp_sum = LibraryExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if library_exp_sum.get('amount__sum'):
+            exp= exp+  library_exp_sum.get('amount__sum')
+    
+        
+        sports_exp = SportsExp.objects.filter(date__range= [start_date, end_date])
+        sports_exp_sum = SportsExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if sports_exp_sum.get('amount__sum'):
+            exp= exp+  sports_exp_sum.get('amount__sum')
+    
+        
+        poor_exp = PoorFundExp.objects.filter(date__range= [start_date, end_date])
+        poor_exp_sum = PoorFundExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if poor_exp_sum.get('amount__sum'):
+            exp= exp+  poor_exp_sum.get('amount__sum')
+    
+        
+        water_exp = WaterExp.objects.filter(date__range= [start_date, end_date])
+        water_exp_sum = WaterExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if water_exp_sum.get('amount__sum'):
+            exp= exp+  water_exp_sum.get('amount__sum')
+    
+        
+        electric_exp = ElectricExp.objects.filter(date__range= [start_date, end_date])
+        electric_exp_sum = ElectricExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if electric_exp_sum.get('amount__sum'):
+            exp= exp+  electric_exp_sum.get('amount__sum')
+    
+        
+        bank_exp = BankChargeExp.objects.filter(date__range= [start_date, end_date])
+        bank_exp_sum = BankChargeExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if bank_exp_sum.get('amount__sum'):
+            exp= exp+  bank_exp_sum.get('amount__sum')
+    
+        tel_exp = TelephoneBillExp.objects.filter(date__range= [start_date, end_date])
+        tel_exp_sum = TelephoneBillExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if tel_exp_sum.get('amount__sum'):
+            exp= exp+  tel_exp_sum.get('amount__sum')
+    
+       
+        sct_exp = ScienceAndTechnologyExp.objects.filter(date__range= [start_date, end_date])
+        sct_exp_sum = ScienceAndTechnologyExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if sct_exp_sum.get('amount__sum'):
+            exp= exp+  sct_exp_sum.get('amount__sum')
+    
+        
+        cl_exp = ComputerLabExp.objects.filter(date__range= [start_date, end_date])
+        cl_exp_sum = ComputerLabExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if cl_exp_sum.get('amount__sum'):
+            exp= exp+  cl_exp_sum.get('amount__sum')
+    
+        entertainment_exp = EntertainmentExp.objects.filter(date__range= [start_date, end_date])
+        entertainment_exp_sum = EntertainmentExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if entertainment_exp_sum.get('amount__sum'):
+            exp= exp+  entertainment_exp_sum.get('amount__sum')
+    
+        
+        conveyance_exp = ConveyanceExp.objects.filter(date__range= [start_date, end_date])
+        conveyance_exp_sum = ConveyanceExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if conveyance_exp_sum.get('amount__sum'):
+            exp= exp+  conveyance_exp_sum.get('amount__sum')
+    
+      
+        printing_exp = PrintingAndStationaryExp.objects.filter(date__range= [start_date, end_date])
+        printing_exp_sum = PrintingAndStationaryExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if printing_exp_sum.get('amount__sum'):
+            exp= exp+  printing_exp_sum.get('amount__sum')
+    
+    
+        management_exp = ManagementExp.objects.filter(date__range= [start_date, end_date])
+        management_exp_sum = ManagementExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if management_exp_sum.get('amount__sum'):
+            exp= exp+  management_exp_sum.get('amount__sum')
+    
+        
+        pardon_exp = PardonExp.objects.filter(date__range= [start_date, end_date])
+        pardon_exp_sum = PardonExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if pardon_exp_sum.get('amount__sum'):
+            exp= exp+  pardon_exp_sum.get('amount__sum')
+    
+        
+        others_exp = OtherExp.objects.filter(date__range= [start_date, end_date])
+        others_exp_sum = OtherExp.objects.filter(date__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+        if others_exp_sum.get('amount__sum'):
+            exp= exp+  others_exp_sum.get('amount__sum')
+    
+        
+        # EXPENCE ENDS
+
+        context= {
+            'start_date': start_date, 
+            'end_date': end_date_show, 
+            'name': 'Income and expences',
+            
+            # INCOME 
+            'govt_remu': govt_remu,
+            'govt_remu_sum': govt_remu_sum,
+
+            'hsc': hsc,
+            'hsc_sum': hsc_sum,
+
+            'honours': honours,
+            'honours_sum': honours_sum,
+
+            'degree': degree,
+            'degree_sum': degree_sum,
+
+            'college_exam': college_exam,
+            'college_exam_sum': college_exam_sum,
+
+            'board_exam': board_exam,
+            'board_exam_sum': board_exam_sum,
+
+            'college_dev':college_dev,
+            'college_dev_sum': college_dev_sum,
+
+            'milad_puja':milad_puja,
+            'milad_puja_sum':milad_puja_sum,
+
+            'library': library,
+            'library_sum': library_sum,
+
+            'college_sports': college_sports,
+            'college_sports_sum': college_sports_sum,
+
+            'board_sports': board_sports,
+            'board_sports_sum': board_sports_sum,
+
+            'science_tech': science_tech,
+            'science_tech_sum': science_tech_sum,
+
+            'computer_lab': computer_lab,
+            'computer_lab_sum': computer_lab_sum,
+
+            'admission': admission,
+            'admission_sum': admission_sum,
+
+            'reg': reg,
+            'reg_sum': reg_sum,
+
+            'college_rov': college_rov,
+            'college_rov_sum': college_rov_sum,
+
+            'board_rov': board_rov,
+            'board_rov_sum': board_rov_sum,
+
+            'transfer': transfer,
+            'transfer_sum': transfer_sum,
+
+            'id_card': id_card,
+            'id_card_sum': id_card_sum,
+
+            'certificate': certificate,
+            'certificate_sum': certificate_sum,
+
+            'retention': retention,
+            'retention_sum': retention_sum,
+
+            'tc': tc,
+            'tc_sum': tc_sum,
+
+            'paper': paper,
+            'paper_sum': paper_sum,
+
+            'practical': practical,
+            'practical_sum': practical_sum,
+
+            'bill': bill,
+            'bill_sum': bill_sum,
+
+            'management': management,
+            'management_sum': management_sum,
+
+            'fourth': fourth,
+            'fourth_sum': fourth_sum,
+
+            'late_fee': late_fee,
+            'late_fee_sum': late_fee_sum,
+
+            'center_fee': center_fee,
+            'center_fee_sum': center_fee_sum,
+
+            'poor': poor,
+            "poor_sum": poor_sum,
+
+            'bank': bank,
+            'bank_sum': bank_sum,
+
+            'd': d,
+            'd_sum': d_sum,
+
+            # EXPENCES
+            'salery': salery,
+            'salery_sum': salery_sum,
+
+            'house': house,
+            'house_sum': house_sum,
+
+            'board_exp': board_exp,
+            'board_exp_sum': board_exp_sum,
+
+            'college_exam_exp': college_exam_exp,
+            'college_exam_sum': college_exam_sum,
+
+            'college_dev_exp': college_dev_exp,
+            'college_dev_sum': college_dev_sum,
+
+            'milad_puja_exp': milad_puja_exp,
+            'milad_puja_exp_sum': milad_puja_exp_sum,
+
+            'library_exp': library_exp,
+            'library_exp_sum': library_exp_sum,
+
+            'sports_exp': sports_exp,
+            'sports_exp_sum': sports_exp_sum,
+
+            'poor_exp': poor_exp,
+            'poor_exp_sum': poor_exp_sum,
+
+            'water_exp': water_exp,
+            'water_exp_sum': water_exp_sum,
+
+            'electric_exp': electric_exp,
+            'electric_exp_sum': electric_exp_sum,
+
+            'bank_exp': bank_exp,
+            'bank_exp_sum': bank_exp_sum,
+
+            'tel_exp': tel_exp,
+            'tel_exp_sum': tel_exp_sum,
+
+            'sct_exp': sct_exp,
+            'sct_exp_sum': sct_exp_sum,
+
+            'cl_exp': cl_exp,
+            'cl_exp_sum': cl_exp_sum,
+
+            'entertainment_exp': entertainment_exp,
+            'entertainment_exp_sum': entertainment_exp_sum,
+
+            'conveyance_exp': conveyance_exp,
+            'conveyance_exp_sum': conveyance_exp_sum,
+
+            'printing_exp': printing_exp,
+            'printing_exp_sum': printing_exp_sum,
+
+            'management_exp': management_exp,
+            'management_exp_sum': management_exp_sum,
+
+            'pardon_exp': pardon_exp,
+            'pardon_exp_sum': pardon_exp_sum,
+
+            'others_exp': others_exp,
+            'others_exp_sum': others_exp_sum,
+
+            'income': total,
+            'exp': exp
+
+            }
+        return render(request, 'dashboard/income_summary.html', context)
+        # for i in data:
+        #     print(data.user.roll)
+
+        
+        # print(start_date)
+        # print(end_date)
+        
+    #     roll = request.POST['roll']
+    #     session_name = request.POST['session']
+    #     class_name = request.POST['class']
+    #     year = request.POST['year']
+
+    #     try:
+    #         element= Student.objects.filter(roll= roll, session= session_name, course= class_name, student_year= year)
+    #         for i in element:
+    #             store_id= i.id
+    #             return HttpResponseRedirect(reverse('edit-profile', args=(store_id,))) 
+    #     except:
+    #         registered = True 
+        
+        
+
+    # session= SessionYear.objects.all().order_by('-session_name')
+
+        
+    context= {'registered':registered, 'session': session, 'registered':registered , "name": "edit"}
+    return render(request, 'dashboard/monthly_income_expences.html', context)
 
 # ADD STAFF
 def add_staff(request):
@@ -2749,7 +3314,7 @@ def monthly_payment(request):
 
 
 # MONTHLY DONATION
-def donation(request):
+def get_donation(request):
    
     context= {}
     return render(request, 'dashboard/donation-payment.html', context)   

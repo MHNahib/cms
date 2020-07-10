@@ -13,9 +13,11 @@
   <div class="content-header">
     <div class="container-fluid">
       <!-- {% if registered %}
+
       <div class="alert alert-success" role="alert">
         New user added successuflly.
       </div>
+
       {% endif %} -->
     </div><!-- /.container-fluid -->
   </div>
@@ -38,7 +40,7 @@
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Search student for {{name}}</h3>
-                
+
               </div>
               {% if registered %}
               <br>
@@ -48,65 +50,42 @@
                 <button onclick="reload" type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-              </div>              
-              
+              </div>
+
               {% endif %}
-            
+
               <!-- form start -->
               <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Roll</label>
-                    <input type="text" name="roll" class="form-control" placeholder="Students roll number" required>
-                  </div>
 
                   <div class="form-group row">
 
-                    <div class="col-md-4 mb-4">
-                      <label for="country">Session</label>
-                      <select class="custom-select d-block w-100" name="session">
-                        <option value="">Choose...</option>
-                        {% for i in session %}
-                        <option>{{i.session_name}}</option>
-                        {% endfor %}
-                      </select>
-
+                    <div class="col-md-6 mb-3">
+                      <label for="name">Starting date</label>
+                      <input type="date" class="form-control" name="start-date" placeholder="Starting date" required>
+                      <div class="invalid-feedback">
+                        Please enter your birth date as per as SSC registration card
+                      </div>
                     </div>
 
-                    <div class="col-md-4 mb-4">
-                      <label for="lastName">Class</label>
-                      <select class="custom-select d-block w-100" name="class" required>
-                        <option value="">Choose...</option>
-                        <option>HSC</option>
-                        <option>Honours</option>
-                        <option>Degree</option>
-                      </select>
-
+                    <div class="col-md-6 mb-3">
+                      <label for="name">Ending date</label>
+                      <input type="date" class="form-control" name="end-date" placeholder="Ending date" required>
+                      <div class="invalid-feedback">
+                        Please enter your birth date as per as SSC registration card
+                      </div>
                     </div>
-
-                    <div class="col-md-4 mb-4">
-                      <label for="country">Year</label>
-                      <select class="custom-select d-block w-100" name="year" required>
-                        <option value="">Choose...</option>
-                        <option>1st</option>
-                        <option>2nd</option>
-                        <option>3rd</option>
-                        <option>4th</option>
-                        
-                      </select>
-                    </div>
-
-                    
                   </div>
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary swalDefaultSuccess" id="add"> <i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                  <button type="submit" class="btn btn-primary swalDefaultSuccess" id="add"> <i class="fa fa-search"
+                      aria-hidden="true"></i> Search</button>
                 </div>
               </form>
-              
+
 
               {% if messages %}
               <div class="alert alert-danger" role="alert">
@@ -152,7 +131,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script>
-  
+
 </script>
 <!-- bs-custom-file-input -->
 <script src="{% static 'dashboard/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>

@@ -65,10 +65,12 @@ urlpatterns = [
     path('payment/', views.monthly_payment, name='monthly-payment'),
     path('payment/search/', views.payment_search, name='search-payment'),
     path('edit/search/', views.edit_search, name='search-payment'),
-    path('payment/donation/', views.donation, name='donation'),
+    path('payment/donation/', views.get_donation, name='donation'),
     path('payment/<str:id>/', views.payment, name='payment'),
     path('pardon/<str:id>/', views.pardon , name='pardon'),
     path('expense/', views.expense , name='expense'),
+
+    path('display/income/', views.display_income , name='expense'),
 
     # path('list/students/', views.list_students , name='list-students'),
     

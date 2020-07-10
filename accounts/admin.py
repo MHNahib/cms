@@ -52,6 +52,7 @@ admin.site.register(CenterFee)
 admin.site.register(PoorFundFee)
 admin.site.register(BankInterestFee)
 admin.site.register(donation)
+admin.site.register(GovtRemuneration)
 
 # INCOME TABLE ends (students part)
 # -------------------------------------------

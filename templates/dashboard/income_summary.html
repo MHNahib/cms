@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary of {{name}}</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            font-size: 20px;
+            padding-left: 5px;
+
+        }
+
+
+        th,
+        .no,
+        .amount {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="text-align: center;">KHANBAHADUR AWLAD HOSSAIN KHAN COLLEGE, MANIKGANJ</h2>
+    <h3 style="text-align: center;">Cash Summary</h3>
+    <h3 style="text-align: center;">From {{start_date}} to {{end_date}}</h3>
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th>No</th>
+            <th>Details</th>
+            <th>Taka</th>
+        </tr>
+        <tr>
+            <td class="no">1</td>
+            <td>Govt. Remuneration</td>
+            <td class="amount">{{govt_remu_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">2</td>
+            <td>Monthly Tuition fee : Intermediate</td>
+            <td class="amount">{{hsc_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">2</td>
+            <td style="text-align: center;">Honours</td>
+            <td class="amount">{{honours_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">2</td>
+            <td style="text-align: center;">Degree</td>
+            <td class="amount">{{degree_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">3</td>
+            <td>College Examination fee</td>
+            <td class="amount">{{college_exam_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">4</td>
+            <td>Board/University Examination fee</td>
+            <td class="amount">{{board_exam_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">5</td>
+            <td>College Development fee</td>
+            <td class="amount">{{college_dev_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">6</td>
+            <td>Milad /Puja</td>
+            <td class="amount">{{milad_puja_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">7</td>
+            <td>Library fee</td>
+            <td class="amount">{{library_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">8</td>
+            <td>Sports : College</td>
+            <td class="amount">{{college_sports_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Sports : Board/university</td>
+            <td class="amount">{{board_sports_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">9</td>
+            <td>Poor fund</td>
+            <td class="amount">{{science_tech_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">10</td>
+            <td>Donation: Govt. /Public(Name)</td>
+            <td class="amount">{{d_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">11</td>
+            <td>Bank Interest</td>
+            <td class="amount">{{bank_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">12</td>
+            <td>Science and Technologic fee</td>
+            <td class="amount">{{science_tech_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">13</td>
+            <td>Computer lab fee</td>
+            <td class="amount">{{computer_lab_sum.amount__sum}}</td>
+        </tr>
+
+        <tr>
+            <td class="no">14</td>
+            <td>Other Fund Receipts and Income</td>
+            <td class="amount"></td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Admission fee</td>
+            <td class="amount">{{admission_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Registration fee</td>
+            <td class="amount">{{reg_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Rovers/Girls guide : College</td>
+            <td class="amount">{{college_rov_sum.amount__sum}}</td>            
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Rovers/Girls guide : Board/ University</td>
+            <td class="amount">{{board_rov_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>College transfer fee</td>
+            <td class="amount">{{transfer_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>ID Card fee</td>
+            <td class="amount">{{id_card_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Certificate / Transcript fee</td>
+            <td class="amount">{{certificate_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Retention fee</td>
+            <td class="amount">{{retention_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Testimonial /Character / other Certificate fee</td>
+            <td class="amount">{{tc_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Paper/ Magazines</td>
+            <td class="amount">{{paper_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Practical fee</td>
+            <td class="amount">{{practical_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Water/Electric/Telephone</td>
+            <td class="amount">{{bill_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Management fee</td>
+            <td class="amount">{{management_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Fourth paper fee</td>
+            <td class="amount">{{fourth_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Late fee</td>
+            <td class="amount">{{late_fee_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Center fee</td>
+            <td class="amount">{{center_fee_sum.amount__sum}}</td>
+        </tr>
+
+        <tr>
+            <td class="no"></td>
+            <td>Total</td>
+            <td class="amount">{{income}}</td>
+        </tr>
+    </table>
+
+    <br>
+
+    <h2 style="text-align: center;">KHANBAHADUR AWLAD HOSSAIN KHAN COLLEGE, MANIKGANJ</h2>
+    <h3 style="text-align: center;">Ledger</h3>
+    <h3 style="text-align: center;">A. Receipts/ Income</h3>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Govt. Remuneration</th>
+            <th>Account no. 1</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in govt_remu %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Tuition fee : Intermediate</th>
+            <th>Account no. 2</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in hsc %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Tuition fee : Honours</th>
+            <th>Account no. 2</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in honours %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Tuition fee : Degree</th>
+            <th>Account no. 2</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in degree %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">College Examination fee</th>
+            <th>Account no. 3</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in college_exam %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Board/University Examination fee</th>
+            <th>Account no. 4</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in board_exam %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">College Development fee</th>
+            <th>Account no. 5</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in college_dev %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Milad /Puja</th>
+            <th>Account no. 6</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in milad_puja %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Library fee</th>
+            <th>Account no. 7</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in library %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Sports : College</th>
+            <th>Account no. 8</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in college_sports %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Sports : Board/university</th>
+            <th>Account no. 8</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in board_sports %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Donation: Govt. /Public(Name)</th>
+            <th>Account no. 10</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in d %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.donar_name}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Bank Interest</th>
+            <th>Account no. 11</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in d %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no"></td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Science and Technologic fee</th>
+            <th>Account no. 12</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in science_tech %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Computer lab fee</th>
+            <th>Account no. 13</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in computer_lab %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Admission fee</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in admission %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Rovers/Girls guide : College</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in college_rov %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Rovers/Girls guide : Board/university</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in board_rov %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">College transfer fee</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in transfer %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">ID Card fee</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in id_card %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Certificate / Transcript fee</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in certificate %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Retention fee</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in retention %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Testimonial /Character / other Certificate fee</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in tc %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Paper/ Magazines</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in paper %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Water/Electric/Telephone</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in bill %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Management fee</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in management %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Fourth paper fee</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in fourth %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Late fine</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in late_fee %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="2">Center</th>
+            <th>Account no. 14</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details/Roll No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in center_fee %}
+        <tr>
+            <td class="no">{{i.date_time}}</td>
+            <td class="no">{{i.user.roll}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <h3 style="text-align: center;">B. Payment/ Expenses</h3>
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th>No.</th>
+            <th>Details</th>
+            <th>Taka</th>
+        </tr>
+        <tr>
+            <td class="no">30</td>
+            <td>Govt. Salary</td>
+            <td class="amount">{{salery_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">31</td>
+            <td>House rent and Bonus</td>
+            <td class="amount">{{house_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">32</td>
+            <td>Board /University Registration fee</td>
+            <td class="amount">{{board_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">33</td>
+            <td>College Examination Expenses</td>
+            <td class="amount">{{college_exam_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">34</td>
+            <td>College Development Expenses</td>
+            <td class="amount">{{college_dev_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">35</td>
+            <td>Milad /Puja Expenses</td>
+            <td class="amount">{{milad_puja_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">36</td>
+            <td>Library Expenses</td>
+            <td class="amount">{{library_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">37</td>
+            <td>Sports Expenses</td>
+            <td class="amount">{{sports_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">38</td>
+            <td>Poor fund Expenses</td>
+            <td class="amount">{{poor_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">39</td>
+            <td>Water bill</td>
+            <td class="amount">{{water_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">40</td>
+            <td>Electric bill</td>
+            <td class="amount">{{electric_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">41</td>
+            <td>Bank Charges</td>
+            <td class="amount">{{bank_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">42</td>
+            <td>Telephone bill</td>
+            <td class="amount">{{tel_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">43</td>
+            <td>Science and Technologic Expenses</td>
+            <td class="amount">{{sct_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">44</td>
+            <td>Computer lab Expenses</td>
+            <td class="amount">{{cl_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">45</td>
+            <td>Entertainment Expenses</td>
+            <td class="amount">{{entertainment_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">46</td>
+            <td>Conveyance</td>
+            <td class="amount">{{conveyance_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">47</td>
+            <td>Printing and Stationery</td>
+            <td class="amount">{{printing_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">48</td>
+            <td>Management Expenses</td>
+            <td class="amount">{{management_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">49</td>
+            <td>Pardon fund Expenses</td>
+            <td class="amount">{{pardon_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td class="no">50</td>
+            <td>Other expenses</td>
+            <td class="amount">{{others_exp_sum.amount__sum}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Total</td>
+            <td class="amount">{{exp}}</td>
+        </tr>
+    </table>
+
+
+    <br>
+    <h2 style="text-align: center;">KHANBAHADUR AWLAD HOSSAIN KHAN COLLEGE, MANIKGANJ</h2>
+    <h3 style="text-align: center;">Ledger</h3>
+    <h3 style="text-align: center;">B. Payment/ Expenses</h3>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Govt. Salary</th>
+            <th>Account no. 30</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in salery %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">House rent and Bonus</th>
+            <th>Account no. 31</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in house %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Board /University Registration fee</th>
+            <th>Account no. 32</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in board_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">College Examination Expenses</th>
+            <th>Account no. 33</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in college_exam_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">College Development Expenses</th>
+            <th>Account no. 34</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in college_dev_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Milad /Puja Expenses</th>
+            <th>Account no. 35</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in milad_puja_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Library Expenses</th>
+            <th>Account no. 36</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in library_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Sports Expenses</th>
+            <th>Account no. 37</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in sports_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Poor fund Expenses</th>
+            <th>Account no. 38</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in poor_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Water bill</th>
+            <th>Account no. 39</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in water_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Electric bill</th>
+            <th>Account no. 40</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in electric_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Bank Charges</th>
+            <th>Account no. 41</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in bank_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Telephone bill</th>
+            <th>Account no. 42</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in tel_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Science and Technologic Expenses</th>
+            <th>Account no. 43</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in sct_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Computer lab Expenses</th>
+            <th>Account no. 44</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in cl_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Entertainment Expenses</th>
+            <th>Account no. 45</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in entertainment_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Conveyance</th>
+            <th>Account no. 46</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in conveyance_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Printing and Stationery</th>
+            <th>Account no. 47</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in printing_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Management Expenses</th>
+            <th>Account no. 48</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in management_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Pardon Expenses</th>
+            <th>Account no. 49</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in pardon_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th colspan="3">Other expenses</th>
+            <th>Account no. 50</th>
+        </tr>
+        <tr>
+            <th class="no">Date</th>
+            <th class="no">Details</th>
+            <th class="no">Vouture No</th>
+            <th class="no">Amount</th>
+        </tr>
+        {% for i in others_exp %}
+        <tr>
+            <td class="no">{{i.date}}</td>
+            <td class="no">{{i.details}}</td>
+            <td class="no">{{i.vauture}}</td>
+            <td class="no">{{i.amount}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+</body>
+
+</html>
