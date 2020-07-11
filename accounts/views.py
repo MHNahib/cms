@@ -1254,6 +1254,36 @@ def edit_search(request):
     context= {'registered':registered, 'session': session, 'registered':registered , "name": "edit"}
     return render(request, 'dashboard/serach.html', context)
 
+# UPDATE YEAR
+def update_year_search(request):
+
+    registered = False
+    
+    if request.method == 'POST':
+        
+        # roll = request.POST['roll']
+        session_name = request.POST['session']
+        class_name = request.POST['class']
+        year = request.POST['year']
+
+        
+        try:
+            element= Student.objects.filter(session= session_name, course= class_name, student_year= year).order_by('roll')
+            # print(element)
+            context= {'course': class_name, 'session': session_name, 'year': year, 'students': element}
+            return render(request, 'dashboard/show-list-of-students.html', context)
+            
+        except:
+            registered = True 
+        
+        
+
+    session= SessionYear.objects.all().order_by('-session_name')
+
+        
+    context= {'registered':registered, 'session': session, 'registered':registered , "name": "update year"}
+    return render(request, 'dashboard/update-year.html', context)
+
 
 # DISPLAY INCOME
 def display_income(request):
@@ -2251,6 +2281,37 @@ def add_roll(request):
             return HttpResponse('true')
         except:
             return HttpResponse('false')
+
+        
+    
+# ADD ROLL
+def update_year(request):
+    if request.method == 'POST':
+        # roll = request.POST['roll']
+        list_of_students = request.POST.getlist('students[]')
+        year= request.POST['year']
+        # print(year)
+                   
+
+        try:
+            for i in list_of_students:
+                Student.objects.filter(id=i).update(student_year= year) 
+            
+            return HttpResponse('true')
+        except:
+            return HttpResponse('false')
+
+        
+        # user= User.objects.get(id=user_id)
+        # if roll == 'None':
+        #     return HttpResponse('false')
+        # # print(user)
+        # try:
+        #     saveRoll= Student.objects.filter(user= user).update(roll= roll)
+        #     print(saveRoll)
+        #     return HttpResponse('true')
+        # except:
+        #     return HttpResponse('false')
 
         
 
