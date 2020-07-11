@@ -1,0 +1,144 @@
+{% extends 'non-working-files/body.html' %}
+{% block title %}
+<title>{{user_profile.name}}, teacher of Khan Bahadur Awlad Hossein Khan College, Manikganj</title>
+{% endblock %}
+{% block body %}
+{%  load static %}
+
+ <!-- Main content -->
+ <section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+
+        <!-- Profile Image -->
+        <div class="card card-primary card-outline">
+          <div class="card-body box-profile">
+            <div class="text-center">
+              <img class="profile-user-img img-fluid img-circle" src="{{user_profile.teacher_img.url}}" height="128px" width="128px" alt="User profile picture">
+            </div>
+
+            <h3 class="profile-username text-center">{{user_profile.name}}</h3>     
+            <p>
+              Designation: {{user_profile.designation}}
+            </p>
+
+          <!-- /.card-header -->
+          <div class="card-body">
+            <strong><i class="fa fa-book mr-1"></i> Depertment </strong>
+
+            <p class="text-muted">
+              {{user_profile.subject}}
+            </p>
+
+            <hr>
+
+            <strong><i class="fa fa-phone mr-1"></i> Phone number</strong>
+
+            <p class="text-muted">
+              <span class="tag tag-danger">{{user_profile.phone_number}}</span>
+              <br>
+              <span class="tag tag-success">{{user_profile.phone_number_2}}</span>
+              
+            </p>
+
+            <hr>
+
+            <strong><i class="fa fa-envelope mr-1"></i> Email</strong>
+
+            <p class="text-muted">{{user_profile.email}}</p>
+          </div>
+          <!-- /.card-body -->
+            <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+     
+      </div>
+      <!-- /.col -->
+      <div class="col-md-9">
+        <div class="card">          
+          <div class="card-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="activity">
+                <!-- Post -->
+                <div class="post">
+                  <div class="user-block">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card">
+                          <div class="card-header">
+                            <h3 class="card-title">Educational qualifiaction</h3>
+            
+                            <div class="card-tools">
+                              
+                            </div>
+                          </div>
+                          <!-- /.card-header -->
+                          <div class="card-body table-responsive p-0 table-bordered" style="height: 300px;">
+                            <table class="table table-head-fixed text-nowrap table table-hover">
+                              <thead>
+                                <tr style="text-align: center;">                          
+                                  <th>Degree Name</th>                                  
+                                  <th>Institute Name</th>
+                                  <th>GPA/ Grade</th>
+                                </tr>
+                              </thead>
+                              <tbody>  
+                                {% if education.phd %}                            
+                                <tr style="text-align: center;">                                  
+                                  <td>Phd</td>
+                                  <td>{{education.phd  }}</td>
+                                  <td>{{education.subject  }}</td>                                  
+                                </tr>  
+                                {% endif %}                              
+                                <tr style="text-align: center;">                                  
+                                  <td>{{education.masters  }}</td>
+                                  <td>{{education.masters_from  }}</td>
+                                  <td>{{education.masters_grade  }}</td>                                  
+                                </tr>                                
+                                <tr style="text-align: center;">                                  
+                                  <td>{{education.honours  }}</td>
+                                  <td>{{education.honours_from  }}</td>
+                                  <td>{{education.honours_grade  }}</td>                                  
+                                </tr>                                
+                                <tr style="text-align: center;">                                  
+                                  <td>HSC</td>
+                                  <td>{{education.hsc  }}</td>
+                                  <td>{{education.hsc_grade  }}</td>                                  
+                                </tr>                                
+                                <tr style="text-align: center;">                                  
+                                  <td>SSC</td>
+                                  <td>{{education.ssc  }}</td>
+                                  <td>{{education.ssc_grade  }}</td>                                  
+                                </tr>                                
+                                 </tbody>
+                            </table>
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.user-block -->
+              </div>
+              
+
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div><!-- /.card-body -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div><!-- /.container-fluid -->
+</section>
+
+
+{% endblock %}

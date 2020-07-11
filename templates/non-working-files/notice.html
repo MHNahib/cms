@@ -1,4 +1,7 @@
 {% extends 'non-working-files/body.html' %}
+{% block title %}
+<title>Notice board of Khan Bahadur Awlad Hossein Khan College, Manikganj</title>
+{% endblock %}
 {% block body %}
 {%  load static %}
 
@@ -30,9 +33,11 @@
                     {% endfor %}
                 </table>
                 <!-- Paginator -->
+
                 {%	include	"pagination.html"	with	page=posts	%}
 
-                <!-- Paginator -->                
+
+                <!-- Paginator -->
             </div>
         </div>
     </div>

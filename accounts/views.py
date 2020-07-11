@@ -34,6 +34,8 @@ from django.utils.datastructures import MultiValueDictKeyError
 from .token import generate_token
 from django.core.mail import EmailMessage
 
+
+
 # Create your views here.
 
 # message3
@@ -50,6 +52,12 @@ from django.core.mail import EmailMessage
 #     data=''
 #     context= {'subject': subject, 'data': data}
 #     return render(request, 'accounts/test.html', context)
+
+def handler404(request, exception, template_name="accounts/failed.html"):
+
+    response = render_to_response("accounts/failed.html")
+    response.status_code = 404
+    return response
 
 # FLOAT CHECKER
 

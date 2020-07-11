@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+handler404 = 'non_working_files.views.handler404'
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('message/view/1/', views.message1, name='user1'),
@@ -28,6 +30,13 @@ urlpatterns = [
     path('library/', views.library_book, name='library'),
     path('library/books/<str:slug>', views.show_book, name='book'),
     path('photos/gallery', views.gallery, name='photo'),
+    path('accounting/', views.accouting, name='accounting'),
+    path('bengali/', views.bangla, name='bangla'),
+    path('management/', views.management, name='management'),
+    path('geography/', views.geography, name='geography'),
+    path('general/', views.general, name='general'),
+    path('staffs/', views.staffs, name='staffs'),
+    path('profile/<str:id>', views.profile, name='profile'),
     
     # path('privacy', views.privacy, name='privacy'),
     # path('terms', views.terms, name='terms'),

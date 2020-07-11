@@ -1,4 +1,7 @@
 {% extends 'non-working-files/body.html' %}
+{% block title %}
+<title>{{book.book_title}} of Khan Bahadur Awlad Hossein Khan College, Manikganj</title>
+{% endblock %}
 {% block body %}
 {%  load static %}
 
@@ -38,7 +41,7 @@
         <hr>
 
         <!-- Date/Time -->
-        <p>{Posted on {{book.book_adding_date}}</p>
+        <p>Posted on {{book.book_adding_date}}</p>
 
         <hr>
 

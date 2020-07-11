@@ -5,7 +5,18 @@ from django.conf import settings
 from django.views.generic import ListView
 from .models import Notice, Library, Gallery
 from non_working_files.models import Notice, Library, Gallery
+from accounts.models import * 
+
+
 # Create your views here.
+
+# 404 handel
+
+def handler404(request, *args, **argv):
+    response = render_to_response('accounts/failed.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
 
 # index page
 def index(request):
@@ -13,6 +24,9 @@ def index(request):
     # USER WILL GET EMAIL WHEN ANYONE FILLSUP THE FORM
     
     successful=False
+
+    head= Teacher.objects.filter(dept_head= True).order_by('dept_name')
+
 
     if request.method == 'POST':
         sub =  request.POST['sub']
@@ -41,7 +55,7 @@ def index(request):
         )
         successful=True
 
-    context= {'successful': successful}        
+    context= {'successful': successful, 'head': head}        
 
 
     return render(request, 'non-working-files/index.html', context)
@@ -57,6 +71,158 @@ def message2(request):
 # message3
 def message3(request):
     return render(request, 'non-working-files/user3.html')
+
+# TEACHER LIST OF ACCOUNTING DEPT
+def accouting(request):
+    head= Teacher.objects.filter(dept_head= True, dept_name= "Accounting")
+
+    teachers= Teacher.objects.filter(subject= "Accounting").order_by('-joining_date')
+
+    paginator = Paginator(teachers, 20)
+    page = request.GET.get('page')
+ 
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1) 
+
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)   
+
+      
+
+    context = {'head': head, 'teachers': teachers, 'dept': "Accounting", 'page':page,'posts':posts}
+    return render(request, 'non-working-files/list-teacher.html', context)
+
+# TEACHER LIST OF BANGLA DEPT
+def bangla(request):
+    head= Teacher.objects.filter(dept_head= True, dept_name= "Bangla")
+
+    teachers= Teacher.objects.filter(subject= "Bangla").order_by('-joining_date')
+
+    paginator = Paginator(teachers, 20)
+    page = request.GET.get('page')
+ 
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1) 
+
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)   
+
+      
+
+    context = {'head': head, 'teachers': teachers, 'dept': "Bangla", 'page':page,'posts':posts}
+    return render(request, 'non-working-files/list-teacher.html', context)
+
+# TEACHER LIST OF management DEPT
+def management(request):
+    head= Teacher.objects.filter(dept_head= True, dept_name= "Management")
+
+    teachers= Teacher.objects.filter(subject= "Management").order_by('-joining_date')
+
+    paginator = Paginator(teachers, 20)
+    page = request.GET.get('page')
+ 
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1) 
+
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)   
+
+      
+
+    context = {'head': head, 'teachers': teachers, 'dept': "Management", 'page':page,'posts':posts}
+    return render(request, 'non-working-files/list-teacher.html', context)
+
+# TEACHER LIST OF geography DEPT
+def geography(request):
+    head= Teacher.objects.filter(dept_head= True, dept_name= "Geography")
+
+    teachers= Teacher.objects.filter(subject= "Geography").order_by('-joining_date')
+
+    paginator = Paginator(teachers, 20)
+    page = request.GET.get('page')
+ 
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1) 
+
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)   
+
+      
+
+    context = {'head': head, 'teachers': teachers, 'dept': "Geography", 'page':page,'posts':posts}
+    return render(request, 'non-working-files/list-teacher.html', context)
+
+# TEACHER LIST OF general DEPT
+def general(request):
+    head= 'General'
+
+    teachers= Teacher.objects.all().order_by('-joining_date')
+
+    paginator = Paginator(teachers, 20)
+    page = request.GET.get('page')
+ 
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1) 
+
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)   
+
+      
+
+    context = {'head': head, 'teachers': teachers, 'dept': "General", 'page':page,'posts':posts}
+    return render(request, 'non-working-files/list-teacher.html', context)
+
+# TEACHER LIST OF general DEPT
+def staffs(request):
+    
+
+    staff= Staff.objects.all().order_by('-joining_date')
+
+    paginator = Paginator(staff, 20)
+    page = request.GET.get('page')
+ 
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1) 
+
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)   
+
+      
+
+    context = { 'staff': staff, 'page':page,'posts':posts}
+    return render(request, 'non-working-files/list-staff.html', context)
+
+
+def profile(request, id):
+    
+    
+    # user_profile= Student.objects.get(id=id)
+    # student_id= User.objects.get(id= user_profile.user_id)
+    # about= StudentAbout.objects.get(user= student_id)
+    # education= StudentEducation.objects.get(user= student_id)
+    # recepits= StudentReceipt.objects.filter(user= user_profile)
+    
+    # group=""
+    user= Teacher.objects.get(id= id)
+    education= TeacherEducation.objects.get(user= user)
+
+
+    # context= {'user':  user, 'user_profile': user_profile, 'group': group, 'about': about, 'education': education}
+    context= { 'user_profile': user, 'education': education}
+    return render(request, 'non-working-files/profile-teacher.html', context)   
+
 
 # HISTORY
 def history(request):

@@ -18,6 +18,8 @@ from django.urls import path
 from django.contrib.auth import views as auth_views 
 from . import views
 
+handler404 = 'accounts.views.handler404'
+
 urlpatterns = [
     
     # path('test/', views.test, name='test'),

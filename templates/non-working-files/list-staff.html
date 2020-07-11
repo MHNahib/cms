@@ -1,0 +1,96 @@
+{% extends 'non-working-files/body.html' %}
+{% block title %}
+<title>List of all staffs Khan Bahadur Awlad Hossein Khan College, Manikganj</title>
+{% endblock %}
+{% block body %}
+{%  load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+  
+  <!-- SYTLE CSS -->
+  <!-- <link rel="stylesheet" href="{% static 'non-working-files/css/style.css' %}"> -->
+  <!-- FONTAWESOME STYLES-->
+  <!-- <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+  
+  <style>
+    /*
+    .bg-dark {
+      transition: 550ms ease;
+      background: transparent !important
+    }
+
+    .bg-dark.scrolled {
+      background: #17a7e3 !important
+    }
+    */
+  </style>
+
+
+
+<body>
+ 
+ 
+  <section id="team" class="pb-5">
+    <div class="container">        
+        <h5 class="section-title h1">All staffs list</h5>       
+        <div class="row">
+          {% for i in staff %}
+          <div class="col-xs-12 col-sm-6 col-md-4">
+              <div class="image-flip" >
+                  <div class="mainflip flip-0">
+                      <div class="frontside">
+                          <div class="card">
+                              <div class="card-body text-center">
+                                  <p><img class=" img-fluid" src="{{i.staff_img.url}}" alt="{{i.name}} (Depertment head {{i.dept_name}} of Khan Bahadur Awlad Hossein Khan College, Manikganj)"></p>
+                                  <h4 class="card-title">{{i.name}}</h4>
+                                  <p class="card-text">Works as {{i.post}}, <br>
+                                    Khan Bahadur Awlad Hossein Khan College, Manikganj</p>
+                                  <!-- <a href="https://www.fiverr.com/share/qb8D02" class="btn btn-primary btn-sm"><i class="fa fa-user-circle-o"></i> View profile</a> -->
+                              </div>
+                          </div>
+                      </div>
+                      <div class="backside">
+                          <div class="card">
+                              <div class="card-body text-center mt-4">
+                                  <h4 class="card-title">{{i.name}}</h4>
+                                  <p class="card-text">Works as {{i.post}},<br>
+                                    Khan Bahadur Awlad Hossein Khan College, Manikganj</p>                                   
+                                  <ul class="list-inline">
+                                      <li class="list-inline-item">
+                                          <a class="social-icon text-xs-center" href="tel:{{i.phone_number}}">
+                                              <i class="fa fa-phone"></i>
+                                          </a>
+                                      </li>
+                                      <li class="list-inline-item">
+                                          <a class="social-icon text-xs-center" href="tel:{{i.phone_number_2}}">
+                                              <i class="fa fa-phone"></i>
+                                          </a>
+                                      </li>                                      
+                                      <li class="list-inline-item">
+                                          <a class="social-icon text-xs-center" href="mailto:{{i.email}}">
+                                              <i class="fa fa-envelope"></i>
+                                          </a>
+                                      </li>
+                                  </ul>
+                                </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+        </div>
+        {%	include	"pagination.html"	with	page=posts	%}
+    </div>
+  </section>
+  
+  
+</body>
+
+</html>
+{% endblock %}
