@@ -69,10 +69,10 @@
               </div>
               <div class="card-footer">
                 <div class="text-right">
-                  <a href="#" class="btn btn-sm bg-teal">
+                  <a href="{% url 'edit-teacher' i.id %}" class="btn btn-sm bg-teal">
                     <i class="fa fa-edit "></i> Edit
                   </a>
-                  <a href="{% url 'show-profile' i.user.id %}" class="btn btn-sm btn-primary">
+                  <a href="{% url 'profile' i.id %}" class="btn btn-sm btn-primary">
                     <i class="fas fa-user"></i> View Profile
                   </a>
                 </div>
@@ -111,9 +111,7 @@
   <!-- /.control-sidebar -->
 
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
 <script>
   // Add the following code if you want the name of the file appear on select
   $(".custom-file-input").on("change", function () {
@@ -121,12 +119,6 @@
     $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
   });
 </script>
-<!-- bs-custom-file-input -->
-<script src="{% static 'dashboard/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
-<!-- AdminLTE App -->
-<script src="{% static 'dashboard/dist/js/adminlte.min.js' %}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{% static 'dashboard/dist/js/demo.js' %}"></script>
 
 
 

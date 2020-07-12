@@ -33,6 +33,8 @@ from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeEr
 from django.utils.datastructures import MultiValueDictKeyError
 from .token import generate_token
 from django.core.mail import EmailMessage
+from datetime import datetime
+from datetime import datetime, timedelta
 
 
 
@@ -77,8 +79,9 @@ def passwordGenerator(size=8, chars=string.ascii_uppercase + string.digits):
 
 # LOGIN
 def user_login(request):
-
-    if request.method== 'POST':
+    if(request.user.is_authenticated):
+        return redirect('index')
+    elif request.method== 'POST':
         
         username= request.POST.get('email')
         password= request.POST.get('password')
@@ -160,7 +163,7 @@ def signup_hsc(request):
         session=  SessionYear.objects.all().last()
         try:
             user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
-            user.is_active= False
+            user.is_active= True
 
             user.save()
             print("crossed user")
@@ -471,7 +474,7 @@ def signup_honours(request):
         
         try:
             user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
-            user.is_active= False
+            user.is_active= True
 
             user.save()
             print("crossed user")
@@ -619,7 +622,7 @@ def signup_ibm(request):
         
         try:
             user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
-            user.is_active= False
+            user.is_active= True
 
             user.save()
             print("crossed user")
@@ -709,7 +712,7 @@ def signup_degree(request):
         
         try:
             user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
-            user.is_active= False
+            user.is_active= True
 
             user.save()
             print("crossed user")
@@ -784,13 +787,277 @@ def signup_degree(request):
 
 # ADMIN DASHBOARD
 def admin_dashboard(request):
+
+    user= request.user
+
     user_count= User.objects.all().count()
     today_login= User.objects.filter(last_login__startswith=timezone.now().date()).count()
 
     today_login= round((today_login/user_count)*100)
 
-    context= {'user_count': user_count, 'today_login': today_login}
+    teacher_male= Teacher.objects.filter(gender= "Male").count()
+    teacher_Female= Teacher.objects.filter(gender= "Female").count()
+
+    total= 0.0
+    start_date= datetime.today().strftime('%Y-%m-%d')
+   
+    end_date =  (datetime.now() + timedelta(1)).strftime('%Y-%m-%d')
+
+    total_income= TotalIncome.objects.all().last()
+    # INCOME SIDE STARTS 
+
+    
+    hsc_sum= MonthlyPayment.objects.filter(user__in= Student.objects.filter(course="HSC"),date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+    
+    if hsc_sum.get('amount__sum'):
+        total= total+  hsc_sum.get('amount__sum')
+
+    
+    honours_sum= MonthlyPayment.objects.filter(user__in= Student.objects.filter(course="Honours"),date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+    
+    if honours_sum.get('amount__sum'):
+        total= total+  honours_sum.get('amount__sum')
+
+    
+    degree_sum= MonthlyPayment.objects.filter(user__in= Student.objects.filter(course="Degree (Pass)"),date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if degree_sum.get('amount__sum'):
+        total= total+  degree_sum.get('amount__sum')
+
+    
+    govt_remu_sum = GovtRemuneration.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if govt_remu_sum.get('amount__sum'):
+        total= total+  govt_remu_sum.get('amount__sum')
+
+    
+    college_exam_sum = CollegeExamFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if college_exam_sum.get('amount__sum'):
+        total= total+  college_exam_sum.get('amount__sum')
+
+    
+    board_exam_sum = BoardExamFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if board_exam_sum.get('amount__sum'):
+        total= total+  board_exam_sum.get('amount__sum')
+
+    
+    college_dev_sum = CollegeDevelopmentFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if college_dev_sum.get('amount__sum'):
+        total= total+  college_dev_sum.get('amount__sum')
+
+    
+    milad_puja_sum = MiladPujaFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if milad_puja_sum.get('amount__sum'):
+        total= total+  milad_puja_sum.get('amount__sum')
+
+    
+    library_sum = LibraryFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if library_sum.get('amount__sum'):
+        total= total+  library_sum.get('amount__sum')
+
+    
+    college_sports_sum = CollegeSportsFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if college_sports_sum.get('amount__sum'):
+        total= total+  college_sports_sum.get('amount__sum')
+
+    
+    board_sports_sum = BoardSportsFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if board_sports_sum.get('amount__sum'):
+        total= total+  board_sports_sum.get('amount__sum')
+
+    
+    science_tech_sum = ScienceAndTechnologyFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if science_tech_sum.get('amount__sum'):
+        total= total+  science_tech_sum.get('amount__sum')
+
+    
+    computer_lab_sum = ComputerLab.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if computer_lab_sum.get('amount__sum'):
+        total= total+  computer_lab_sum.get('amount__sum')
+
+    
+    admission_sum = AdmissionFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if admission_sum.get('amount__sum'):
+        total= total+  admission_sum.get('amount__sum')
+
+    
+    reg_sum = RegistrationFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if reg_sum.get('amount__sum'):
+        total= total+  reg_sum.get('amount__sum')
+
+    
+    college_rov_sum = CollegeRoversFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if college_rov_sum.get('amount__sum'):
+        total= total+  college_rov_sum.get('amount__sum')
+
+    
+    board_rov_sum = BoardRoversFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if board_rov_sum.get('amount__sum'):
+        total= total+  board_rov_sum.get('amount__sum')
+
+    
+    transfer_sum = CollegeTranseferFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if transfer_sum.get('amount__sum'):
+        total= total+  transfer_sum.get('amount__sum')
+
+    
+    id_card_sum = IdCardFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if id_card_sum.get('amount__sum'):
+        total= total+  id_card_sum.get('amount__sum')
+
+    
+    certificate_sum = CertificateFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if certificate_sum.get('amount__sum'):
+        total= total+  certificate_sum.get('amount__sum')
+
+    
+    retention_sum = RetentionFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if retention_sum.get('amount__sum'):
+        total= total+  retention_sum.get('amount__sum')
+
+    
+    tc_sum = TestimonialFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if tc_sum.get('amount__sum'):
+        total= total+  tc_sum.get('amount__sum')
+
+    
+    paper_sum = PaperMagazineFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if paper_sum.get('amount__sum'):
+        total= total+  paper_sum.get('amount__sum')
+
+    
+    practical_sum = PracticalFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if practical_sum.get('amount__sum'):
+        total= total+  practical_sum.get('amount__sum')
+
+    
+    bill_sum = WaterFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if bill_sum.get('amount__sum'):
+        total= total+  bill_sum.get('amount__sum')
+
+    
+    management_sum = ManagementFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if management_sum.get('amount__sum'):
+        total= total+  management_sum.get('amount__sum')
+
+    
+    fourth_sum = FourthPaperFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if fourth_sum.get('amount__sum'):
+        total= total+  fourth_sum.get('amount__sum')
+
+    
+    late_fee_sum = LateFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if late_fee_sum.get('amount__sum'):
+        total= total+  late_fee_sum.get('amount__sum')
+
+    
+    center_fee_sum = CenterFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if center_fee_sum.get('amount__sum'):
+        total= total+  center_fee_sum.get('amount__sum')
+
+    
+    poor_sum = PoorFundFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if poor_sum.get('amount__sum'):
+        total= total+  poor_sum.get('amount__sum')
+
+    
+    bank_sum = BankInterestFee.objects.filter(date_time__range= [start_date, end_date]).aggregate(Sum('amount'))
+
+    if bank_sum.get('amount__sum'):
+        total= total+  bank_sum.get('amount__sum')
+    
+    d_sum = donation.objects.filter(date__range=[start_date, end_date]).aggregate(Sum('amount'))
+    
+    if d_sum.get('amount__sum'):
+        total= total+  d_sum.get('amount__sum')
+
+    hsc= Student.objects.filter(course= 'HSC').count()
+    honours=Student.objects.filter(course= 'Honours').count()
+    degree= Student.objects.filter(course= 'Degree (Pass)').count()
+    ibm=  Student.objects.filter(course= 'IBM').count()
+
+    first= Staff.objects.filter(designation= "1st").count()
+    second= Staff.objects.filter(designation= "2nd").count()
+    third= Staff.objects.filter(designation= "3rd").count()
+    fourth= Staff.objects.filter(designation= "4th").count()
+    transaction= StudentReceipt.objects.all()[:4]
+
+    # INCOME SIDE ENDS 
+
+    context= {
+        'user_count': user_count, 
+        'today_login': today_login, 
+        'income': total, 
+        'total': total_income,
+        'male_teacher': teacher_male,
+        'female_teacher': teacher_Female,
+        'hsc': hsc,
+        'honours': honours,
+        'degree': degree,
+        'ibm': ibm,
+        'first': first,
+        'second': second,
+        'third': third,
+        'fourth': fourth,
+        'transaction': transaction,
+        'user': user
+        }
     return render(request, 'dashboard/index.html', context)
+
+
+# ADMIN DASHBOARD
+def student_dashboard(request):
+
+    user= request.user
+    # usr= User.objects.get(email= user)
+    # user= Student.objects.get(email= user)
+    
+    user= User.objects.get(email= user)
+    person= Student.objects.get(user= user)
+    payment= StudentPayment.objects.get(user= person)
+    receipts= StudentReceipt.objects.filter(user= person).count()
+    tutionfee= StudentReceipt.objects.filter(user= person).aggregate(Sum('tutionfee'))
+    total= StudentReceipt.objects.filter(user= person).aggregate(Sum('total_amount'))
+    others= total['total_amount__sum']-tutionfee['tutionfee__sum']
+
+    context= {
+         
+        'person': person,
+        'user': user,
+        'payment': payment,
+        'receipts': receipts,
+        'tutionfee': tutionfee,
+        'others': others,
+        }
+    return render(request, 'dashboard/index-student.html', context)
+
+
 
 # # ADD NOTICE
 def notice(request):
@@ -1230,8 +1497,38 @@ def payment_search(request):
     session= SessionYear.objects.all().order_by('-session_name')
 
         
-    context= {'registered':registered, 'session': session, 'registered':registered, "name": "payment" }
+    context= {'registered':registered, 'session': session, "name": "payment" }
     return render(request, 'dashboard/serach.html', context)
+
+# STUDENT SEARCH FOR PAYMENT
+def ladger_search(request):
+
+    registered = False
+    
+    if request.method == 'POST':
+        
+        session_name = request.POST['session']        
+
+        session= SessionYear.objects.get(session_name= session_name)
+        income= TotalIncome.objects.get(session= session)
+        expences= TotalExpances.objects.get(session= session)
+        others= income.admission_fee+ income.reg_fee+ income.college_rovers+ income.board_rovers+ income.college_transfer+ income.id_fee+ income.certificate_fee+ income.retention_fee+ income.testimonial_fee+ income.paper_magazine+ income.preactical_fee+ income.bill+ income.management_fee+ income.fourth_paper+ income.late_fine+ income.center
+        total= TotalEarning.objects.all()[0]
+        context={
+            'session': session_name,
+            'income': income,
+            'expences': expences,
+            'total': total, 
+            'others': others
+        }
+        return render(request, 'dashboard/ledger.html', context)
+        
+
+    session= SessionYear.objects.all().order_by('-session_name')
+
+        
+    context= {'registered':registered, 'session': session, "name": "payment" }
+    return render(request, 'dashboard/serach-ladger.html', context)
 
 
 # STUDENT SEARCH FOR EDIT
@@ -2003,14 +2300,14 @@ def profile(request, id):
     user_profile= Student.objects.get(id=id)
     student_id= User.objects.get(id= user_profile.user_id)
     about= StudentAbout.objects.get(user= student_id)
-    education= StudentEducation.objects.get(user= student_id)
-    recepits= StudentReceipt.objects.filter(user= user_profile)
-    
+    education= StudentEducation.objects.get(user= student_id)    
+    person= user_profile
     group=""
+   
 
 
     # context= {'user':  user, 'user_profile': user_profile, 'group': group, 'about': about, 'education': education}
-    context= { 'user_profile': user_profile, 'group': group, 'about': about, 'education': education, 'recepits':recepits}
+    context= { 'user_profile': user_profile, 'group': group, 'about': about, 'education': education, 'person': person}
     return render(request, 'dashboard/profile-student.html', context)   
 
 

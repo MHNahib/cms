@@ -9,7 +9,7 @@
   {%	include	"dashboard/nav.html"	with	user=user	%}
 
   <!-- SIDEBAR -->
-  {%	include	"dashboard/sidebar.html"	with	user=user	%}
+  {%	include	"dashboard/sidebar-s.html"	with	user=person	%}
 
 
   <!-- Content Wrapper. Contains page content -->
@@ -32,9 +32,9 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>{{user_count}}</h3>
+                <h3>{{payment.total}}<sup style="font-size: 20px">TK</sup></h3>
 
-                <p>Total users</p>
+                <p>Total payable monthly fee</p>
               </div>
               <div class="icon">
                 <i class="fa fa-users"></i>
@@ -47,9 +47,9 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>{{today_login}}<sup style="font-size: 20px">%</sup></h3>
+                <h3>{{tutionfee.tutionfee__sum}}<sup style="font-size: 20px">TK</sup></h3>
 
-                <p>Today loggedin</p>
+                <p>Today paid monthly fee</p>
               </div>
               <div class="icon">
                 <i class="fa fa-user"></i>
@@ -62,9 +62,9 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>{{income}}</h3>
+                <h3>{{receipts}}<sup style="font-size: 20px"></sup></h3>
 
-                <p>Total income today</p>
+                <p>Total receipts</p>
               </div>
               <div class="icon">
                 <i class="far fa-money-bill-alt"></i>
@@ -77,9 +77,9 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>{{total.total_amount}}</h3>
+                <h3>{{others}}<sup style="font-size: 20px">TK</sup></h3>
 
-                <p>Total income</p>
+                <p>Others</p>
               </div>
               <div class="icon">
                 <i class="far fa-money-bill-alt"></i>
@@ -134,7 +134,7 @@
           <div class="col-lg-6">
             <div class="card card-info">
            <div class="card-header">
-             <h3 class="card-title">Total Staff list</h3>
+             <h3 class="card-title">Notice board</h3>
 
              <div class="card-tools">
                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>

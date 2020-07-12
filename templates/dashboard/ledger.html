@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt and payment</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            font-size: 20px;
+            padding-left: 5px;
+            
+        }
+        
+
+        th,
+        .no,
+        .amount {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="text-align: center;">KHANBAHADUR AWLAD HOSSAIN KHAN COLLEGE, MANIKGANJ</h2>
+    <h3 style="text-align: center;">Receipts and payment amount (Session- {{session}})</h3>
+    <h3 style="text-align: center;">A. Receipts/ Income</h3>
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th>No</th>
+            <th>Details</th>
+            <th>Taka</th>
+        </tr>
+        <tr>
+            <td class="no">1</td>
+            <td>Govt. Remuneration</td>
+            <td class="amount">{{income.govt_reuneration}}</td>
+        </tr>
+        <tr>
+            <td class="no">2</td>
+            <td>Monthly Tuition fee : Intermediate</td>
+            <td class="amount">{{income.hsc_tutionfee}}</td>
+        </tr>
+        <tr>
+            <td class="no">2</td>
+            <td style="text-align: center;">Honours</td>
+            <td class="amount">{{income.honours_tutionfee}}</td>
+        </tr>
+        <tr>
+            <td class="no">2</td>
+            <td style="text-align: center;">Degree</td>
+            <td class="amount">{{income.degree_tutionfee}}</td>
+        </tr>
+        <tr>
+            <td class="no">3</td>
+            <td>College Examination fee</td>
+            <td class="amount">{{income.college_examfee}}</td>
+        </tr>
+        <tr>
+            <td class="no">4</td>
+            <td>Board/University Examination fee</td>
+            <td class="amount">{{income.board_examfee}}</td>
+        </tr>
+        <tr>
+            <td class="no">5</td>
+            <td>College Development fee</td>
+            <td class="amount">{{income.college_devfee}}</td>
+        </tr>
+        <tr>
+            <td class="no">6</td>
+            <td>Milad /Puja</td>
+            <td class="amount">{{income.milad_puja}}</td>
+        </tr>
+        <tr>
+            <td class="no">7</td>
+            <td>Library fee</td>
+            <td class="amount">{{income.library_fee}}</td>
+        </tr>
+        <tr>
+            <td class="no">8</td>
+            <td>Sports : College</td>
+            <td class="amount">{{income.college_sports_fee}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Sports : Board/university</td>
+            <td class="amount">{{income.board_sports_fee}}</td>
+        </tr>
+        <tr>
+            <td class="no">9</td>
+            <td>Poor fund</td>
+            <td class="amount">{{income.poor_fund}}</td>
+        </tr>
+        <tr>
+            <td class="no">10</td>
+            <td>Donation: Govt. /Public(Name)</td>
+            <td class="amount">{{income.donation}}</td>
+        </tr>
+        <tr>
+            <td class="no">11</td>
+            <td>Bank Interest</td>
+            <td class="amount">{{income.bank_interest}}</td>
+        </tr>
+        <tr>
+            <td class="no">12</td>
+            <td>Science and Technologic fee</td>
+            <td class="amount">{{income.science_and_tech}}</td>
+        </tr>
+        <tr>
+            <td class="no">13</td>
+            <td>Computer lab fee</td>
+            <td class="amount">{{income.computer_lab_fee}}</td>
+        </tr>
+        <tr>
+            <td class="no">14</td>
+            <td>Other Fund Receipts and Income</td>
+            <td class="amount">{{others}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Total</td>
+            <td class="amount">{{income.total_amount}}</td>
+        </tr>
+    </table>
+
+    <br>
+    
+    <h3 style="text-align: center;">B. Payment/ Expenses</h3>
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>           
+            <th>Details</th>
+            <th>Taka</th>
+        </tr>
+        <tr>            
+            <td>Govt. Salary</td>
+            <td class="amount">{{expences.govt_salary}}</td>
+        </tr>        
+        <tr>            
+            <td>House rent and Bonus</td>
+            <td class="amount">{{expences.house_rent}}</td>
+        </tr>        
+        <tr>            
+            <td>Board /University Registration fee</td>
+            <td class="amount">{{expences.board_reg}}</td>
+        </tr>        
+        <!-- <tr>            
+            <td>Board /University Registration fee</td>
+            <td class="amount">{{expences.house_rent}}</td>
+        </tr>         -->
+        <tr>            
+            <td>College Examination Expenses</td>
+            <td class="amount">{{expences.college_exam}}</td>
+        </tr>        
+        <tr>            
+            <td>College Development Expenses</td>
+            <td class="amount">{{expences.college_dev}}</td>
+        </tr>        
+        <tr>            
+            <td>Milad /Puja Expenses</td>
+            <td class="amount">{{expences.milad_puja}}</td>
+        </tr>        
+        <tr>            
+            <td>Library Expenses</td>
+            <td class="amount">{{expences.library_exp}}</td>
+        </tr>        
+        <tr>            
+            <td>Sports Expenses</td>
+            <td class="amount">{{expences.sports_exp}}</td>
+        </tr>        
+        <tr>            
+            <td>College Development Expenses</td>
+            <td class="amount">{{expences.college_dev}}</td>
+        </tr>        
+        <tr>            
+            <td>Poor fund Expenses</td>
+            <td class="amount">{{expences.poor_fund_exp}}</td>
+        </tr>        
+        <tr>            
+            <td>Water bill</td>
+            <td class="amount">{{expences.water_exp}}</td>
+        </tr>        
+        <tr>            
+            <td>Electric bill</td>
+            <td class="amount">{{expences.electric_exp}}</td>
+        </tr>        
+        <tr>            
+            <td>Bank Charges</td>
+            <td class="amount">{{expences.bank_charges}}</td>
+        </tr>        
+        <tr>            
+            <td>Telephone bill</td>
+            <td class="amount">{{expences.telephone_exp}}</td>
+        </tr>        
+        <tr>            
+            <td>Science and Technologic Expenses</td>
+            <td class="amount">{{expences.scinece_and_tech}}</td>
+        </tr>        
+        <tr>            
+            <td>Computer lab Expenses</td>
+            <td class="amount">{{expences.computer_lab_exp}}</td>
+        </tr>        
+        <tr>            
+            <td>Entertainment Expenses</td>
+            <td class="amount">{{expences.entertainment_exp}}</td>
+        </tr>        
+        <tr>            
+            <td>Conveyance</td>
+            <td class="amount">{{expences.conveyance}}</td>
+        </tr>        
+        <tr>            
+            <td>Printing and Stationery</td>
+            <td class="amount">{{expences.printing_and_stationary}}</td>
+        </tr>        
+        <tr>            
+            <td>Management Expenses</td>
+            <td class="amount">{{expences.management_exp}}</td>
+        </tr>        
+        <tr>            
+            <td>General fund Expenses</td>
+            <td class="amount">{{expences.pardon}}</td>
+        </tr>        
+        <tr>            
+            <td>Other expenses</td>
+            <td class="amount">{{expences.other}}</td>
+        </tr>        
+        <tr>            
+            <td>Total</td>
+            <td class="amount">{{expences.total_amount}}</td>
+        </tr>        
+    </table>
+
+    <br>
+    <h3 style="text-align: center;">Cash Balance Summary</h3>
+    <table style="width:90%;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th>No</th>
+            <th>Opening Balance/ Previous Cash balance</th>
+            <th>Taka</th>
+        </tr>
+        <!-- <tr>
+            <td class="no"></td>
+            <td>Opening Balance/ Previous Cash balance</td>
+            <td class="amount"></td>
+        </tr> -->
+        <tr>
+            <td class="no">A</td>
+            <td>Total receipts</td>
+            <td class="amount">{{income.total_amount}}</td>
+        </tr>
+        <!-- <tr>
+            <td class="no"></td>
+            <td>Total</td>
+            <td class="amount"></td>
+        </tr> -->
+        <tr>
+            <td class="no">B</td>
+            <td>Total Payments</td>
+            <td class="amount">{{expences.total_amount}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td>Closing Balance/Present cash balance</td>
+            <td class="amount">{{total.amount}}</td>
+        </tr>
+    </table>
+</body>
+
+</html>

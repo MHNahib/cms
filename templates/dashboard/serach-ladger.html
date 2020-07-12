@@ -57,47 +57,13 @@
                 {% csrf_token %}
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Roll</label>
-                    <input type="text" name="roll" class="form-control" placeholder="Students roll number" required>
-                  </div>
-
-                  <div class="form-group row">
-
-                    <div class="col-md-4 mb-4">
-                      <label for="country">Session</label>
-                      <select class="custom-select d-block w-100" name="session">
-                        <option value="">Choose...</option>
-                        {% for i in session %}
-                        <option>{{i.session_name}}</option>
-                        {% endfor %}
-                      </select>
-
-                    </div>
-
-                    <div class="col-md-4 mb-4">
-                      <label for="lastName">Class</label>
-                      <select class="custom-select d-block w-100" name="class" required>
-                        <option value="">Choose...</option>
-                        <option>HSC</option>
-                        <option>Honours</option>
-                        <option>Degree</option>
-                      </select>
-
-                    </div>
-
-                    <div class="col-md-4 mb-4">
-                      <label for="country">Year</label>
-                      <select class="custom-select d-block w-100" name="year" required>
-                        <option value="">Choose...</option>
-                        <option>1st</option>
-                        <option>2nd</option>
-                        <option>3rd</option>
-                        <option>4th</option>
-                        
-                      </select>
-                    </div>
-
-                    
+                    <label for="exampleInputPassword1">Session</label>
+                    <select class="custom-select d-block w-100" name="session">
+                      <option value="">Choose...</option>
+                      {% for i in session %}
+                      <option>{{i.session_name}}</option>
+                      {% endfor %}
+                    </select>
                   </div>
                 </div>
                 <!-- /.card-body -->

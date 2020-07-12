@@ -2,147 +2,250 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{% static 'dashboard/dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2"
-            alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">{{user.first_name}}</a>
-        </div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="{% static 'dashboard/dist/img/user2-160x160.jpg' %}" height="160px" width="160px"
+          class="img-circle elevation-2" alt="User Image">
       </div>
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-             with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon far fa-file-alt"></i>
-              <p>
-                Add new notice
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon far fa-money-bill-alt"></i>
-              <p>
-                Take payment
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
-              <p>
-                Gallery
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-book"></i>
-              <p>
-                Add books
-              </p>
-            </a>
-          </li>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-university"></i>
-              <p>
-                Publish result
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Edit students profile
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-user-plus"></i>
-              <p>
-                Add new teacher
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-user-plus"></i>
-              <p>
-                Add new staff
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
-              <p>
-                Attendence
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
-              <p>
-                Add marks
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fa fa-user"></i>
-              <p>
-                Edit profile
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fa fa-user"></i>
-              <p>
-                Profile
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fa fa-file"></i>
-              <p>
-                Result
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'logout' %}" class="nav-link">
-              <i class="nav-icon fas fa-power-off"></i>
-              <p>
-                Logout
-              </p>
-            </a>
-          </li>
-      </nav>
-      <!-- /.sidebar-menu -->
+      <div class="info">
+        <a href="#" class="d-block">{{user.first_name}}</a>
+      </div>
     </div>
-    <!-- /.sidebar -->
-  </aside>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+        <li class="nav-item">
+          <a href="{% url 'admin' %}" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Dashboard
+            </p>
+          </a>
+        </li>
+        <!-- <li class="nav-item">
+          <a href="pages/widgets.html" class="nav-link">
+            <i class="nav-icon fa fa-user"></i>
+            <p>
+              Profile
+            </p>
+          </a>
+        </li> -->
+        <li class="nav-item">
+          <a href="{% url 'add-notice' %}" class="nav-link">
+            <i class="nav-icon far fa-file-alt"></i>
+            <p>
+              Add new notice
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'search-payment' %}" class="nav-link">
+            <i class="nav-icon far fa-money-bill-alt"></i>
+            <p>
+              Take payment
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'add-photo' %}" class="nav-link">
+            <i class="nav-icon far fa-image"></i>
+            <p>
+              Add Photo
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'add-books' %}" class="nav-link">
+            <i class="nav-icon fas fa-book"></i>
+            <p>
+              Add books
+            </p>
+          </a>
+        </li>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'update-student-search' %}" class="nav-link">
+            <i class="nav-icon fas fa-university"></i>
+            <p>
+              Update students year
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+              Add roll to
+              <i class="fas fa-angle-left right"></i>
+              <span class="badge badge-info right">12</span>
+            </p>
+          </a>
+
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'roll-hsc-science' %}" class="nav-link">
+                <i class="nav-icon fas fa-university"></i>
+                <p>
+                  Science students
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'roll-hsc-commarts' %}" class="nav-link">
+                <i class="nav-icon fas fa-university"></i>
+                <p>
+                  Comarts students
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'roll-hsc-Humanities(A)' %}" class="nav-link">
+                <i class="nav-icon fas fa-university"></i>
+                <p>
+                  Humanities (A) students
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'roll-hsc-Humanities(B)' %}" class="nav-link">
+                <i class="nav-icon fas fa-university"></i>
+                <p>
+                  Humanities (B) students
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'roll-honours-bangla' %}" class="nav-link">
+                <i class="nav-icon fas fa-university"></i>
+                <p>
+                  Hon's (Bangla) students
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'roll-honours-accounting' %}" class="nav-link">
+                <i class="nav-icon fas fa-university"></i>
+                <p>
+                  Hon's (Accounting) students
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'roll-honours-geography' %}" class="nav-link">
+                <i class="nav-icon fas fa-university"></i>
+                <p>
+                  Hon's (Geography) students
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'roll-honours-management' %}" class="nav-link">
+                <i class="nav-icon fas fa-university"></i>
+                <p>
+                  Hon's (Management) students
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'roll-degree-bba' %}" class="nav-link">
+                <i class="nav-icon fas fa-university"></i>
+                <p>
+                  BBA students
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'roll-degree-ba' %}" class="nav-link">
+                <i class="nav-icon fas fa-university"></i>
+                <p>
+                  BA students
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'roll-degree-bss' %}" class="nav-link">
+                <i class="nav-icon fas fa-university"></i>
+                <p>
+                  BSS students
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'roll-ibm' %}" class="nav-link">
+                <i class="nav-icon fas fa-university"></i>
+                <p>
+                  IBM students
+                </p>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'edit-payment' %}" class="nav-link">
+            <i class="nav-icon fas fa-edit"></i>
+            <p>
+              Edit students profile
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'add-teacher' %}" class="nav-link">
+            <i class="nav-icon fas fa-user-plus"></i>
+            <p>
+              Add new teacher
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'expense' %}" class="nav-link">
+            <i class="nav-icon far fa-money-bill-alt"></i>
+            <p>
+              Add expences
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'income-expences' %}" class="nav-link">
+            <i class="nav-icon far fa-money-bill-alt"></i>
+            <p>
+              Monthly income and expences
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'ladger-search' %}" class="nav-link">
+            <i class="nav-icon far fa-money-bill-alt"></i>
+            <p>
+              Ladger
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'add-staff' %}" class="nav-link">
+            <i class="nav-icon fas fa-user-plus"></i>
+            <p>
+              Add new staff
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="nav-link">
+            <i class="nav-icon fas fa-power-off"></i>
+            <p>
+              Logout
+            </p>
+          </a>
+        </li>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>

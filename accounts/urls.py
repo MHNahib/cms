@@ -23,31 +23,53 @@ handler404 = 'accounts.views.handler404'
 urlpatterns = [
     
     # path('test/', views.test, name='test'),
+    # API
     path('user/list/', views.user_list, name='user-list'),
+
+    # LOGIN AND LOGOUT
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
+
+    # ADMISSION
     path('admission/hsc/', views.signup_hsc, name='signup'),
     path('admission/honours/', views.signup_honours, name='signup-h'),   
     path('admission/ibm/', views.signup_ibm, name='signup-ibm'),   
     path('admission/degree/', views.signup_degree, name='signup-degree'),   
+
+    # ADMIN DASHBOARD and student dashboard
     path('dashboard/', views.admin_dashboard, name='admin'),
+    path('student/', views.student_dashboard, name='dashboard'),
+
+    # ADD TEACHER PRINCIPAL AND STAFFS
     path('add/principal/', views.add_principal, name='add-principal'),
     path('add/teacher/', views.add_teacher, name='add-teacher'),
     path('add/staff/', views.add_staff, name='add-staff'),
-    path('edit/staff/<str:id>/', views.edit_staff, name='add-staff'),
-    path('edit/teacher/<str:id>/', views.edit_teacher, name='add-staff'),
+
+    # EDIT TEACHER AND STAFF
+    path('edit/staff/<str:id>/', views.edit_staff, name='edit-staff'),
+    path('edit/teacher/<str:id>/', views.edit_teacher, name='edit-teacher'),
+
+    # STUDENTS PROFILE AND EDIT
     path('profile/<str:id>/', views.profile, name='show-profile'),
     path('profile/edit/<str:id>/', views.profile_edit, name='edit-profile'),
+
+    # DOWNLOAD FORM
     path('download/<str:username>/', views.download_form, name='download'),
     # path('dashboard/teacher/appoint/<str:id>/', views.wil_take, name='will-take'),
+
+    # STAFF AND TEACHER LIST
     path('list/teachers/', views.teachersList, name='show-teachers-list'),
     path('list/staffs/', views.staffsList, name='show-staffs-list'),
+
+    # ADD NOTICE PHOTO DEPERTMENT SUBJECT SESSION 
     path('add/notice/', views.notice, name='add-notice'),
     path('add/photo/', views.photo, name='add-photo'),
     path('add/books/', views.books, name='add-books'),
-    path('add/depertment/', views.depertment, name='add-depertment'),
-    path('add/subject/', views.subject, name='add-subject'),
+    # path('add/depertment/', views.depertment, name='add-depertment'),
+    # path('add/subject/', views.subject, name='add-subject'),
     path('add/session/', views.session, name='session'),
+
+    # ADD ROLL 
     path('add/roll/hsc/science/', views.roll_hsc_science, name='roll-hsc-science'),
     path('add/roll/hsc/business-studies/', views.roll_hsc_commarts, name='roll-hsc-commarts'),
     path('add/roll/hsc/humanities/a/', views.roll_hsc_arts_a, name='roll-hsc-Humanities(A)'),
@@ -60,21 +82,34 @@ urlpatterns = [
     path('add/roll/degree/ba/', views.roll_degree_ba, name='roll-degree-ba'),
     path('add/roll/degree/bss/', views.roll_degree_bss, name='roll-degree-bss'),
     path('add/roll/ibm/', views.roll_ibm, name='roll-ibm'),
+
+    # API 
     path('add/roll/', views.add_roll, name='add-roll'),
+
+    # ADD AND SHOW SESSION 
     path('add/session/save/', views.session_save, name='save_session'),
     path('add/session/show/', views.session_show, name='show_session'),
+
+    # ADD YEAR 
     path('add/year/', views.year, name='year'),
+
+    # PAYMENT 
     path('payment/', views.monthly_payment, name='monthly-payment'),
+
+    # SEARCH 
     path('payment/search/', views.payment_search, name='search-payment'),
     path('edit/search/', views.edit_search, name='edit-payment'),
     path('update-year-search/', views.update_year_search, name='update-student-search'),
     path('update/year/', views.update_year, name='update-student'),
+
+
     path('payment/donation/', views.get_donation, name='donation'),
     path('payment/<str:id>/', views.payment, name='payment'),
     path('pardon/<str:id>/', views.pardon , name='pardon'),
     path('expense/', views.expense , name='expense'),
+    path('ladger/search/', views.ladger_search , name='ladger-search'),
 
-    path('display/income/', views.display_income , name='expense'),
+    path('display/income/', views.display_income , name='income-expences'),
 
     # path('list/students/', views.list_students , name='list-students'),
     
