@@ -396,6 +396,8 @@
                             Hello, {{user.first_name}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'admin' %}">Dashboard</a>
+                        
                             <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                         </div>
                     </li>

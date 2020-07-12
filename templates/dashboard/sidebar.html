@@ -6,12 +6,12 @@
   <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
+      <!-- <div class="image">
         <img src="{% static 'dashboard/dist/img/user2-160x160.jpg' %}" height="160px" width="160px"
           class="img-circle elevation-2" alt="User Image">
-      </div>
+      </div> -->
       <div class="info">
-        <a href="#" class="d-block">{{user.first_name}}</a>
+        <a href="#" class="d-block">Student portal</a>
       </div>
     </div>
 
@@ -205,6 +205,22 @@
           </a>
         </li>
         <li class="nav-item">
+          <a href="{% url 'show-teachers-list' %}" class="nav-link">
+            <i class="nav-icon fas fa-user-plus"></i>
+            <p>
+              Teachers list
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'show-staffs-list' %}" class="nav-link">
+            <i class="nav-icon fas fa-user-plus"></i>
+            <p>
+              Staff list
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="{% url 'expense' %}" class="nav-link">
             <i class="nav-icon far fa-money-bill-alt"></i>
             <p>
@@ -233,6 +249,14 @@
             <i class="nav-icon fas fa-user-plus"></i>
             <p>
               Add new staff
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'add-principal' %}" class="nav-link">
+            <i class="nav-icon fas fa-user-plus"></i>
+            <p>
+              Add new principal
             </p>
           </a>
         </li>

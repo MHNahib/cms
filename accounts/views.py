@@ -35,6 +35,7 @@ from .token import generate_token
 from django.core.mail import EmailMessage
 from datetime import datetime
 from datetime import datetime, timedelta
+from .decorators import *
 
 
 
@@ -78,6 +79,7 @@ def passwordGenerator(size=8, chars=string.ascii_uppercase + string.digits):
 
 
 # LOGIN
+@unauthenticated_user
 def user_login(request):
     if(request.user.is_authenticated):
         return redirect('index')
@@ -99,7 +101,21 @@ def user_login(request):
             if user:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect(reverse('dashboard'))              
+                    if request.user.groups.exists():
+                        group = request.user.groups.all()[0].name
+                        if group == 'admin' or group == 'BOSS':
+                            return redirect('admin')
+                        else:
+                            return HttpResponseRedirect(reverse('dashboard'))
+                    # if request.user.groups.exists():
+
+			            # group = request.user.groups.all()[0].name
+
+		                # if group == 'admin' or group =='BOSS':
+
+			            #     return redirect('admin')
+                        # else:
+                        #     return HttpResponseRedirect(reverse('dashboard'))              
             
 
             else:
@@ -109,6 +125,7 @@ def user_login(request):
 
     else:
         return render(request, 'accounts/login.html')
+
 
 
 def user_logout(request):
@@ -166,6 +183,10 @@ def signup_hsc(request):
             user.is_active= True
 
             user.save()
+
+            group = Group.objects.get(name='student')
+            user.groups.add(group)
+
             print("crossed user")
         except:
             return render(request, 'accounts/failed.html', status= 401)
@@ -186,6 +207,8 @@ def signup_hsc(request):
 
             education= StudentEducation(user= user, ssc_board=ssc_board, ssc_grade= ssc_grade, ssc_group= ssc_group, ssc_reg= ssc_reg, ssc_roll=ssc_roll, ssc_year=ssc_year)
             education.save()
+
+            
 
             # compulsory subjects
             subject1= Subject(user= user, subject_name= 'Bangla',firstpaper_code= '101', secondpaper_code= '102',optional= False)
@@ -404,6 +427,7 @@ def signup_hsc(request):
 
 
 # DOWNLOAD FORM
+
 def download_form(request, username):
     user= User.objects.get(username=username)
     education= StudentEducation.objects.get(user=user)
@@ -431,6 +455,7 @@ def download_form(request, username):
 
 
 # SIGNUP HONOURS
+
 def signup_honours(request):
 
     registered = False   
@@ -477,6 +502,10 @@ def signup_honours(request):
             user.is_active= True
 
             user.save()
+
+            group = Group.objects.get(name='student')
+            user.groups.add(group)
+
             print("crossed user")
         except:
             return render(request, 'accounts/failed.html', status= 401)
@@ -585,6 +614,7 @@ def signup_honours(request):
     return render(request, 'accounts/signup-h.html', context)
 
 # SIGNUP IBM
+
 def signup_ibm(request):
 
     registered = False   
@@ -625,6 +655,10 @@ def signup_ibm(request):
             user.is_active= True
 
             user.save()
+
+            group = Group.objects.get(name='student')
+            user.groups.add(group)
+
             print("crossed user")
         except:
             return render(request, 'accounts/failed.html', status= 401)
@@ -664,6 +698,7 @@ def signup_ibm(request):
     return render(request, 'accounts/signup-ibm.html', context)
 
 # SIGNUP DEGREE
+
 def signup_degree(request):
 
     registered = False   
@@ -715,6 +750,10 @@ def signup_degree(request):
             user.is_active= True
 
             user.save()
+
+            group = Group.objects.get(name='student')
+            user.groups.add(group)
+
             print("crossed user")
         except:
             return render(request, 'accounts/failed.html', status= 401)
@@ -786,6 +825,8 @@ def signup_degree(request):
     return render(request, 'accounts/signup-degree.html', context)
 
 # ADMIN DASHBOARD
+@login_required(login_url='login')
+@admin_only
 def admin_dashboard(request):
 
     user= request.user
@@ -1060,6 +1101,8 @@ def student_dashboard(request):
 
 
 # # ADD NOTICE
+@login_required(login_url='login')
+@admin_only
 def notice(request):
 
     registered = False
@@ -1081,6 +1124,8 @@ def notice(request):
     return render(request, 'dashboard/add-noitce.html', context)
 
 # # ADD PHOTO
+@login_required(login_url='login')
+@admin_only
 def photo(request):
 
     registered = False
@@ -1099,6 +1144,8 @@ def photo(request):
     return render(request, 'dashboard/add-photo.html', context)
 
 # # ADD BOOKS
+@login_required(login_url='login')
+@admin_only
 def books(request):
 
     registered = False
@@ -1144,6 +1191,8 @@ def books(request):
 
 
 # ADD TEACHER
+@login_required(login_url='login')
+@admin_only
 def add_teacher(request):
 
     # depertment= Depertment.objects.all()
@@ -1226,6 +1275,9 @@ def add_teacher(request):
         )
 
         teacher.save()
+        if dept_head:
+            group = Group.objects.get(name='admin')
+            user.groups.add(group)
         
         education= TeacherEducation(
 
@@ -1258,6 +1310,8 @@ def add_teacher(request):
 
 
 #  EDIT TEACHER
+@login_required(login_url='login')
+@admin_only
 def edit_teacher(request, id):
 
     # depertment= Depertment.objects.all()
@@ -1379,6 +1433,8 @@ def edit_teacher(request, id):
 
 
 # ADD principal
+@login_required(login_url='login')
+@admin_only
 def add_principal(request):
 
     # depertment= Depertment.objects.all()
@@ -1430,6 +1486,9 @@ def add_principal(request):
                 
         user.save() 
 
+        group = Group.objects.get(name='admin')
+        user.groups.add(group)
+
         teacher= Principal(
             user= user, 
             name= name,             
@@ -1473,6 +1532,8 @@ def add_principal(request):
 
 
 # STUDENT SEARCH FOR PAYMENT
+@login_required(login_url='login')
+@admin_only
 def payment_search(request):
 
     registered = False
@@ -1501,6 +1562,8 @@ def payment_search(request):
     return render(request, 'dashboard/serach.html', context)
 
 # STUDENT SEARCH FOR PAYMENT
+@login_required(login_url='login')
+@admin_only
 def ladger_search(request):
 
     registered = False
@@ -1532,6 +1595,8 @@ def ladger_search(request):
 
 
 # STUDENT SEARCH FOR EDIT
+@login_required(login_url='login')
+@admin_only
 def edit_search(request):
 
     registered = False
@@ -1560,6 +1625,8 @@ def edit_search(request):
     return render(request, 'dashboard/serach.html', context)
 
 # UPDATE YEAR
+@login_required(login_url='login')
+@admin_only
 def update_year_search(request):
 
     registered = False
@@ -1591,6 +1658,8 @@ def update_year_search(request):
 
 
 # DISPLAY INCOME
+@login_required(login_url='login')
+@admin_only
 def display_income(request):
 
     registered = False
@@ -2153,6 +2222,8 @@ def display_income(request):
     return render(request, 'dashboard/monthly_income_expences.html', context)
 
 # ADD STAFF
+@login_required(login_url='login')
+@admin_only
 def add_staff(request):
 
     registered = False
@@ -2198,6 +2269,8 @@ def add_staff(request):
                 user= User.objects.create_user(username=email, first_name=name, last_name= name, email=email, password=passwordGenerator())
                 user.is_active= True
                 user.save()  
+                group = Group.objects.get(name='admin')
+                user.groups.add(group)
                 staff= Staff(
                     user= user, 
                     name= name, 
@@ -2239,6 +2312,8 @@ def add_staff(request):
     return render(request, 'dashboard/add-staff.html', context)
     
 # EDIT STAFF
+@login_required(login_url='login')
+@admin_only
 def edit_staff(request, id):
 
     registered = False
@@ -2294,6 +2369,8 @@ def edit_staff(request, id):
 
 
 # PROFILE
+@login_required(login_url='login')
+@student_only
 def profile(request, id):
     
     
@@ -2312,6 +2389,8 @@ def profile(request, id):
 
 
 # PROFILE EDIT 
+@login_required(login_url='login')
+@admin_only
 def profile_edit(request, id):
     
     
@@ -2488,6 +2567,8 @@ def year(request):
     return render(request, 'dashboard/year.html', context)    
 
 # ADD ROLL OF SCIENCE (HSC) STUDENTS
+@login_required(login_url='login')
+@admin_only
 def roll_hsc_science(request):
     user= Student.objects.filter(course= "HSC", group='Science', roll= None)
     context={'user': user, 'course': "HSC", 'group':'Science'}
@@ -2495,6 +2576,8 @@ def roll_hsc_science(request):
 
 
 # ADD ROLL OF COMARTS (HSC) STUDENTS
+@login_required(login_url='login')
+@admin_only
 def roll_hsc_commarts(request):
     user= Student.objects.filter(course= "HSC", group='Business Studies', roll= None)
     context={'user': user, 'course': "HSC", 'group':'Business Studies'}
@@ -2502,6 +2585,8 @@ def roll_hsc_commarts(request):
 
 
 # ADD ROLL OF ARTS A (HSC) STUDENTS
+@login_required(login_url='login')
+@admin_only
 def roll_hsc_arts_a(request):
     user= Student.objects.filter(course= "HSC", group='Humanities (A)', roll= None)
     context={'user': user, 'course': "HSC", 'group':'Humanities (A)'}
@@ -2509,6 +2594,8 @@ def roll_hsc_arts_a(request):
 
 
 # ADD ROLL OF ARTS B (HSC) STUDENTS
+@login_required(login_url='login')
+@admin_only
 def roll_hsc_arts_b(request):
     user= Student.objects.filter(course= "HSC", group='Humanities (B)', roll= None)
     context={'user': user, 'course': "HSC", 'group':'Humanities (B)'}
@@ -2516,6 +2603,8 @@ def roll_hsc_arts_b(request):
 
 
 # ADD ROLL OF HONOURS (Department of Accounting) STUDENTS
+@login_required(login_url='login')
+@admin_only
 def roll_honours_accounting(request):
     user= Student.objects.filter(course= 'Honours', group='Department of Accounting', roll= None)
     context={'user': user, 'course': 'Honours', 'group':'Department of Accounting'}
@@ -2523,6 +2612,8 @@ def roll_honours_accounting(request):
 
 
 # ADD ROLL OF HONOURS (Department of Bengali) STUDENTS
+@login_required(login_url='login')
+@admin_only
 def roll_honours_bangla(request):
     user= Student.objects.filter(course= 'Honours', group='Department of Bengali', roll= None)
     context={'user': user, 'course': 'Honours', 'group':'Department of Bengali'}
@@ -2530,6 +2621,8 @@ def roll_honours_bangla(request):
 
 
 # ADD ROLL OF HONOURS (Department of Geography) STUDENTS
+@login_required(login_url='login')
+@admin_only
 def roll_honours_geography(request):
     user= Student.objects.filter(course= 'Honours', group='Department of Geography', roll= None)
     context={'user': user, 'course': 'Honours', 'group':'Department of Geography'}
@@ -2537,6 +2630,8 @@ def roll_honours_geography(request):
 
 
 # ADD ROLL OF HONOURS (Department of Management) STUDENTS
+@login_required(login_url='login')
+@admin_only
 def roll_honours_management(request):
     user= Student.objects.filter(course= 'Honours', group='Department of Management', roll= None)
     context={'user': user, 'course': 'Honours', 'group':'Department of Management'}
@@ -2544,24 +2639,32 @@ def roll_honours_management(request):
 
 
 # ADD ROLL OF DEGREE (BBA) STUDENTS
+@login_required(login_url='login')
+@admin_only
 def roll_degree_bba(request):
     user= Student.objects.filter(course= 'Degree (Pass)', group='BBA (PASS)', roll= None)
     context={'user': user, 'course': 'Degree (Pass)', 'group':'BBA (PASS)'}
     return render(request, 'dashboard/add-roll.html', context)
 
 # ADD ROLL OF DEGREE (BA) STUDENTS
+@login_required(login_url='login')
+@admin_only
 def roll_degree_ba(request):
     user= Student.objects.filter(course= 'Degree (Pass)', group='BA (PASS)', roll= None)
     context={'user': user, 'course': 'Degree (Pass)', 'group':'BA (PASS)'}
     return render(request, 'dashboard/add-roll.html', context)
 
 # ADD ROLL OF DEGREE (BSS) STUDENTS
+@login_required(login_url='login')
+@admin_only
 def roll_degree_bss(request):
     user= Student.objects.filter(course= 'Degree (Pass)', group='BSS (PASS)', roll= None)
     context={'user': user, 'course': 'Degree (Pass)', 'group':'BSS (PASS)'}
     return render(request, 'dashboard/add-roll.html', context)
 
 # ADD ROLL OF IBM STUDENTS
+@login_required(login_url='login')
+@admin_only
 def roll_ibm(request):
     user= Student.objects.filter(course= 'IBM', roll= None)
     context={'user': user, 'course': 'IBM', 'group':''}
@@ -2590,6 +2693,8 @@ def add_roll(request):
         
     
 # ADD ROLL
+@login_required(login_url='login')
+@admin_only
 def update_year(request):
     if request.method == 'POST':
         # roll = request.POST['roll']
@@ -2647,6 +2752,8 @@ def subject(request):
     return render(request, 'dashboard/subject.html', context)    
 
 # ADD SESSSION
+@login_required(login_url='login')
+@admin_only
 def session(request):
         
     context= {}
@@ -2692,6 +2799,8 @@ def user_list(request):
 
 
 # SHOW TEACHER'S LIST
+@login_required(login_url='login')
+@admin_only
 def teachersList(request):
 
     # dept= Depertment.objects.get(dept_name= dept_name)
@@ -2727,6 +2836,8 @@ def teachersList(request):
 
 
 # SHOW TEACHER'S LIST
+@login_required(login_url='login')
+@admin_only
 def staffsList(request):
 
     # dept= Depertment.objects.get(dept_name= dept_name)
@@ -2762,6 +2873,8 @@ def staffsList(request):
 
 
 # PAYMENT
+@login_required(login_url='login')
+@admin_only
 def payment(request, id):
 
     student= Student.objects.get(id= id)
@@ -3290,6 +3403,8 @@ def payment(request, id):
 
     
 # PARDON
+@login_required(login_url='login')
+@admin_only
 def pardon(request, id):
 
     if request.method == 'POST':
@@ -3680,6 +3795,8 @@ def monthly_payment(request):
 
 
 # MONTHLY DONATION
+@login_required(login_url='login')
+@admin_only
 def get_donation(request):
    
     context= {}
