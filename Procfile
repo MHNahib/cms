@@ -1,1 +1,1 @@
-gunicorn CMS.wsgi:application
+web: gunicorn gettingstarted.wsgi
